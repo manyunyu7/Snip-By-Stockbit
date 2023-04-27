@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -72,4 +73,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
+
+    // Navigation
+    val navigation_version = "2.3.4"
+    implementation("androidx.navigation:navigation-fragment-ktx:$navigation_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$navigation_version")
 }
