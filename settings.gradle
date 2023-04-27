@@ -16,3 +16,5 @@ rootProject.name = "Snip by Stockbit"
 include ':app'
 include ':core'
 include ':uikit'
+include ':feature-example'
+include ':shared-dependencies'
