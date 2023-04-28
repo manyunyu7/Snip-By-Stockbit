@@ -28,12 +28,6 @@ class LuminaRepositoryImpl @Inject constructor(
     ): Flow<ResponseState<List<LuminaUIModel>>> = flow<ResponseState<List<LuminaUIModel>>> {
         emit(ResponseState.Loading())
 
-//        val cachedImages = getCachedAllImage()
-//
-//        if (cachedImages.isNotEmpty()) {
-//            emit(ResponseState.Success(cachedImages))
-//        }
-
         if (isOnline(connectivityManager)) {
             try {
                 val response = remoteDataSource.getLuminaList(limit, page)
@@ -63,7 +57,7 @@ class LuminaRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getCachedAllImage(): List<LuminaUIModel> {
+    private fun getCachedAllImage(): List<LuminaUIModel> {
 
         var localData = localDatabase.getAll()?.map {
             it.toLuminaUIModel()
