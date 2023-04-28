@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.feylabs.snipbystockbit.R
 import com.feylabs.snipbystockbit.databinding.ActivityMainRouterBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainRouterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainRouterBinding
