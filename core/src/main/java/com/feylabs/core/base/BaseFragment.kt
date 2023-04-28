@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import java.lang.reflect.ParameterizedType
 
-open class BaseFragment<B : ViewBinding>(
-    private val inflateBinding: (LayoutInflater, ViewGroup?, Boolean) -> B
-) : Fragment() {
+@Suppress("UNCHECKED_CAST")
+abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
 
-    open fun initUI() {}
-    open fun initObserver() {}
-    open fun initAction() {}
-    open fun initData() {}
+    abstract fun initUI()
+    abstract fun initObserver()
+    abstract fun initAction()
+    abstract fun initData()
 
 
     private var _binding: B? = null
@@ -27,12 +27,14 @@ open class BaseFragment<B : ViewBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflateBinding(inflater, container, false)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val bindingClass =
+            (this::class.java.genericSuperclass as? ParameterizedType)?.actualTypeArguments.takeIf { it?.isNotEmpty() == true }
+                ?.get(0) as? Class<*>
+        val inflateMethod = bindingClass?.getMethod("inflate", LayoutInflater::class.java)
+        (inflateMethod?.invoke(null, layoutInflater) as? B)?.also { _binding = it }
+
+        return binding.root
     }
 
     override fun onDestroyView() {

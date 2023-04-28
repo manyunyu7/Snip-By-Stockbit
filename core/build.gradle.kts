@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared-dependencies"))
+    api(project(":shared-dependencies"))
 
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
