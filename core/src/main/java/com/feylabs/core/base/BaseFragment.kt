@@ -9,13 +9,13 @@ import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 
 @Suppress("UNCHECKED_CAST")
-open class BaseFragment<B : ViewBinding> : Fragment() {
+abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
 
-    open fun initUI() {}
-    open fun initObserver() {}
-    open fun initAction() {}
-    open fun initData() {}
+    abstract fun initUI()
+    abstract fun initObserver()
+    abstract fun initAction()
+    abstract fun initData()
 
 
     private var _binding: B? = null
