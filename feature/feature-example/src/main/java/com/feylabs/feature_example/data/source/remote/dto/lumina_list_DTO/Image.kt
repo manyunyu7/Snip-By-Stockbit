@@ -2,6 +2,7 @@ package com.feylabs.feature_example.data.source.remote.dto.lumina_list_DTO
 
 
 import androidx.annotation.Keep
+import com.feylabs.feature_example.data.source.local.entity.LuminaItemEntity
 import com.feylabs.feature_example.domain.ui_model.LuminaUIModel
 import com.google.gson.annotations.SerializedName
 
@@ -44,6 +45,15 @@ data class Image(
 ) {
     fun toLuminaUIModel(): LuminaUIModel {
         return LuminaUIModel(
+            id = this.id,
+            prompt = this.prompt,
+            url = this.url,
+            category = this.category
+        )
+    }
+
+    fun toLuminaItemEntity(): LuminaItemEntity {
+        return LuminaItemEntity(
             id = this.id,
             prompt = this.prompt,
             url = this.url,
