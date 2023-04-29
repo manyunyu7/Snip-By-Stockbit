@@ -14,7 +14,7 @@ android {
         applicationId = "com.feylabs.snipbystockbit"
         versionCode = 1
         versionName = "1.0"
-        minSdk = 26
+        minSdk = 25
         targetSdk = 32
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,4 +63,5 @@ dependencies {
     api("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+
 }

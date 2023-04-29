@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_snip_event">Event</string>
+    <string name="menu_snip_unboxing">Unboxing</string>
+    <string name="menu_snip_academy">Academy</string>
+    <string name="menu_snip_snips">Snips</string>
+</resources>

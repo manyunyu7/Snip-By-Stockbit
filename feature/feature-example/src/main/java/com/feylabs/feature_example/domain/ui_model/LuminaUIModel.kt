@@ -5,4 +5,5 @@ data class LuminaUIModel(
     val prompt: String,
     val category: String,
     val url: String,
+    val model: String,
 )

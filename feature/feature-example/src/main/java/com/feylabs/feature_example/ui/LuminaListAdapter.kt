@@ -32,9 +32,10 @@ class LuminaListAdapter : RecyclerView.Adapter<LuminaListAdapter.AdapterViewHold
                     itemInterface.onclick(data)
             }
 
-            binding.baseImg.loadImageFromURL(
-                context = binding.root.context, data.url
-            )
+            binding.base.title=data.category
+            binding.base.content=data.prompt
+            binding.base.setImage(data.url)
+            binding.base.subtitle=data.model
         }
     }
 

@@ -48,7 +48,8 @@ data class Image(
             id = this.id,
             prompt = this.prompt,
             url = this.url,
-            category = this.category
+            category = this.category,
+            model = this.model,
         )
     }
 
@@ -57,7 +58,8 @@ data class Image(
             id = this.id,
             prompt = this.prompt,
             url = this.url,
-            category = this.category
+            category = this.category,
+            model = this.model
         )
     }
 }
