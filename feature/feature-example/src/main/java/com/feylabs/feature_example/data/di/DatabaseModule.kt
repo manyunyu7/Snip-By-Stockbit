@@ -17,7 +17,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideJavalovaDatabase(@ApplicationContext context: Context): LuminaDatabase {
+    fun provideLuminaDatabase(@ApplicationContext context: Context): LuminaDatabase {
         return Room.databaseBuilder(context, LuminaDatabase::class.java, "lumina-db")
             .fallbackToDestructiveMigration()
             .build()

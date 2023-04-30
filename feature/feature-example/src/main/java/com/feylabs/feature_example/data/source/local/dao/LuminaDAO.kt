@@ -6,7 +6,7 @@ import com.feylabs.feature_example.data.source.local.entity.LuminaItemEntity
 @Dao
 interface LuminaDAO {
 
-    @Query("SELECT * FROM lumina_items")
+    @Query("SELECT * FROM lumina_items  ORDER BY id DESC")
     fun getAll(): List<LuminaItemEntity>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

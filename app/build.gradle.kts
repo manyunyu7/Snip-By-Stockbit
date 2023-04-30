@@ -53,6 +53,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":shared-dependencies"))
     implementation(project(":feature:feature-example"))
+    implementation(project(":feature:snips"))
 
     // Navigation
     val navigation_version = "2.5.0"

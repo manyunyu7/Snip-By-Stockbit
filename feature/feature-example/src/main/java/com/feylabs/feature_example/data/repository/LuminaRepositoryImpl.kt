@@ -7,6 +7,7 @@ import com.feylabs.core.helper.network.NetworkInfo.isOnline
 import com.feylabs.core.helper.wrapper.ResponseState
 import com.feylabs.feature_example.data.source.RemoteDataSource
 import com.feylabs.feature_example.data.source.local.dao.LuminaDAO
+import com.feylabs.feature_example.di.LuminaModule.ConnectivityManagerLumina
 import com.feylabs.feature_example.domain.repository.LuminaRepository
 import com.feylabs.feature_example.domain.ui_model.LuminaUIModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 class LuminaRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val connectivityManager: ConnectivityManager,
+    @ConnectivityManagerLumina private val connectivityManager: ConnectivityManager,
     private val localDatabase: LuminaDAO
 ) : LuminaRepository {
 

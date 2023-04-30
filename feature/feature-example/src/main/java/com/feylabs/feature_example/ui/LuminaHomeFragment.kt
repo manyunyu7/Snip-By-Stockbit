@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class LuminaHomeFragment : BaseFragment<FragmentLuminaHomeBinding>() {
+class LuminaHomeFragment : BaseFragment<FragmentLuminaHomeBinding>(
+    FragmentLuminaHomeBinding::inflate
+) {
 
     val viewModel: LuminaViewModel by viewModels()
     override fun initData() {
