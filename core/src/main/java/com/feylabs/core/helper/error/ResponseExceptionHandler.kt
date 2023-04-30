@@ -20,23 +20,40 @@ object ResponseExceptionHandler {
                 flow.emit(ResponseState.Error(ErrorResponse(errorMessage)))
             }
             is SocketTimeoutException -> {
-                flow.emit(ResponseState.Error(ErrorResponse("Socket timeout error")))
+                val message = mapErrorMessage(exception.message, "Socket timeout error")
+                flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
             is ConnectException -> {
-                flow.emit(ResponseState.Error(ErrorResponse("Connection error")))
+                val message = mapErrorMessage(exception.message, "Connection error")
+                flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
             is UnknownHostException -> {
-                flow.emit(ResponseState.Error(ErrorResponse("Unknown host error")))
+                val message = mapErrorMessage(exception.message, "Unknown host error")
+                flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
             is IOException -> {
-                flow.emit(ResponseState.Error(ErrorResponse("Network error")))
+                val message = mapErrorMessage(exception.message, "Network error")
+                flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
             is NetworkErrorException -> {
-                flow.emit(ResponseState.Error(ErrorResponse("Network connection error")))
+                val message = mapErrorMessage(exception.message, "Network connection error")
+                flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
             else -> {
-                flow.emit(ResponseState.Error(ErrorResponse("An unknown error occurred")))
+                val message = mapErrorMessage(exception.message, "An unknown error occurred")
+                flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
+        }
+    }
+
+    private fun mapErrorMessage(originalMessage: String?, defaultMessage: String): String {
+        val message = originalMessage?.toLowerCase()
+        return when {
+            message == null -> defaultMessage
+            message.contains("timeout") -> "The request timed out. Please try again later."
+            message.contains("reset") -> "The connection was reset. Please try again later."
+            message.contains("dns lookup failed") -> "The DNS lookup failed. Please check your internet connection."
+            else -> defaultMessage
         }
     }
 }
