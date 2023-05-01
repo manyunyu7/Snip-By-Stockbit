@@ -37,5 +37,13 @@
         <deepLink app:uri="@string/route_lumina_homes" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_unboxing_module_test"
+        android:name="com.feylabs.unboxing.ui.UnboxingHomeTestFragment"
+        android:label="Snips Home">
+
+        <deepLink app:uri="@string/route_snips_unboxing_test" />
+    </fragment>
+
 
 </navigation>

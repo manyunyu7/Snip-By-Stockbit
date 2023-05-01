@@ -4,7 +4,7 @@ import com.feylabs.unboxing.data.source.local.entity.SnipsEntity
 import com.feylabs.unboxing.domain.uimodel.SnipsUIModel
 import com.feylabs.unboxing.data.source.remote.dto.Data as SnipsDTO
 
-object Mapper {
+object SnipMapper {
 
     fun SnipsDTO.toSnipUIModel(): SnipsUIModel {
         return SnipsUIModel(

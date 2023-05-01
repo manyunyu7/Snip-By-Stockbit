@@ -1,8 +1,8 @@
-package com.feylabs.snips.di
+package com.feylabs.unboxing.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.feylabs.snips.data.source.remote.service.SnipsAPI
+import com.feylabs.unboxing.data.source.remote.service.UnboxingAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SnipsModule {
+object UnboxingModule {
 
 
     @Provides
@@ -27,18 +27,18 @@ object SnipsModule {
 
     @Provides
     @Singleton
-    @RetrofitSnips
-    fun provideLuminaAPI(): SnipsAPI {
+    @UnboxingSnips
+    fun provideAPI(): UnboxingAPI {
         return Retrofit.Builder()
             .baseUrl("http://192.168.100.33:8888/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(SnipsAPI::class.java)
+            .create(UnboxingAPI::class.java)
     }
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class RetrofitSnips
+    annotation class UnboxingSnips
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

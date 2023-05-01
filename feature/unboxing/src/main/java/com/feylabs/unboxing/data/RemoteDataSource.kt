@@ -1,13 +1,14 @@
 package com.feylabs.unboxing.data
 
-import com.feylabs.snips.data.source.remote.service.SnipsAPI
-import com.feylabs.snips.di.SnipsModule
 import com.feylabs.unboxing.data.source.remote.dto.SnipsResponseDTO
+import com.feylabs.unboxing.data.source.remote.dto.unboxingDTO.ListUnboxingDTO
+import com.feylabs.unboxing.data.source.remote.service.UnboxingAPI
+import com.feylabs.unboxing.di.UnboxingModule
 import retrofit2.Response
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
-    @SnipsModule.RetrofitSnips private val api: SnipsAPI
+    @UnboxingModule.UnboxingSnips private val api: UnboxingAPI
 ) {
     suspend fun getAllSnips(
         lastId: Int?,
@@ -15,5 +16,15 @@ class RemoteDataSource @Inject constructor(
         limit: Int?
     ): Response<SnipsResponseDTO> {
         return api.getAllSnips(lastId, categoryId, limit)
+    }
+
+    suspend fun getUnboxing(category: String): Response<ListUnboxingDTO> {
+        return api.getUnboxing(
+            category = category,
+            limit = null,
+            categoryId = null,
+            lastId = null,
+            page = null
+        )
     }
 }

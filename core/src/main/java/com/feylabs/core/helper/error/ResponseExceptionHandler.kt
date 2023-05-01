@@ -40,7 +40,7 @@ object ResponseExceptionHandler {
                 flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
             else -> {
-                val message = mapErrorMessage(exception.message, "An unknown error occurred")
+                val message = mapErrorMessage(exception.localizedMessage.toString(), "")
                 flow.emit(ResponseState.Error(ErrorResponse(message)))
             }
         }
