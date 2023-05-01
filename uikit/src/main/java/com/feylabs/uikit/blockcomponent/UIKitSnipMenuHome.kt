@@ -4,9 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.feylabs.uikit.databinding.CustomUikitInfoCardBinding
 import com.feylabs.uikit.databinding.CustomUikitSnipMenuHomeBinding
-import com.feylabs.uikit.util.ImageViewUtil.loadImageFromURL
 
 class UIKitSnipMenuHome : ConstraintLayout {
 
@@ -26,10 +24,13 @@ class UIKitSnipMenuHome : ConstraintLayout {
     private var menuEventAction: (() -> Unit)? = null
 
 
-    private val binding = CustomUikitSnipMenuHomeBinding.inflate(LayoutInflater.from(context))
+    private val binding: CustomUikitSnipMenuHomeBinding = CustomUikitSnipMenuHomeBinding.inflate(
+        LayoutInflater.from(context),
+        this,
+        true
+    )
 
     init { // inflate binding and add as view
-        addView(binding.root)
         binding.btnAcademy.setOnClickListener {
             menuAcademyAction?.invoke()
         }

@@ -7,9 +7,13 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
-   @SnipsModule.RetrofitSnips private val api: SnipsAPI
+    @SnipsModule.RetrofitSnips private val api: SnipsAPI
 ) {
-    suspend fun getAllSnips(lastId: Int?,categoryId: Int?): Response<SnipsResponseDTO> {
-        return api.getAllSnips(lastId,categoryId)
+    suspend fun getAllSnips(
+        lastId: Int?,
+        categoryId: Int?,
+        limit: Int?
+    ): Response<SnipsResponseDTO> {
+        return api.getAllSnips(lastId, categoryId, limit)
     }
 }

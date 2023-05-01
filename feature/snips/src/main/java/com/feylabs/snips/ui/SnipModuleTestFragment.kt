@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.toast.ToastHelper.showToast
-import com.feylabs.snips.databinding.FragmentSnipsHomeBinding
+import com.feylabs.snips.databinding.FragmentSnipModuleTestBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
-    FragmentSnipsHomeBinding::inflate
+class SnipModuleTestFragment : BaseFragment<FragmentSnipModuleTestBinding>(
+    FragmentSnipModuleTestBinding::inflate
 ) {
 
     val viewModel: SnipsViewModel by viewModels()

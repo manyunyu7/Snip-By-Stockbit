@@ -5,5 +5,9 @@ import com.feylabs.snips.domain.uimodel.SnipsUIModel
 import kotlinx.coroutines.flow.Flow
 
 interface SnipsUseCase {
-    suspend fun getAllSnips(categoryId: Int?, lastId: Int?): Flow<ResponseState<List<SnipsUIModel>>>
+    suspend fun getAllSnips(
+        categoryId: Int?,
+        lastId: Int?,
+        limit: Int?
+    ): Flow<ResponseState<List<SnipsUIModel>>>
 }

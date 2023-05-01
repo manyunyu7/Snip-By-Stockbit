@@ -13,9 +13,10 @@ class SnipsInteractor @Inject constructor(
 
     override suspend fun getAllSnips(
         categoryId: Int?,
-        lastId: Int?
+        lastId: Int?,
+        limit: Int?
     ): Flow<ResponseState<List<SnipsUIModel>>> {
-        return snipsRepository.getAllSnips(categoryId,lastId)
+        return snipsRepository.getAllSnips(categoryId, lastId, limit)
     }
 
 }

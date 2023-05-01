@@ -11,6 +11,7 @@ interface SnipsAPI {
     suspend fun getAllSnips(
         @Query("last_id") lastId: Int?,
         @Query("category_id") categoryId: Int?,
+        @Query("limit") limit: Int?,
     ): Response<SnipsResponseDTO>
 
 }

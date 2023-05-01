@@ -4,14 +4,15 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.feylabs.uikit.databinding.CustomUikitInfoCardBinding
-import com.feylabs.uikit.databinding.CustomUikitSnipMenuHomeBinding
+import com.feylabs.uikit.databinding.CustomUikitContentItemBinding
 import com.feylabs.uikit.util.ImageViewUtil.loadImageFromURL
 
 class UiKitContentItem : ConstraintLayout {
 
-    constructor(context: Context) : super(context){
-    }
+    constructor(context: Context) : super(context)
+
+    private var onActionClick: (() -> Unit) = {}
+
 
     constructor(context: Context, attrSet: AttributeSet) : super(context, attrSet)
     constructor(context: Context, attrSet: AttributeSet, defStyleAttr: Int) : super(
@@ -20,47 +21,54 @@ class UiKitContentItem : ConstraintLayout {
         defStyleAttr
     )
 
-    private var menuSnipAction: (() -> Unit)? = null
-    private var menuAcademyAction: (() -> Unit)? = null
-    private var menuUnboxingAction: (() -> Unit)? = null
-    private var menuEventAction: (() -> Unit)? = null
 
+    private val binding: CustomUikitContentItemBinding = CustomUikitContentItemBinding.inflate(
+        LayoutInflater.from(context),
+        this,
+        true
+    )
 
-    private val binding = CustomUikitSnipMenuHomeBinding.inflate(LayoutInflater.from(context))
-
-    init { // inflate binding and add as view
-        addView(binding.root)
-        binding.btnAcademy.setOnClickListener {
-            menuAcademyAction?.invoke()
-        }
-
-        binding.btnSnip.setOnClickListener {
-            menuSnipAction?.invoke()
-        }
-
-        binding.btnEvent.setOnClickListener {
-            menuEventAction?.invoke()
-        }
-
-        binding.btnUnboxing.setOnClickListener {
-            menuUnboxingAction?.invoke()
+    init {
+        binding.root.setOnClickListener {
+            onActionClick.invoke()
         }
     }
 
-    fun onMenuSnipClick(action: (() -> Unit)? = null){
-        this.menuSnipAction = action
+    var title: CharSequence
+        set(value) {
+            binding.tvMain.text = value
+        }
+        get() = binding.tvMain.text?.toString() ?: ""
+
+
+    var subtitle: CharSequence
+        set(value) {
+            binding.tvSubtitle.text = value
+        }
+        get() = binding.tvSubtitle.text?.toString() ?: ""
+
+
+    val thumbnailImage
+        get() = binding.ivMainImage
+
+
+    fun setThumbnail(imageUrl: String?) {
+        binding.ivMainImage.loadImageFromURL(
+            context, imageUrl
+        )
     }
 
-    fun onMenuAcademyClick(action: (() -> Unit)? = null){
-        this.menuAcademyAction = action
+    fun setSubtitleIcon(imageUrl: String?) {
+        binding.ivTitleIcon.loadImageFromURL(
+            context, imageUrl
+        )
     }
 
-    fun onMenuUnboxingClick(action: (() -> Unit)? = null){
-        this.menuUnboxingAction = action
+    fun onClickListener(action: (() -> Unit)? = null) {
+        if (action != null) {
+            onActionClick = action
+        }
     }
 
-    fun onMenuEventClick(action: (() -> Unit)? = null){
-        this.menuEventAction = action
-    }
 
 }

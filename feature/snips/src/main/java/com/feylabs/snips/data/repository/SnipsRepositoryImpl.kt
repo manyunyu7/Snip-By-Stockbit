@@ -9,7 +9,6 @@ import com.feylabs.snips.data.RemoteDataSource
 import com.feylabs.snips.data.mapper.Mapper.toSnipsEntity
 import com.feylabs.snips.data.mapper.Mapper.toSnipsUIModel
 import com.feylabs.snips.data.source.local.dao.SnipsDAO
-import com.feylabs.snips.di.SnipsModule
 import com.feylabs.snips.di.SnipsModule.ConnectivityManagerSnips
 import com.feylabs.snips.domain.repository.SnipsRepository
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
@@ -24,12 +23,12 @@ class SnipsRepositoryImpl @Inject constructor(
     @ConnectivityManagerSnips private val connectivityManager: ConnectivityManager,
     private val localDatabase: SnipsDAO
 ) : SnipsRepository {
-    override fun getAllSnips(categoryId: Int?, lastId: Int?) =
+    override fun getAllSnips(categoryId: Int?, lastId: Int?, limit: Int?) =
         flow<ResponseState<List<SnipsUIModel>>> {
             emit(ResponseState.Loading())
             if (NetworkInfo.isOnline(connectivityManager)) {
                 try {
-                    val response = remoteDataSource.getAllSnips(lastId, categoryId)
+                    val response = remoteDataSource.getAllSnips(lastId, categoryId, limit)
                     if (response.isSuccessful) {
                         val entityModels = response.body()?.data?.map { it.toSnipsEntity() }
                         localDatabase.apply {
