@@ -17,19 +17,20 @@ class SnipsViewModel @Inject constructor(private val snipUseCase: SnipsUseCase) 
     private val snipListValue = MutableStateFlow(SnipsListState())
     var luminaListValue: StateFlow<SnipsListState> = snipListValue
 
-    fun getImage(lastId:Int?=null,categoryId:Int?=null) {
+    fun getImage(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            snipUseCase.getAllSnips(lastId = lastId, categoryId = categoryId).collect {
-                when (it) {
-                    is Loading -> {
-                        snipListValue.value = SnipsListState(
-                            isLoading = true
-                        )
-                    }
-                    is Success -> {
-                        snipListValue.value = SnipsListState(
-                            coinList = it.data ?: emptyList()
-                        )
+            snipUseCase.getAllSnips(lastId = lastId, categoryId = categoryId, limit = null)
+                .collect {
+                    when (it) {
+                        is Loading -> {
+                            snipListValue.value = SnipsListState(
+                                isLoading = true
+                            )
+                        }
+                        is Success -> {
+                            snipListValue.value = SnipsListState(
+                                coinList = it.data ?: emptyList()
+                            )
                     }
                     is Error -> {
                         snipListValue.value = SnipsListState(
