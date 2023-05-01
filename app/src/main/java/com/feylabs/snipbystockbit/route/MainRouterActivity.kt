@@ -30,6 +30,8 @@ class MainRouterActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_lumina_home,
+                R.id.navigation_lumina_s,
+                R.id.navigation_snip_module_test,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

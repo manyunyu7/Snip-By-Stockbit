@@ -8,11 +8,15 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 25
         targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures{
+        viewBinding = true
     }
 
     buildTypes {
@@ -44,5 +48,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation(project(":shared-dependencies"))
+    implementation(project(":core"))
 
 }

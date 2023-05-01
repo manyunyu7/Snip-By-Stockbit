@@ -11,14 +11,16 @@ data class LuminaItemEntity(
     @PrimaryKey val id: String,
     val prompt: String,
     val category: String,
-    val url: String
+    val url: String,
+    val model: String
 ) {
     fun toLuminaUIModel(): LuminaUIModel {
         return LuminaUIModel(
+            id = id,
             prompt = prompt,
             category = category,
             url = url,
-            id = id
+            model = this.model
         )
     }
 }

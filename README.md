@@ -63,17 +63,93 @@ We welcome contributions to Snip by Stockbit! Before getting started, please rev
 - Use the following format for commit messages: `<emoji> <type>: <description>`.
 - Examples of commit types include `✨ feat` for a new feature, `🐛 fix` for a bug fix, and `📝 docs` for documentation updates.
 
-### Emojis
-- ✨ `:sparkles:` for new features
-- 🐛 `:bug:` for bug fixes
-- 📝 `:memo:` for documentation updates
-- 🚀 `:rocket:` for performance improvements
-- ♻️ `:recycle:` for refactoring
-- 🚧 `:construction:` for work in progress
-- 🔥 `:fire:` for removing code or files
-- 🎨 `:art:` for code style/formatting
 
-### Conventions
+## Emojis in Commit Messages
+
+At our company, we have found that using emojis in commit messages can be a helpful way to quickly understand the type of changes that have been made to a codebase. While this practice is **not mandatory**, we recommend using emojis as a way to make commit messages more engaging and easier to read.
+
+Emojis can add visual cues to your commit messages that help communicate the type of changes you made. For example, you could use the following emojis to indicate different types of changes that you can help your teammates **quickly understand the nature of your changes**
+
+
+Here are the emojis we use and what they represent:
+
+### Automation
+- 🤖  for automation-related changes
+- 🕰️ for scheduling or timing changes
+- 🚦  for optimizing resource utilization
+Use 🤖 when making automation-related changes to the codebase, such as implementing automated testing or deployment processes. Use 🕰️ when making scheduling or timing changes, such as updating cron jobs or timeouts. Use 🚦 when optimizing resource utilization, such as reducing memory usage or optimizing database queries. Use 🤝 when integrating with external services or systems, such as implementing APIs or webhooks.
+
+### Bug Fixes
+- 🐛 `:bug:` for bug fixes
+- 🛡️ `:shield:` for security bug fixes
+- 🤕 `:face_with_head_bandage:` for critical bug fixes
+- 🚨 `:rotating_light:` for emergency bug fixes
+Use 🐛 when you fix a bug or issue in the code. Use 🛡️ when you fix a security-related bug, 🤕 when you fix a critical bug that could cause major issues, and 🚨 when you fix an emergency bug that requires immediate attention.
+
+### Security
+- 🔒 `:lock:` for security-related changes
+- 🚪 `:door:` for access control changes
+- 🛡️ `:shield:` for security bug fixes
+- 🔓 `:unlock:` for removing security restrictions
+
+Use 🔒 when you make security-related changes to the code, such as implementing encryption or adding password requirements. Use 🚪 when you make access control changes, such as updating permissions or adding new authentication methods. Use 🛡️ for security-related bug fixes, and use 🔓 when you remove security restrictions.
+
+### Performance Improvements
+- 🚀 `:rocket:` for performance improvements
+- 🐎 `:racehorse:` for improving performance without changing functionality
+- 📈 `:chart_with_upwards_trend:` for improving scalability
+- 🚦 `:vertical_traffic_light:` for optimizing resource utilization
+Use 🚀 when you make significant improvements to the performance of the code, such as optimizing algorithms, reducing latency, or increasing throughput. Use 🐎 when you improve the performance of the code without changing its functionality, such as by removing redundant code or improving memory management. Use 📈 when you improve the scalability of the code, such as by improving the efficiency of data structures or algorithms. Use 🚦 when you optimize the resource utilization of the code, such as by reducing memory or CPU usage.
+
+
+
+### Features
+- ✨ `:sparkles:` for new features
+- 🆕 `:new:` for adding new functionality to an existing feature
+- 🔄 `:repeat:` for making changes to an existing feature
+Use ✨ when you add a new feature or functionality to the codebase. Use 🆕 when you add new functionality to an existing feature, and 🔄 when you make changes to an existing feature.
+
+### Documentation
+- 📝 `:memo:` for documentation updates
+- 📚 `:books:` for adding new documentation
+- 🚩 `:triangular_flag_on_post:` for updating documentation that needs attention
+Use `:memo:` when you make changes to the documentation. Use `:books:` when you add new documentation, and `:triangular_flag_on_post:` when you update documentation that needs attention.
+
+### Refactoring
+- ♻️ `:recycle:` for refactoring
+- 🧼 `:soap:` for cleaning up code
+- 🚮 `:put_litter_in_its_place:` for removing dead code
+- 🔀 `:twisted_rightwards_arrows:` for moving code to a new location
+Use ♻️ when you refactor the code, which means you restructure or rewrite the code without changing its behavior. Use 🧼 when you clean up the code by removing unused variables, renaming variables for clarity, or improving the code style. Use 🚮 when you remove dead code, which is code that is no longer used. Use 🔀 when you move code to a new location, such as moving a function from one file to another.
+
+### Work in Progress
+- 🚧 `:construction:` for work in progress
+Use 🚧 or 🏗️ when you are working on a feature or fixing a bug, and the code is not yet complete or ready for review. These emojis indicate that the code is a work in progress and should not be merged until it is complete.
+
+### Removals
+- 🔥 `:fire:` for removing code or files
+- 🗑️ `:wastebasket:` for removing unused files or code
+- 🙅‍♀️ `:no_good_woman:` for removing permissions or access
+Use 🔥 when you remove code or files from the codebase. Use 🗑️ when you remove unused files or code. Use 🙅‍ when you remove permissions or access.
+
+### Styling
+- 🎨 `:art:` for code style/formatting, also for changes in uikit modules
+- 📏 `:straight_ruler:` for adjusting spacing or indentation
+- 🌈 `:rainbow:` for adding color or styling
+- 🕶️ `:dark_sunglasses:` for changing the look and feel of the UI
+
+Use 🎨 when you make changes to the code's style or formatting. Use 📏 when you adjust spacing or indentation in the code. Use 🌈 when you add color or styling to the code. Use 🕶️ when you change the look and feel of the user interface.
+
+
+### Internationalization and Localization
+- 🌐 `:globe_with_meridians:` for adding or updating internationalization and localization
+- 🇺🇸  for adding or updating translations for English
+- 🇪🇸  for adding or updating translations for Spanish
+- 🇯🇵  for adding or updating translations for Japanese
+
+Use :globe_with_meridians: when you add or update internationalization and localization features in the code. Use the appropriate country code flag emoji, such as :us: for English, :es: for Spanish, or :jp: for Japanese, when you add or update translations for a specific language.
+
+## Conventions
 
 To maintain consistency and readability throughout the codebase, we follow the following conventions:
 

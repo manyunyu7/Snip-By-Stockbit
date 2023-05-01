@@ -8,8 +8,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_luminar"
+        tools:listitem="@layout/custom_uikit_info_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         android:text="@string/hello_blank_fragment" />
 
     <ProgressBar

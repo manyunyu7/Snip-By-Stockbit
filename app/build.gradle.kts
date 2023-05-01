@@ -14,7 +14,7 @@ android {
         applicationId = "com.feylabs.snipbystockbit"
         versionCode = 1
         versionName = "1.0"
-        minSdk = 26
+        minSdk = 25
         targetSdk = 32
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,6 +53,8 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":shared-dependencies"))
     implementation(project(":feature:feature-example"))
+    implementation(project(":feature:snips"))
+    implementation(project(":feature:feat-ui-home"))
 
     // Navigation
     val navigation_version = "2.5.0"
@@ -63,4 +65,5 @@ dependencies {
     api("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+
 }

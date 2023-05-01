@@ -13,5 +13,29 @@
         <deepLink app:uri="@string/route_lumina_home" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_lumina_s"
+        android:name="com.feylabs.feature_example.ui.LuminaHomeFragment"
+        android:label="Lumina">
+
+        <deepLink app:uri="@string/route_lumina_homes" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_snip_module_test"
+        android:name="com.feylabs.snips.ui.SnipModuleTestFragment"
+        android:label="Snips">
+
+        <deepLink app:uri="@string/route_lumina_homes" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_snips_home"
+        android:name="com.feylabs.feat_ui_home.ui.SnipsHomeFragment"
+        android:label="Snips Home">
+
+        <deepLink app:uri="@string/route_lumina_homes" />
+    </fragment>
+
 
 </navigation>

@@ -11,7 +11,7 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 25
         targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -55,11 +55,11 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     // Fragment KTX for simplifying Fragment development
-    implementation("androidx.fragment:fragment-ktx:1.5.0")
+    api("androidx.fragment:fragment-ktx:1.5.0")
 
     // Room Dependencies
-    implementation("androidx.room:room-runtime:2.4.2")
-    implementation("androidx.room:room-ktx:2.4.2")
+    api("androidx.room:room-runtime:2.4.2")
+    api("androidx.room:room-ktx:2.4.2")
     kapt("androidx.room:room-compiler:2.4.2")
 
     // Picasso for loading and caching images
@@ -78,6 +78,6 @@ dependencies {
 
     // Navigation
     val navigation_version = "2.5.0"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigation_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigation_version")
+    api("androidx.navigation:navigation-fragment-ktx:$navigation_version")
+    api("androidx.navigation:navigation-ui-ktx:$navigation_version")
 }
