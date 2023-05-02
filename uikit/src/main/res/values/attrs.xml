@@ -3,14 +3,21 @@
 
     <declare-styleable name="UIKitLargeInfoCard">
         <attr name="cardTitle" format="string"/>
-        <attr name="cardBody" format="string"/>
-        <attr name="cardSubtitle" format="string"/>
-        <attr name="cardImage" format="string"/>
-        <attr name="cardTitleFont" format="string"/>
-        <attr name="cardBodyFont" format="string"/>
-        <attr name="cardSubtitleFont" format="string"/>
-        <attr name="cardTitleTextColor" format="color"/>
-        <attr name="cardBodyTextColor" format="color"/>
-        <attr name="cardSubtitleTextColor" format="color"/>
+        <attr name="cardBody" format="string" />
+        <attr name="cardSubtitle" format="string" />
+        <attr name="cardImage" format="string" />
+        <attr name="cardTitleFont" format="string" />
+        <attr name="cardBodyFont" format="string" />
+        <attr name="cardSubtitleFont" format="string" />
+        <attr name="cardTitleTextColor" format="color" />
+        <attr name="cardBodyTextColor" format="color" />
+        <attr name="cardSubtitleTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="UIKitSectionMenu">
+        <attr name="sectionTitle" format="string" />
+        <attr name="sectionSeeAll" format="string" />
+        <attr name="sectionTitleFont" format="string" />
+        <attr name="sectionSeeAllFont" format="string" />
     </declare-styleable>
 </resources>
