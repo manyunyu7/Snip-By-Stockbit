@@ -38,7 +38,7 @@ class UnboxingHomeTestFragment : BaseFragment<FragmentUnboxingHomeTestBinding>(
 
     override fun initObserver() {
         CoroutineScope(Dispatchers.Main).launch {
-            viewModel.unboxingListValue.collect { value ->
+            viewModel.unboxingSectoralListValue.collect { value ->
                 when {
                     value.isLoading -> {
                         binding.pgLoading.visibility = View.VISIBLE
@@ -47,8 +47,8 @@ class UnboxingHomeTestFragment : BaseFragment<FragmentUnboxingHomeTestBinding>(
                         showToast(value.error)
                         binding.pgLoading.visibility = View.GONE
                     }
-                    value.coinList.isNotEmpty() -> {
-                        mAdapter.addData(value.coinList.toMutableList())
+                    value.unboxingList.isNotEmpty() -> {
+                        mAdapter.addData(value.unboxingList.toMutableList())
                         mAdapter.notifyDataSetChanged()
                         binding.pgLoading.visibility = View.GONE
                         showToast(mAdapter.data.count().toString())
@@ -62,7 +62,6 @@ class UnboxingHomeTestFragment : BaseFragment<FragmentUnboxingHomeTestBinding>(
     }
 
     override fun initData() {
-        viewModel.geUnboxing("sectoral")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,11 +1,11 @@
-package com.feylabs.uikit.listcomponent.unboxingsectoral
+package com.feylabs.uikit.listcomponent.unboxingstock
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.core.helper.date.UtilDate.convertIsoDateStringToIndonesianDateString
 import com.feylabs.uikit.util.ImageViewUtil.loadImageFromURL
-import com.feylabs.uikit.databinding.CustomUikitInfoShowCaseCardBinding as AdapterBinding
+import com.feylabs.uikit.databinding.CustomUikitInfoCardBinding as AdapterBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel as AdapterModel
 
 class UnboxingItemAdapter() :
@@ -35,6 +35,7 @@ class UnboxingItemAdapter() :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: AdapterModel) {
+
             if (binding.root.isInEditMode.not()) {
                 var context = this.binding.root.context
                 itemView.setOnClickListener {

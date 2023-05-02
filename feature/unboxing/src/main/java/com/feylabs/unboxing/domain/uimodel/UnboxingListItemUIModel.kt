@@ -11,5 +11,6 @@ data class UnboxingListItemUIModel(
     val feycover: String = "",
     val volume: Int? = 0,
     val status: String = "",
+    val category: String = "",
 )
 

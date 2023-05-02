@@ -15,38 +15,36 @@ import javax.inject.Inject
 @HiltViewModel
 class UnboxingViewModel @Inject constructor(private val unboxingUseCase: UnboxingUseCase) :
     ViewModel() {
-    private val _unboxingListValue = MutableStateFlow(LuminaListState())
-    var unboxingListValue: StateFlow<LuminaListState> = _unboxingListValue
 
-    fun geUnboxing(category: String) {
+    private val _unboxingSectoralListValue = MutableStateFlow(UnboxingState())
+    val unboxingSectoralListValue: StateFlow<UnboxingState> = _unboxingSectoralListValue
+
+    private val _unboxingStockListValue = MutableStateFlow(UnboxingState())
+    val unboxingStockListValue: StateFlow<UnboxingState> = _unboxingStockListValue
+
+    init {
+        fetchUnboxingData("sectoral", _unboxingSectoralListValue)
+        fetchUnboxingData("stock", _unboxingStockListValue)
+    }
+
+    private fun fetchUnboxingData(type: String, state: MutableStateFlow<UnboxingState>) {
         viewModelScope.launch(Dispatchers.IO) {
-            unboxingUseCase.getUnboxing(category).collect {
+            unboxingUseCase.getUnboxing(type).collect {
                 when (it) {
-                    is Loading -> {
-                        _unboxingListValue.value = LuminaListState(
-                            isLoading = true
-                        )
-                    }
-                    is Success -> {
-                        _unboxingListValue.value = LuminaListState(
-                            coinList = it.data ?: emptyList()
-                        )
-                    }
-                    is Error -> {
-                        _unboxingListValue.value = LuminaListState(
-                            isLoading = false,
-                            error = it.errorResponse?.errorMessage.toString()
-                        )
-                    }
+                    is Loading -> state.value = UnboxingState(isLoading = true)
+                    is Success -> state.value = UnboxingState(unboxingList = it.data ?: emptyList())
+                    is Error -> state.value = UnboxingState(
+                        isLoading = false,
+                        error = it.errorResponse?.errorMessage.toString()
+                    )
                 }
             }
         }
-
     }
 }
 
-class LuminaListState(
+data class UnboxingState(
     val isLoading: Boolean = false,
-    val coinList: List<UnboxingListItemUIModel> = emptyList<UnboxingListItemUIModel>(),
-    var error: String = ""
+    val unboxingList: List<UnboxingListItemUIModel> = emptyList(),
+    val error: String = ""
 )

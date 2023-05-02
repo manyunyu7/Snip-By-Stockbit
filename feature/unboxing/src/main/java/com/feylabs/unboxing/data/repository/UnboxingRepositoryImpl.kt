@@ -73,26 +73,25 @@ class UnboxingRepositoryImpl @Inject constructor(
                     if (response.isSuccessful) {
                         val entityModels = response.body()?.data?.map { it.toUnboxingEntity() }
                         unboxingLocalDataSource.apply {
-                            deleteAll()
                             entityModels?.apply {
                                 insertAll(entityModels)
                             }
-                            emit(ResponseState.Success(getCachedUnboxing()))
+                            emit(ResponseState.Success(getCachedUnboxing(category)))
                         }
                     } else {
                         emit(ResponseState.Error(ErrorResponse(response.message())))
                         delay(1000)
-                        emit(ResponseState.Success(getCachedUnboxing()))
+                        emit(ResponseState.Success(getCachedUnboxing(category)))
                     }
                 } catch (e: Exception) {
                     ResponseExceptionHandler.handleException(e, this)
                 }
             } else {
                 val errorMessage = "Tidak Ada Koneksi Internet"
-                if (getCachedUnboxing().isNotEmpty()) {
+                if (getCachedUnboxing(category).isNotEmpty()) {
                     emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
                     delay(1000)
-                    emit(ResponseState.Success(getCachedUnboxing()))
+                    emit(ResponseState.Success(getCachedUnboxing(category)))
                 } else {
                     emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
                 }
@@ -100,11 +99,17 @@ class UnboxingRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    private fun getCachedUnboxing(): List<UnboxingListItemUIModel> {
-        var localData = unboxingLocalDataSource.getAll()?.map {
+    private fun getCachedUnboxing(category: String): List<UnboxingListItemUIModel> {
+        var localData = unboxingLocalDataSource.getAllByCategory(category)?.map {
             it.toUnboxingUIModel()
         }
         if (localData?.isEmpty()?.not() == true) {
+            localData = unboxingLocalDataSource.getAllByCategory(category)?.map {
+                it.toUnboxingUIModel()
+            }
+        }
+
+        if (category == "all") {
             localData = unboxingLocalDataSource.getAll()?.map {
                 it.toUnboxingUIModel()
             }

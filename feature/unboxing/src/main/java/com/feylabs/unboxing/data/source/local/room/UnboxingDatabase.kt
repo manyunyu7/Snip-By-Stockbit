@@ -8,7 +8,7 @@ import com.feylabs.unboxing.data.source.local.entity.SnipsEntity
 import com.feylabs.unboxing.data.source.local.entity.UnboxingEntity
 
 @Database(
-    entities = [SnipsEntity::class, UnboxingEntity::class], version = 168
+    entities = [SnipsEntity::class, UnboxingEntity::class], version = 169
 )
 abstract class UnboxingDatabase : RoomDatabase() {
     abstract fun snipsDao(): SnipsDAO

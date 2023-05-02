@@ -12,6 +12,7 @@ data class UnboxingEntity(
     val compressedImageUrl: String = "",
     val title: String = "",
     val description: String = "",
+    val category: String = "",
     val date: String = "",
     val url: String = "",
     val feycover: String = "",

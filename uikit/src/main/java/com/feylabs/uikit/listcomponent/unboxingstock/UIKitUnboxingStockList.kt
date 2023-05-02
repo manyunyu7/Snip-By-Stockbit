@@ -1,18 +1,18 @@
-package com.feylabs.uikit.listcomponent.unboxingsectoral
+package com.feylabs.uikit.listcomponent.unboxingstock
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.feylabs.uikit.databinding.CustomUikitListUnboxingSectoralBinding
+import com.feylabs.uikit.databinding.CustomUikitListUnboxingStockBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
 import com.feylabs.uikit.util.RecyclerViewUtil.setHorizontalLayoutManager
 
-class UIKitUnboxingSectoralList : ConstraintLayout {
+class UIKitUnboxingStockList : ConstraintLayout {
 
-    private val binding: CustomUikitListUnboxingSectoralBinding =
-        CustomUikitListUnboxingSectoralBinding.inflate(
+    private val binding: CustomUikitListUnboxingStockBinding =
+        CustomUikitListUnboxingStockBinding.inflate(
             LayoutInflater.from(context),
             this,
             true
@@ -54,7 +54,7 @@ class UIKitUnboxingSectoralList : ConstraintLayout {
     }
 
     private fun initRecyclerView() {
-        binding.rvUikitListUnboxingSectoral.apply {
+        binding.rvUikitListUnboxingStock.apply {
             this.adapter = mAdapter
             setHorizontalLayoutManager(context)
         }

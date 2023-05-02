@@ -9,6 +9,9 @@ interface UnboxingDAO {
     @Query("SELECT * FROM unboxing_items ORDER BY id DESC")
     fun getAll(): List<UnboxingEntity>?
 
+    @Query("SELECT * FROM unboxing_items WHERE category = :category ORDER BY id DESC")
+    fun getAllByCategory(category: String): List<UnboxingEntity>?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(items: List<UnboxingEntity>)
 

@@ -17,7 +17,8 @@ object UnboxingMapper {
             status = this.status.orEmpty(),
             date = this.date.orEmpty(),
             feycover = this.feyCover.orEmpty(),
-            volume = this.volume
+            volume = this.volume,
+            category = this.category.orEmpty()
         )
     }
 
@@ -32,7 +33,8 @@ object UnboxingMapper {
             status = this.status.orEmpty(),
             date = this.date.orEmpty(),
             feycover = this.feyCover.orEmpty(),
-            volume = this.volume
+            volume = this.volume,
+            category = this.category.mapCategory()
         )
     }
 
@@ -47,9 +49,19 @@ object UnboxingMapper {
             status = this.status,
             date = this.date,
             feycover = this.feycover.orEmpty(),
-            volume = this.volume
+            volume = this.volume,
+            category = this.category
         )
     }
 
 
+    private fun String?.mapCategory(): String {
+        if (this == "UNBOXING_CATEGORY_EMITTEN")
+            return "stock"
+        if (this == "UNBOXING_CATEGORY_SECTOR")
+            return "sectoral"
+        return ""
+    }
+
 }
+

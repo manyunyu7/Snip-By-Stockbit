@@ -1,4 +1,4 @@
-package com.feylabs.uikit.listcomponent.unboxingsectoral
+package com.feylabs.uikit.listcomponent.uikitmodel
 
 data class UnboxingSectoralUIKitModel(
     val id: Int,
