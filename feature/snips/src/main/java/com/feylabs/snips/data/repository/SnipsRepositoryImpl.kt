@@ -23,6 +23,7 @@ class SnipsRepositoryImpl @Inject constructor(
     @ConnectivityManagerSnips private val connectivityManager: ConnectivityManager,
     private val localDatabase: SnipsDAO
 ) : SnipsRepository {
+
     override fun getAllSnips(categoryId: Int?, lastId: Int?, limit: Int?) =
         flow<ResponseState<List<SnipsUIModel>>> {
             emit(ResponseState.Loading())
@@ -55,6 +56,51 @@ class SnipsRepositoryImpl @Inject constructor(
                 }
             }
         }.flowOn(Dispatchers.IO)
+
+//    override fun getSnipsCache(
+//        lastId: Int?, categoryId: Int?, limit: Int?
+//    ): Flow<ResponseState<List<SnipsUIModel>>> {
+//        return flow<ResponseState<List<SnipsUIModel>>> {
+//            emit(ResponseState.Loading())
+////            val categoryString = getCategoryLabelFromNumber(categoryId)
+////            val dataUI = mutableListOf<SnipsUIModel>()
+////
+////            if (getCachedSnips().isEmpty()) {
+////                getAllSnips(null, null, null)
+////            }
+////
+////            if (categoryString == "all") {
+////                dataUI.addAll(localDatabase.getAll()?.map {
+////                    it.toSnipsUIModel()
+////                } ?: listOf())
+////            } else {
+////                dataUI.addAll(localDatabase.getPaginateCategory(
+////                    lastValue = lastId ?: -99, categoryString
+////                )?.map {
+////                    it.toSnipsUIModel()
+////                } ?: listOf())
+////            }
+////            emit(ResponseState.Success(dataUI))
+//        }.flowOn(Dispatchers.IO)
+//    }
+
+    private fun getCategoryLabelFromNumber(categoryId: Int?): String {
+        categoryId?.let {
+            if (it == 3) {
+                return "Academy"
+            }
+            if (it == 1) {
+                return "Snips"
+            }
+            if (it == 2) {
+                return "Events"
+            }
+            if (it == 4) {
+                return "Unboxing"
+            }
+        }
+        return "all";
+    }
 
 
     private fun getCachedSnips(): List<SnipsUIModel> {

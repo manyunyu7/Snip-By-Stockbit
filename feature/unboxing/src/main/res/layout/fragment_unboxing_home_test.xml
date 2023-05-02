@@ -5,34 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/x"
+
+    <com.feylabs.uikit.common.UIKitHeaderCommon
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent"
+        app:showBackNavigation="true"
+        app:toolbarTitle="Unboxing"
+        app:toolbarTitleAlignment="left" />
 
-        <com.feylabs.uikit.common.UIKitHeaderHome
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <com.feylabs.uikit.blockcomponent.UiKitContentItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_luminar"
+    <com.feylabs.uikit.listcomponent.unboxingstock.UIKitUnboxingStockList
+        android:id="@+id/snip_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/x"
-        app:spanCount="2"
-        tools:listitem="@layout/custom_uikit_info_card" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <ProgressBar
         android:id="@+id/pg_loading"

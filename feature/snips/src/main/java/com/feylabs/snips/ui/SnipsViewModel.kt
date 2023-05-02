@@ -14,39 +14,66 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SnipsViewModel @Inject constructor(private val snipUseCase: SnipsUseCase) : ViewModel() {
-    private val snipListValue = MutableStateFlow(SnipsListState())
-    var luminaListValue: StateFlow<SnipsListState> = snipListValue
+    private var _snipListValue = MutableStateFlow(SnipsListState())
+    val snipListValue: StateFlow<SnipsListState> = _snipListValue
 
-    fun getImage(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
+    class SnipsListState(
+        val isLoading: Boolean = false,
+        val snipList: List<SnipsUIModel> = emptyList<SnipsUIModel>(),
+        var error: String = ""
+    )
+
+//    fun getSnipCached(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
+//        viewModelScope.launch(Dispatchers.IO){
+//            snipUseCase.getSnipsCache(lastId, categoryId, limit)
+//                .collect{
+//                    when (it) {
+//                        is Loading -> {
+//                            _snipListValue.value = SnipsListState(
+//                                isLoading = true
+//                            )
+//                        }
+//                        is Success -> {
+//                            _snipListValue.value = SnipsListState(
+//                                snipList = it.data ?: emptyList()
+//                            )
+//                        }
+//                        is Error -> {
+//                            _snipListValue.value = SnipsListState(
+//                                isLoading = false,
+//                                error = it.errorResponse?.errorMessage.toString()
+//                            )
+//                        }
+//                    }
+//                }
+//        }
+//    }
+
+    fun getSnip(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             snipUseCase.getAllSnips(lastId = lastId, categoryId = categoryId, limit = null)
                 .collect {
                     when (it) {
                         is Loading -> {
-                            snipListValue.value = SnipsListState(
+                            _snipListValue.value = SnipsListState(
                                 isLoading = true
                             )
                         }
                         is Success -> {
-                            snipListValue.value = SnipsListState(
-                                coinList = it.data ?: emptyList()
+                            _snipListValue.value = SnipsListState(
+                                snipList = it.data ?: emptyList()
                             )
-                    }
-                    is Error -> {
-                        snipListValue.value = SnipsListState(
-                            isLoading = false,
-                            error = it.errorResponse?.errorMessage.toString()
-                        )
+                        }
+                        is Error -> {
+                            _snipListValue.value = SnipsListState(
+                                isLoading = false,
+                                error = it.errorResponse?.errorMessage.toString()
+                            )
+                        }
                     }
                 }
-            }
         }
 
     }
 }
 
-class SnipsListState(
-    val isLoading: Boolean = false,
-    val coinList: List<SnipsUIModel> = emptyList<SnipsUIModel>(),
-    var error: String = ""
-)

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 object RecyclerViewUtil {
 
@@ -23,11 +24,21 @@ object RecyclerViewUtil {
         layoutManager = GridLayoutManager(context, spanCount)
     }
 
-    fun RecyclerView.setGridLayout(
+    fun RecyclerView.setStaggeredGridLayoutManager(
+        spanCount: Int = 2,
+        isVertical: Boolean,
+    ) {
+        layoutManager = StaggeredGridLayoutManager(
+            spanCount,
+            if (isVertical) StaggeredGridLayoutManager.VERTICAL else StaggeredGridLayoutManager.HORIZONTAL,
+        )
+    }
+
+    fun RecyclerView.setGridLayoutManager(
         context: Context,
         spanCount: Int,
         isVertical: Boolean,
-        isReverse: Boolean
+        isReverse: Boolean = false,
     ) {
         layoutManager = GridLayoutManager(
             context,

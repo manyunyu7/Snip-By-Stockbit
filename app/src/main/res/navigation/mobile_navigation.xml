@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_snip_module_test"
-        android:name="com.feylabs.snips.ui.SnipModuleTestFragment"
+        android:name="com.feylabs.snips.ui.all.AllSnipFragment"
         android:label="Snips">
 
         <deepLink app:uri="@string/route_lumina_homes" />
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/navigation_unboxing_module_test"
-        android:name="com.feylabs.unboxing.ui.UnboxingHomeTestFragment"
+        android:name="com.feylabs.unboxing.ui.all.UnboxingAllFragment"
         android:label="Snips Home">
 
         <deepLink app:uri="@string/route_snips_unboxing_test" />

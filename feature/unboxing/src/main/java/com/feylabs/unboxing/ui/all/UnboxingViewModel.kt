@@ -1,4 +1,4 @@
-package com.feylabs.unboxing.ui
+package com.feylabs.unboxing.ui.all
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,6 +23,10 @@ class UnboxingViewModel @Inject constructor(private val unboxingUseCase: Unboxin
     val unboxingStockListValue: StateFlow<UnboxingState> = _unboxingStockListValue
 
     init {
+        fetchData()
+    }
+
+    fun fetchData() {
         fetchUnboxingData("sectoral", _unboxingSectoralListValue)
         fetchUnboxingData("stock", _unboxingStockListValue)
     }

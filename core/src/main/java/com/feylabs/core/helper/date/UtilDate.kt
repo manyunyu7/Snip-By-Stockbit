@@ -1,5 +1,6 @@
 package com.feylabs.core.helper.date
 
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,19 +49,24 @@ object UtilDate {
     }
 
     fun String.convertIsoDateStringToDate(): Date? {
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSX", Locale.getDefault())
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
         sdf.timeZone = TimeZone.getTimeZone("UTC")
         return try {
             sdf.parse(this)
         } catch (e: Exception) {
-            null
+            Timber.d("error tanggalan ${e.toString()}")
+            return null
         }
     }
 
     fun String.convertIsoDateStringToIndonesianDateString(): String {
-        val date = this.convertIsoDateStringToDate()
-        val sdf = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-        return sdf.format(date ?: Date())
+        try {
+            val date = this.convertIsoDateStringToDate() ?: return this
+            val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            return sdf.format(date ?: Date())
+        } catch (e: Exception) {
+            return this
+        }
     }
 
 

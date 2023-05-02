@@ -1,13 +1,13 @@
-package com.feylabs.snips.ui
+package com.feylabs.snips.ui.all
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.snips.databinding.FragmentSnipModuleTestBinding
+import com.feylabs.snips.ui.SnipsViewModel
+import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,21 +15,19 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class SnipModuleTestFragment : BaseFragment<FragmentSnipModuleTestBinding>(
+class AllSnipFragment : BaseFragment<FragmentSnipModuleTestBinding>(
     FragmentSnipModuleTestBinding::inflate
 ) {
 
     val viewModel: SnipsViewModel by viewModels()
     override fun initData() {
-        viewModel.getImage(1000)
+        viewModel.getSnip(categoryId = 2, limit = 10, lastId = null)
     }
 
-    val luminaAdapter by lazy { SnipsListAdapter() }
 
     override fun initObserver() {
-
         CoroutineScope(Dispatchers.Main).launch {
-            viewModel.luminaListValue.collect { value ->
+            viewModel.snipListValue.collect { value ->
                 when {
                     value.isLoading -> {
                         binding.pgLoading.visibility = View.VISIBLE
@@ -38,9 +36,17 @@ class SnipModuleTestFragment : BaseFragment<FragmentSnipModuleTestBinding>(
                         showToast(value.error)
                         binding.pgLoading.visibility = View.GONE
                     }
-                    value.coinList.isNotEmpty() -> {
-                        luminaAdapter.addData(value.coinList.toMutableList())
-                        luminaAdapter.notifyDataSetChanged()
+                    value.snipList.isNotEmpty() -> {
+                        binding.snipList.addDatas(value.snipList.map {
+                            UnboxingSectoralUIKitModel(
+                                id = it.id ?: -99,
+                                date = it.created,
+                                description = "",
+                                image = it.imageUrl,
+                                title = it.title,
+                                feyCover = it.feyCover.orEmpty()
+                            )
+                        })
                         binding.pgLoading.visibility = View.GONE
                     }
                 }
@@ -49,15 +55,6 @@ class SnipModuleTestFragment : BaseFragment<FragmentSnipModuleTestBinding>(
     }
 
     override fun initUI() {
-        setupRecyclerView()
-    }
-
-    private fun setupRecyclerView() {
-        luminaAdapter.page = 1
-        binding.rvLuminar.apply {
-            layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-            adapter = luminaAdapter
-        }
     }
 
 

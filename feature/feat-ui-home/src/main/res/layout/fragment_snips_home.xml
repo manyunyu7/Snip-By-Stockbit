@@ -65,6 +65,7 @@
 
             <com.feylabs.uikit.listcomponent.unboxingstock.UIKitUnboxingStockList
                 android:id="@+id/unboxing_stock"
+                app:layoutStyle="linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

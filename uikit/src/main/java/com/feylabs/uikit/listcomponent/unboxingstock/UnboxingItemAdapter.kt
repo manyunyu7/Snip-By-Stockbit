@@ -15,6 +15,8 @@ class UnboxingItemAdapter() :
     val data = mutableListOf<AdapterModel>()
     lateinit var itemInterface: ItemInterface
 
+    var isGrid = false
+
     fun setInterface(itemInterface: ItemInterface) {
         this.itemInterface = itemInterface
     }
@@ -43,8 +45,15 @@ class UnboxingItemAdapter() :
                         itemInterface.onClick(data)
                 }
 
+                val layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    binding.root.layoutParams.height
+                )
+                binding.root.layoutParams = layoutParams
+
                 with(binding) {
                     binding.tvTitle.text = data.title
+                    binding.tvContent.text = data.description
                     binding.tvSecondary.text =
                         data.date.convertIsoDateStringToIndonesianDateString()
                     this.ivThumbnail.loadImageFromURL(context, data.image)

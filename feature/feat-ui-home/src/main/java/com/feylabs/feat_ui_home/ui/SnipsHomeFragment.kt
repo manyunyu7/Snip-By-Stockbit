@@ -26,12 +26,6 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     }
 
     override fun initObserver() {
-    }
-
-    override fun initAction() {
-    }
-
-    override fun initData() {
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.unboxingStockListValue.collect { state ->
                 when {
@@ -49,7 +43,6 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                 }
             }
         }
-
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.snipListValue.collect { state ->
                 when {
@@ -68,7 +61,6 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
             }
 
         }
-
         CoroutineScope(Dispatchers.Main).launch {
             // Observe changes in the unboxing sectoral list state
             viewModel.unboxingSectoralListValue.collect { state ->
@@ -94,6 +86,14 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
         }
     }
 
+    override fun initAction() {
+    }
+
+    override fun initData() {
+        viewModel.getUnboxingStock()
+        viewModel.getUnboxingSectoral()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
@@ -116,9 +116,9 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
 
     private fun SnipsUIModel.toUnboxingSectoralUIKit() =
         UnboxingSectoralUIKitModel(
-            date = this.created,
+            date = this.description,
             id = this.id ?: -99,
-            description = this.description,
+            description = "",
             image = this.imageUrl,
             title = this.title,
             feyCover = this.imageUrl

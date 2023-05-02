@@ -1,6 +1,7 @@
 package com.feylabs.uikit.listcomponent.snip
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.core.helper.date.UtilDate.convertIsoDateStringToIndonesianDateString
@@ -43,9 +44,10 @@ class UIKitSnipItemAdapter() :
                 }
 
                 with(binding) {
+                    binding.tvDescription.visibility = View.VISIBLE
+                    binding.tvDescription.text = data.description
                     binding.tvMain.text = data.title
-                    binding.tvSubtitle.text =
-                        data.date.convertIsoDateStringToIndonesianDateString()
+                    binding.tvSubtitle.text = data.date.convertIsoDateStringToIndonesianDateString()
                     binding.ivMainImage.loadImageFromURL(context, data.image)
                 }
             }

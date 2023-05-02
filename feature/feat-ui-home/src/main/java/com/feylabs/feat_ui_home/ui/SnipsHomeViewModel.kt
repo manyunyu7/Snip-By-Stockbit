@@ -37,6 +37,27 @@ class SnipsHomeViewModel @Inject constructor(
         fetchSnip(categoryId = 1, limit = 4)
     }
 
+
+    data class UnboxingState(
+        val isLoading: Boolean = false,
+        val unboxingList: List<UnboxingListItemUIModel> = emptyList(),
+        val error: String = ""
+    )
+
+    class SnipsListState(
+        val isLoading: Boolean = false,
+        val snipList: List<SnipsUIModel> = emptyList<SnipsUIModel>(),
+        var error: String = ""
+    )
+
+    fun getUnboxingStock() {
+        fetchUnboxingData("stock", _unboxingStockListValue)
+    }
+
+    fun getUnboxingSectoral() {
+        fetchUnboxingData("sectoral", _unboxingSectoralListValue)
+    }
+
     private fun fetchUnboxingData(type: String, state: MutableStateFlow<UnboxingState>) {
         viewModelScope.launch(Dispatchers.IO) {
             unboxingUseCase.getUnboxing(type).collect {
@@ -80,14 +101,3 @@ class SnipsHomeViewModel @Inject constructor(
     }
 }
 
-data class UnboxingState(
-    val isLoading: Boolean = false,
-    val unboxingList: List<UnboxingListItemUIModel> = emptyList(),
-    val error: String = ""
-)
-
-class SnipsListState(
-    val isLoading: Boolean = false,
-    val snipList: List<SnipsUIModel> = emptyList<SnipsUIModel>(),
-    var error: String = ""
-)

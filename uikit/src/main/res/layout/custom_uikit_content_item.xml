@@ -76,9 +76,8 @@
                 android:layout_marginBottom="@dimen/dimen_10dp"
                 android:padding="5dp"
                 android:src="@drawable/snip_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_main"></ImageView>
+                app:layout_constraintTop_toBottomOf="@id/tv_main" />
 
             <TextView
                 android:id="@+id/tv_subtitle"
@@ -92,7 +91,6 @@
                 android:text="Snips • 24 Agustus 2023"
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_title_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guidelineCenter"
                 app:layout_constraintStart_toEndOf="@id/iv_title_icon"
@@ -102,18 +100,22 @@
                 android:id="@+id/tv_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginTop="8dp"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Snips • 24 Agustus 2023"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:layout_marginBottom="@dimen/dimen_10dp"
+                android:maxLines="2"
+                android:textColor="@android:color/secondary_text_dark"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:visibility="gone"
+                tools:text="Snips • 24 Agustus 2023"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guidelineCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
