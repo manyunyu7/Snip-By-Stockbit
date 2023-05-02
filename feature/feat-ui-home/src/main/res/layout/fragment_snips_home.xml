@@ -50,15 +50,11 @@
                 app:sectionSeeAll="Lihat Semua"
                 app:sectionTitle="Snip Terbaru" />
 
-            <com.feylabs.uikit.blockcomponent.UiKitContentItem
+            <com.feylabs.uikit.listcomponent.snip.UIKitSnipList
+                android:id="@+id/snip_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_10dp" />
+                android:layout_height="wrap_content" />
 
-            <com.feylabs.uikit.blockcomponent.UiKitContentItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_10dp" />
 
             <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
                 android:layout_width="match_parent"

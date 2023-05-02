@@ -15,7 +15,7 @@ object RecyclerViewUtil {
         )
     }
 
-    fun RecyclerView.setVerticalLayoutManager(context: Context, isReverse: Boolean) {
+    fun RecyclerView.setVerticalLayoutManager(context: Context, isReverse: Boolean = false) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, isReverse)
     }
 

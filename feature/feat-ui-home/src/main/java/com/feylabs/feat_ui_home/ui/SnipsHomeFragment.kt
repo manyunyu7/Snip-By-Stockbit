@@ -5,9 +5,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.feylabs.core.base.BaseFragment
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
+import com.feylabs.snips.domain.uimodel.SnipsUIModel
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
 import com.feylabs.unboxing.domain.uimodel.UnboxingListItemUIModel
-import com.feylabs.unboxing.ui.UnboxingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     FragmentSnipsHomeBinding::inflate
 ) {
 
-    val viewModel: UnboxingViewModel by viewModels()
+    val viewModel: SnipsHomeViewModel by viewModels()
 
     override fun initUI() {
         hideActionBar()
@@ -51,6 +51,25 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
         }
 
         CoroutineScope(Dispatchers.Main).launch {
+            viewModel.snipListValue.collect { state ->
+                when {
+                    state.isLoading -> {
+                        // Show loading progress
+                    }
+                    state.error.isNotBlank() -> {
+                        // Show error message
+                    }
+                    state.snipList.isNotEmpty() -> {
+                        binding.snipList.addDatas(state.snipList.take(3).map {
+                            it.toUnboxingSectoralUIKit()
+                        })
+                    }
+                }
+            }
+
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
             // Observe changes in the unboxing sectoral list state
             viewModel.unboxingSectoralListValue.collect { state ->
                 when {
@@ -61,7 +80,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                         // Show error message
                     }
                     state.unboxingList.isNotEmpty() -> {
-                        val idsToFilter = listOf(34, 203, 4, 202, 199) // IDs to filter by
+                        val idsToFilter = listOf(34, 203, 4, 202, 199, 204) // IDs to filter by
                         binding.unboxingSectoral.addDatas(state.unboxingList.map {
                             it.toUnboxingSectoralUIKit()
                         }.filter {
@@ -90,9 +109,21 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
             id = this.id ?: -99,
             description = this.description,
             image = this.imageUrl,
-            title = this.title
+            title = this.title,
+            feyCover = this.feycover
         )
 
 
+    private fun SnipsUIModel.toUnboxingSectoralUIKit() =
+        UnboxingSectoralUIKitModel(
+            date = this.created,
+            id = this.id ?: -99,
+            description = this.description,
+            image = this.imageUrl,
+            title = this.title,
+            feyCover = this.imageUrl
+        )
+
 }
+
 
