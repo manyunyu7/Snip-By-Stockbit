@@ -37,7 +37,8 @@
     <declare-styleable name="UIKitUnboxingStockList">
         <attr name="layoutStyle" format="enum">
             <enum name="grid" value="0" />
-            <enum name="linear" value="1" />
+            <enum name="scroll_horizontal" value="1" />
+            <enum name="scroll_vertical" value="2" />
         </attr>
     </declare-styleable>
 

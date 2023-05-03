@@ -20,34 +20,36 @@ class SnipsViewModel @Inject constructor(private val snipUseCase: SnipsUseCase) 
     class SnipsListState(
         val isLoading: Boolean = false,
         val snipList: List<SnipsUIModel> = emptyList<SnipsUIModel>(),
-        var error: String = ""
+        var error: String = "",
+        var toBeCleared: Boolean = false,
     )
 
-//    fun getSnipCached(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
-//        viewModelScope.launch(Dispatchers.IO){
-//            snipUseCase.getSnipsCache(lastId, categoryId, limit)
-//                .collect{
-//                    when (it) {
-//                        is Loading -> {
-//                            _snipListValue.value = SnipsListState(
-//                                isLoading = true
-//                            )
-//                        }
-//                        is Success -> {
-//                            _snipListValue.value = SnipsListState(
-//                                snipList = it.data ?: emptyList()
-//                            )
-//                        }
-//                        is Error -> {
-//                            _snipListValue.value = SnipsListState(
-//                                isLoading = false,
-//                                error = it.errorResponse?.errorMessage.toString()
-//                            )
-//                        }
-//                    }
-//                }
-//        }
-//    }
+    fun getSnipCached(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
+        viewModelScope.launch(Dispatchers.IO) {
+            snipUseCase.getSnipsCache(lastId, categoryId, limit)
+                .collect {
+                    when (it) {
+                        is Loading -> {
+                            _snipListValue.value = SnipsListState(
+                                isLoading = true
+                            )
+                        }
+                        is Success -> {
+                            _snipListValue.value = SnipsListState(
+                                snipList = it.data ?: emptyList()
+                            )
+                            _snipListValue.value.toBeCleared = it.toBeCleared
+                        }
+                        is Error -> {
+                            _snipListValue.value = SnipsListState(
+                                isLoading = false,
+                                error = it.errorResponse?.errorMessage.toString()
+                            )
+                        }
+                    }
+                }
+        }
+    }
 
     fun getSnip(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -34,7 +34,7 @@ class SnipsHomeViewModel @Inject constructor(
     init {
         fetchUnboxingData("sectoral", _unboxingSectoralListValue)
         fetchUnboxingData("stock", _unboxingStockListValue)
-        fetchSnip(categoryId = 1, limit = 4)
+        fetchSnip(categoryId = 1)
     }
 
 

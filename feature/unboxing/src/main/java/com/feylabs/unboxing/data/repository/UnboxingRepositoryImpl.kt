@@ -66,6 +66,7 @@ class UnboxingRepositoryImpl @Inject constructor(
     override fun getUnboxing(category: String): Flow<ResponseState<List<UnboxingListItemUIModel>>> {
         return flow<ResponseState<List<UnboxingListItemUIModel>>> {
             emit(ResponseState.Success(getCachedUnboxing(category), true))
+            delay(1000)
             emit(ResponseState.Loading())
             if (NetworkInfo.isOnline(connectivityManager)) {
                 try {

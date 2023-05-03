@@ -45,11 +45,13 @@ class UnboxingItemAdapter() :
                         itemInterface.onClick(data)
                 }
 
-                val layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    binding.root.layoutParams.height
-                )
-                binding.root.layoutParams = layoutParams
+                if (isGrid) {
+                    val layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        binding.root.layoutParams.height
+                    )
+                    binding.root.layoutParams = layoutParams
+                }
 
                 with(binding) {
                     binding.tvTitle.text = data.title

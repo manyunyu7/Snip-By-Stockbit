@@ -32,6 +32,10 @@ class UIKitSnipItemAdapter() :
 
     override fun getItemCount(): Int = data.size
 
+    fun getLastId(): Int {
+        return data.last().id
+    }
+
     inner class ViewHolder(private val binding: AdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

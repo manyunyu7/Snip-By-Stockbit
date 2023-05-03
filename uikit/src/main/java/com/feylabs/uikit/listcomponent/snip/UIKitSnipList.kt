@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.uikit.databinding.CustomUikitListSnipBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
@@ -17,6 +19,8 @@ class UIKitSnipList : ConstraintLayout {
             this,
             true
         )
+
+    var loadMoreListener: LoadMoreListener? = null
 
     private var onActionClick: (() -> Unit) = {}
 
@@ -58,9 +62,24 @@ class UIKitSnipList : ConstraintLayout {
             this.adapter = mAdapter
             setVerticalLayoutManager(context)
         }
+
+
+        binding.rvUikitListSnip.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                val totalItemCount = layoutManager.itemCount
+
+                if (lastVisibleItemPosition == totalItemCount - 1) {
+                    loadMoreListener?.onLoadMore(mAdapter.getLastId())
+                }
+
+            }
+        })
     }
 
-    private fun getItemCount() = mAdapter.itemCount
+    fun getItemCount() = mAdapter.itemCount
 
     fun addItem(item: UnboxingSectoralUIKitModel) {
         val position = mAdapter.itemCount
@@ -78,6 +97,15 @@ class UIKitSnipList : ConstraintLayout {
         if (action != null) {
             onActionClick = action
         }
+    }
+
+    fun clear() {
+        mAdapter.data.clear()
+        mAdapter.notifyDataSetChanged()
+    }
+
+    interface LoadMoreListener {
+        fun onLoadMore(lastId: Int)
     }
 
 }

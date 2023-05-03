@@ -19,12 +19,16 @@ class SnipsInteractor @Inject constructor(
         return snipsRepository.getAllSnips(categoryId, lastId, limit)
     }
 
-//    override fun getSnipsCache(
-//        lastId: Int?,
-//        categoryId: Int?,
-//        limit: Int?
-//    ): Flow<ResponseState<List<SnipsUIModel>>> {
-//        return snipsRepository.getSnipsCache(lastId = lastId,categoryId=categoryId, limit = limit)
-//    }
+    override fun getSnipsCache(
+        lastId: Int?,
+        categoryId: Int?,
+        limit: Int?
+    ): Flow<ResponseState<List<SnipsUIModel>>> {
+        return snipsRepository.getSnipsCache(
+            lastId = lastId,
+            categoryId = categoryId,
+            limit = limit
+        )
+    }
 
 }

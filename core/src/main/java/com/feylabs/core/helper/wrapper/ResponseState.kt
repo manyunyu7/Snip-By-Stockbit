@@ -7,7 +7,11 @@ sealed class ResponseState<T>(
     val message: String? = null,
     val errorResponse: ErrorResponse? = null
 ) {
-    class Success<T>(data: T? = null, val isFromCache: Boolean = false) :
+    class Success<T>(
+        data: T? = null,
+        val isFromCache: Boolean = false,
+        val toBeCleared: Boolean = false
+    ) :
         ResponseState<T>(data = data)
 
     class Error<T>(errorResponse: ErrorResponse? = null) :

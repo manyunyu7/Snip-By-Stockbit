@@ -27,8 +27,9 @@ class LuminaRepositoryImpl @Inject constructor(
         limit: Int,
         page: Int
     ): Flow<ResponseState<List<LuminaUIModel>>> = flow<ResponseState<List<LuminaUIModel>>> {
+        emit(ResponseState.Success(getCachedAllImage()))
+        delay(1000)
         emit(ResponseState.Loading())
-
         if (isOnline(connectivityManager)) {
             try {
                 val response = remoteDataSource.getLuminaList(limit, page)

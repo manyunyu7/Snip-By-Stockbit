@@ -21,7 +21,7 @@ import javax.inject.Inject
 class SnipsRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     @ConnectivityManagerSnips private val connectivityManager: ConnectivityManager,
-    private val localDatabase: SnipsDAO
+    private val localDatabase: SnipsDAO,
 ) : SnipsRepository {
 
     override fun getAllSnips(categoryId: Int?, lastId: Int?, limit: Int?) =
@@ -57,32 +57,46 @@ class SnipsRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-//    override fun getSnipsCache(
-//        lastId: Int?, categoryId: Int?, limit: Int?
-//    ): Flow<ResponseState<List<SnipsUIModel>>> {
-//        return flow<ResponseState<List<SnipsUIModel>>> {
-//            emit(ResponseState.Loading())
-////            val categoryString = getCategoryLabelFromNumber(categoryId)
-////            val dataUI = mutableListOf<SnipsUIModel>()
-////
-////            if (getCachedSnips().isEmpty()) {
-////                getAllSnips(null, null, null)
-////            }
-////
-////            if (categoryString == "all") {
-////                dataUI.addAll(localDatabase.getAll()?.map {
-////                    it.toSnipsUIModel()
-////                } ?: listOf())
-////            } else {
-////                dataUI.addAll(localDatabase.getPaginateCategory(
-////                    lastValue = lastId ?: -99, categoryString
-////                )?.map {
-////                    it.toSnipsUIModel()
-////                } ?: listOf())
-////            }
-////            emit(ResponseState.Success(dataUI))
-//        }.flowOn(Dispatchers.IO)
-//    }
+    override fun getSnipsCache(
+        lastId: Int?, categoryId: Int?, limit: Int?
+    ) = flow<ResponseState<List<SnipsUIModel>>> {
+        emit(ResponseState.Loading())
+        val categoryString = getCategoryLabelFromNumber(categoryId)
+        val dataUI = mutableListOf<SnipsUIModel>()
+
+        if (getCachedSnips().isEmpty()) {
+            getAllSnips(1, null, 9999)
+        }
+
+        emit(ResponseState.Success(getCachedSnips(), toBeCleared = true))
+
+        if (categoryString == "all") {
+            dataUI.addAll(localDatabase.getAll()?.map {
+                it.toSnipsUIModel()
+            } ?: listOf())
+            emit(ResponseState.Success(dataUI))
+        } else {
+            if (lastId != null) {
+                dataUI.addAll(
+                    localDatabase.getPaginateCategory(
+                        lastValue = lastId, categoryLabel = categoryString
+                    )?.map {
+                        it.toSnipsUIModel()
+                    }?.toMutableList() ?: mutableListOf()
+                )
+                emit(ResponseState.Success(dataUI))
+            } else {
+                dataUI.addAll(
+                    localDatabase.getPaginateCategory(
+                        categoryLabel = categoryString
+                    )?.map {
+                        it.toSnipsUIModel()
+                    }?.toMutableList() ?: mutableListOf()
+                )
+                emit(ResponseState.Success(dataUI))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
 
     private fun getCategoryLabelFromNumber(categoryId: Int?): String {
         categoryId?.let {
@@ -101,7 +115,6 @@ class SnipsRepositoryImpl @Inject constructor(
         }
         return "all";
     }
-
 
     private fun getCachedSnips(): List<SnipsUIModel> {
         var localData = localDatabase.getAll()?.map {
