@@ -34,7 +34,6 @@ class SnipsHomeViewModel @Inject constructor(
     init {
         fetchUnboxingData("sectoral", _unboxingSectoralListValue)
         fetchUnboxingData("stock", _unboxingStockListValue)
-        fetchSnip(categoryId = 1)
     }
 
 
@@ -58,6 +57,10 @@ class SnipsHomeViewModel @Inject constructor(
         fetchUnboxingData("sectoral", _unboxingSectoralListValue)
     }
 
+    fun getSnip() {
+        fetchSnip(categoryId = 1, limit = 3)
+    }
+
     private fun fetchUnboxingData(type: String, state: MutableStateFlow<UnboxingState>) {
         viewModelScope.launch(Dispatchers.IO) {
             unboxingUseCase.getUnboxing(type).collect {
@@ -76,7 +79,7 @@ class SnipsHomeViewModel @Inject constructor(
 
     fun fetchSnip(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            snipUseCase.getAllSnips(lastId = lastId, categoryId = categoryId, limit = null)
+            snipUseCase.getAllSnips(lastId = lastId, categoryId = categoryId, limit = limit)
                 .collect {
                     when (it) {
                         is ResponseState.Loading -> {

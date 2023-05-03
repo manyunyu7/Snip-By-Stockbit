@@ -92,6 +92,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     override fun initData() {
         viewModel.getUnboxingStock()
         viewModel.getUnboxingSectoral()
+        viewModel.getSnip()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
