@@ -55,7 +55,6 @@ class UnboxingRepositoryImpl @Inject constructor(
                 val errorMessage = "Tidak Ada Koneksi Internet"
                 if (getCachedSnips().isNotEmpty()) {
                     emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
-                    delay(1000)
                     emit(ResponseState.Success(getCachedSnips()))
                 } else {
                     emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
@@ -65,8 +64,6 @@ class UnboxingRepositoryImpl @Inject constructor(
 
     override fun getUnboxing(category: String): Flow<ResponseState<List<UnboxingListItemUIModel>>> {
         return flow<ResponseState<List<UnboxingListItemUIModel>>> {
-            emit(ResponseState.Success(getCachedUnboxing(category), true))
-            delay(1000)
             emit(ResponseState.Loading())
             if (NetworkInfo.isOnline(connectivityManager)) {
                 try {
@@ -91,7 +88,7 @@ class UnboxingRepositoryImpl @Inject constructor(
                 val errorMessage = "Tidak Ada Koneksi Internet"
                 if (getCachedUnboxing(category).isNotEmpty()) {
                     emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
-                    delay(1000)
+                    delay(5000)
                     emit(ResponseState.Success(getCachedUnboxing(category)))
                 } else {
                     emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))

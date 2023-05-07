@@ -13,7 +13,6 @@ import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -25,10 +24,7 @@ class AllSnipFragment : BaseFragment<FragmentSnipModuleTestBinding>(
     val viewModel: SnipsViewModel by viewModels()
     override fun initData() {
         lifecycleScope.launch {
-            val firstDeferred =
-                async { viewModel.getSnip(categoryId = 1, limit = null, lastId = null) }
-            firstDeferred.await()
-            viewModel.getSnipCached(categoryId = 1, limit = 10, lastId = null)
+            viewModel.getSnip(categoryId = 1, limit = 10, lastId = null)
         }
     }
 
@@ -68,7 +64,7 @@ class AllSnipFragment : BaseFragment<FragmentSnipModuleTestBinding>(
     override fun initUI() {
         binding.snipList.loadMoreListener = object : UIKitSnipList.LoadMoreListener {
             override fun onLoadMore(lastId: Int) {
-                viewModel.getSnipCached(lastId, 1, 20)
+                viewModel.getSnip(lastId, 1, 20)
             }
         }
     }

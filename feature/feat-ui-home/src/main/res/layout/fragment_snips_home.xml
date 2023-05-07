@@ -65,7 +65,7 @@
 
             <com.feylabs.uikit.listcomponent.unboxingstock.UIKitUnboxingStockList
                 android:id="@+id/unboxing_stock"
-                app:layoutStyle="scroll_horizontal"
+                app:layoutStyle="linear_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

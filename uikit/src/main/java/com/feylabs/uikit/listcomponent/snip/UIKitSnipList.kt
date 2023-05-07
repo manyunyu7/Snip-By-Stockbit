@@ -3,9 +3,11 @@ package com.feylabs.uikit.listcomponent.snip
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.feylabs.uikit.R
 import com.feylabs.uikit.databinding.CustomUikitListSnipBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
@@ -43,6 +45,8 @@ class UIKitSnipList : ConstraintLayout {
             initAdapterClick()
             //loadDummyData()
         }
+
+        showSkeleton()
     }
 
     fun loadDummyData() {
@@ -55,6 +59,25 @@ class UIKitSnipList : ConstraintLayout {
                 onActionClick.invoke()
             }
         })
+    }
+
+    fun showSkeleton(count: Int = 3) {
+        val parentLayout = binding.uikitListSnipSkeletonContainer
+        val marginTop = resources.getDimensionPixelSize(R.dimen.dimen_10dp)
+        for (i in 1..count) {
+            val include = LayoutInflater.from(parentLayout.context)
+                .inflate(R.layout.uikit_skeleton_snips_item, parentLayout, false)
+            parentLayout.addView(include)
+        }
+        binding.uikitListSnipSkeletonContainer.visibility = View.VISIBLE
+        binding.rvUikitListSnip.visibility = View.GONE
+    }
+
+    fun hideSkeleton() {
+        val parentLayout = binding.uikitListSnipSkeletonContainer
+        parentLayout.removeAllViews()
+        binding.uikitListSnipSkeletonContainer.visibility = View.GONE
+        binding.rvUikitListSnip.visibility = View.VISIBLE
     }
 
     private fun initRecyclerView() {
@@ -109,6 +132,12 @@ class UIKitSnipList : ConstraintLayout {
             mAdapter.data.addAll(itemsToAdd)
             mAdapter.notifyItemRangeInserted(positionStart, itemsToAdd.size)
         }
+
+        if (mAdapter.itemCount == 0) {
+            showSkeleton(3)
+        } else {
+            hideSkeleton()
+        }
     }
 
     fun onUnboxingItemClick(action: (() -> Unit)? = null) {
@@ -120,6 +149,10 @@ class UIKitSnipList : ConstraintLayout {
     fun clear() {
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
+
+        if (mAdapter.itemCount == 0) {
+            showSkeleton(3)
+        }
     }
 
     interface LoadMoreListener {

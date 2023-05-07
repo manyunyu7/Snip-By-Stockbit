@@ -3,9 +3,12 @@ package com.feylabs.uikit.listcomponent.unboxingstock
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.feylabs.core.helper.view.ViewUtils.gone
+import com.feylabs.core.helper.view.ViewUtils.visible
 import com.feylabs.uikit.R
 import com.feylabs.uikit.databinding.CustomUikitListUnboxingStockBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
@@ -17,9 +20,9 @@ import com.feylabs.uikit.util.RecyclerViewUtil.setVerticalLayoutManager
 class UIKitUnboxingStockList : ConstraintLayout {
 
     enum class LayoutType {
-        VERTICAL_SCROLL,
-        HORIZONTAL_SCROLL,
-        GRID,//STAGGERED
+        LINEAR_VERTICAL,
+        LINEAR_HORIZONTAL,
+        GRID_2,//STAGGERED
     }
 
     private val binding: CustomUikitListUnboxingStockBinding =
@@ -50,36 +53,56 @@ class UIKitUnboxingStockList : ConstraintLayout {
 
     init {
         if (isInEditMode.not()) {
-            initRecyclerView()
-            initAdapterClick()
+
             //loadDummyData()
         }
     }
 
-    var layoutType: LayoutType = LayoutType.GRID
+    var layoutType: LayoutType = LayoutType.GRID_2
+        get() = field
         set(value) {
             setUILayoutType(value)
+            field = value
         }
-        get() {
-            return field
+
+    fun showSkeleton() {
+        when (layoutType) {
+            LayoutType.LINEAR_VERTICAL -> {
+                binding.skeletonListUnboxingStockSingle.visible()
+                binding.skeletonListUnboxingStock.gone()
+            }
+            LayoutType.LINEAR_HORIZONTAL -> {
+                binding.skeletonListUnboxingStockSingle.visible()
+                binding.skeletonListUnboxingStock.gone()
+            }
+            LayoutType.GRID_2 -> {
+                binding.skeletonListUnboxingStock.visible()
+                binding.skeletonListUnboxingStockSingle.gone()
+            }
         }
+    }
+
+    fun hideSkeleton() {
+        binding.skeletonListUnboxingStock.root.visibility = View.GONE
+        binding.skeletonListUnboxingStockSingle.root.visibility = View.GONE
+    }
 
     private fun setUILayoutType(value: LayoutType) {
         binding.rvUikitListUnboxingStock.apply {
             when (value) {
-                LayoutType.GRID -> {
+                LayoutType.LINEAR_VERTICAL -> {
+                    mAdapter.isGrid = false
+                    this.setVerticalLayoutManager(context)
+                }
+                LayoutType.LINEAR_HORIZONTAL -> {
+                    mAdapter.isGrid = false
+                    this.setHorizontalLayoutManager(context = context)
+                }
+                LayoutType.GRID_2 -> {
                     mAdapter.isGrid = true
                     this.setStaggeredGridLayoutManager(
                         2, true
                     )
-                }
-                LayoutType.VERTICAL_SCROLL -> {
-                    mAdapter.isGrid = false
-                    this.setVerticalLayoutManager(context)
-                }
-                LayoutType.HORIZONTAL_SCROLL -> {
-                    mAdapter.isGrid = false
-                    this.setHorizontalLayoutManager(context = context)
                 }
             }
         }
@@ -119,6 +142,12 @@ class UIKitUnboxingStockList : ConstraintLayout {
             mAdapter.data.add(item)
             mAdapter.notifyItemInserted(position)
         }
+
+        if (mAdapter.itemCount == 0) {
+            showSkeleton()
+        } else {
+            hideSkeleton()
+        }
     }
 
     fun addDatas(datas: List<UnboxingSectoralUIKitModel>) {
@@ -137,6 +166,13 @@ class UIKitUnboxingStockList : ConstraintLayout {
             mAdapter.data.addAll(itemsToAdd)
             mAdapter.notifyItemRangeInserted(positionStart, itemsToAdd.size)
         }
+
+        if (mAdapter.itemCount == 0) {
+            showSkeleton()
+        } else {
+            hideSkeleton()
+        }
+
     }
 
     fun onUnboxingItemClick(action: (() -> Unit)? = null) {
@@ -154,17 +190,20 @@ class UIKitUnboxingStockList : ConstraintLayout {
                 styledAttrs.getInt(R.styleable.UIKitUnboxingStockList_layoutStyle, 1)
 
             if (layoutTypeOrdinal == 0) {
-                layoutType = LayoutType.GRID
+                layoutType = LayoutType.GRID_2
             }
             if (layoutTypeOrdinal == 1) {
-                layoutType = LayoutType.HORIZONTAL_SCROLL
+                layoutType = LayoutType.LINEAR_VERTICAL
             }
             if (layoutTypeOrdinal == 2) {
-                layoutType = LayoutType.VERTICAL_SCROLL
+                layoutType = LayoutType.LINEAR_HORIZONTAL
             }
         } finally {
             styledAttrs.recycle()
         }
+        initRecyclerView()
+        initAdapterClick()
+        showSkeleton()
     }
 
 }

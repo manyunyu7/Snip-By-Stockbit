@@ -24,9 +24,9 @@ class SnipsViewModel @Inject constructor(private val snipUseCase: SnipsUseCase) 
         var toBeCleared: Boolean = false,
     )
 
-    fun getSnipCached(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
+    fun getSnip(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            snipUseCase.getSnipsCache(lastId, categoryId, limit)
+            snipUseCase.getAllSnips(categoryId = categoryId, lastId = lastId, limit = limit)
                 .collect {
                     when (it) {
                         is Loading -> {
@@ -51,31 +51,5 @@ class SnipsViewModel @Inject constructor(private val snipUseCase: SnipsUseCase) 
         }
     }
 
-    fun getSnip(lastId: Int? = null, categoryId: Int? = null, limit: Int? = null) {
-        viewModelScope.launch(Dispatchers.IO) {
-            snipUseCase.getAllSnips(lastId = lastId, categoryId = categoryId, limit = null)
-                .collect {
-                    when (it) {
-                        is Loading -> {
-                            _snipListValue.value = SnipsListState(
-                                isLoading = true
-                            )
-                        }
-                        is Success -> {
-                            _snipListValue.value = SnipsListState(
-                                snipList = it.data ?: emptyList()
-                            )
-                        }
-                        is Error -> {
-                            _snipListValue.value = SnipsListState(
-                                isLoading = false,
-                                error = it.errorResponse?.errorMessage.toString()
-                            )
-                        }
-                    }
-                }
-        }
-
-    }
 }
 

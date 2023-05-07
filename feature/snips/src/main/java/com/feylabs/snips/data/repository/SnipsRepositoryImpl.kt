@@ -26,7 +26,7 @@ class SnipsRepositoryImpl @Inject constructor(
 
     override fun getAllSnips(categoryId: Int?, lastId: Int?, limit: Int?) =
         flow<ResponseState<List<SnipsUIModel>>> {
-            emit(ResponseState.Success(getCachedSnips(categoryId)))
+//            emit(ResponseState.Success(getCachedSnips(categoryId)))
             emit(ResponseState.Loading())
             if (NetworkInfo.isOnline(connectivityManager)) {
                 try {
@@ -70,9 +70,9 @@ class SnipsRepositoryImpl @Inject constructor(
         val categoryString = getCategoryLabelFromNumber(categoryId)
         val dataUI = mutableListOf<SnipsUIModel>()
 
-        if (getCachedSnips().isEmpty()) {
-            getAllSnips(1, null, 9999)
-        }
+//        if (getCachedSnips().isEmpty()) {
+//            getAllSnips(1, null, 9999)
+//        }
 
         emit(ResponseState.Success(getCachedSnips(), toBeCleared = true))
 
