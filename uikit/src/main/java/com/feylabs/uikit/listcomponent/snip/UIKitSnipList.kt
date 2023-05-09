@@ -7,13 +7,25 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.feylabs.core.helper.toast.ToastHelper.showToast
+import com.feylabs.core.helper.view.ViewUtils.gone
+import com.feylabs.core.helper.view.ViewUtils.visible
 import com.feylabs.uikit.R
 import com.feylabs.uikit.databinding.CustomUikitListSnipBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
+import com.feylabs.uikit.state.UIKitState
 import com.feylabs.uikit.util.RecyclerViewUtil.setVerticalLayoutManager
 
+
 class UIKitSnipList : ConstraintLayout {
+
+
+    var pastVisiblesItems = 0
+    var visibleItemCount: Int = 0
+    var totalItemCount: Int = 0
+    private var calledId = mutableListOf<Int>()
+
 
     private val binding: CustomUikitListSnipBinding =
         CustomUikitListSnipBinding.inflate(
@@ -25,6 +37,8 @@ class UIKitSnipList : ConstraintLayout {
     var loadMoreListener: LoadMoreListener? = null
 
     private var onActionClick: (() -> Unit) = {}
+
+    private var uiStateFlow = (UIKitState.DEFAULT)
 
 
     private val mAdapter by lazy { UIKitSnipItemAdapter() }
@@ -45,8 +59,37 @@ class UIKitSnipList : ConstraintLayout {
             initAdapterClick()
             //loadDummyData()
         }
-
         showSkeleton()
+    }
+
+    fun setUiState(state: UIKitState = UIKitState.DEFAULT) {
+        this.uiStateFlow = state
+        updateUiBasedOnState()
+    }
+
+    private fun updateUiBasedOnState() {
+        when (uiStateFlow) {
+            UIKitState.LOADING -> {
+                if (calledId.isEmpty().not()) {
+                    binding.progressBar.visible()
+                } else {
+                    showSkeleton()
+                }
+            }
+            UIKitState.SUCCESS -> {}
+            UIKitState.ERROR -> {}
+            UIKitState.EMPTY -> {
+                if (calledId.isEmpty()) {
+                    hideSkeleton()
+                }
+            }
+            UIKitState.DEFAULT -> showToast(context, "Default")
+        }
+
+        if (uiStateFlow != UIKitState.LOADING) {
+            binding.progressBar.gone()
+            hideSkeleton()
+        }
     }
 
     fun loadDummyData() {
@@ -76,8 +119,8 @@ class UIKitSnipList : ConstraintLayout {
     fun hideSkeleton() {
         val parentLayout = binding.uikitListSnipSkeletonContainer
         parentLayout.removeAllViews()
-        binding.uikitListSnipSkeletonContainer.visibility = View.GONE
-        binding.rvUikitListSnip.visibility = View.VISIBLE
+        binding.uikitListSnipSkeletonContainer.gone()
+        binding.rvUikitListSnip.visible()
     }
 
     private fun initRecyclerView() {
@@ -86,20 +129,67 @@ class UIKitSnipList : ConstraintLayout {
             setVerticalLayoutManager(context)
         }
 
+//        binding.nestedsvUiKitListSnip.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+//            val TAG = "nested_sync"
+//            if (scrollY > oldScrollY) {
+//                //Log.i(TAG, "Scroll DOWN")
+//            }
+//            if (scrollY < oldScrollY) {
+//                //Log.i(TAG, "Scroll UP")
+//            }
+//            if (scrollY == 0) {
+//                //Log.i(TAG, "TOP SCROLL")
+//            }
+//            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+//                //Log.i(TAG, "BOTTOM SCROLL")
+//                if (uiStateFlow != UIKitState.LOADING) {
+//                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+//                        // Do pagination.. i.e. fetch new data
+//                        loadMoreListener?.onLoadMore(
+//                            lastId = mAdapter.getLastId(),
+//                            isCalled = calledId.contains(mAdapter.getLastId()),
+//                            calledId = calledId.toString()
+//                        )
+//                        calledId.add(mAdapter.getLastId())
+//                    }
+//                }
+//            }
+//        })
 
         binding.rvUikitListSnip.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                val totalItemCount = layoutManager.itemCount
+                val mLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                if (dy > 0) { //check for scroll down
+                    visibleItemCount = mLayoutManager.getChildCount()
+                    totalItemCount = mLayoutManager.getItemCount()
+                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition()
 
-                if (lastVisibleItemPosition == totalItemCount - 1) {
-                    loadMoreListener?.onLoadMore(mAdapter.getLastId())
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        // Do pagination.. i.e. fetch new data
+                        loadMoreListener?.onLoadMore(
+                            lastId = mAdapter.getLastId(),
+                            isCalled = calledId.contains(mAdapter.getLastId()),
+                            calledId = calledId.toString()
+                        )
+                        calledId.add(mAdapter.getLastId())
+                    }
                 }
-
             }
         })
+
+
+//        binding.rvUikitListSnip.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+//                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+//                val totalItemCount = layoutManager.itemCount
+//
+//                if (lastVisibleItemPosition == totalItemCount - 1) {
+//                    loadMoreListener?.onLoadMore(mAdapter.getLastId())
+//                }
+//            }
+//        })
     }
 
     fun getItemCount() = mAdapter.itemCount
@@ -156,7 +246,7 @@ class UIKitSnipList : ConstraintLayout {
     }
 
     interface LoadMoreListener {
-        fun onLoadMore(lastId: Int)
+        fun onLoadMore(lastId: Int, calledId: String, isCalled: Boolean)
     }
 
 }

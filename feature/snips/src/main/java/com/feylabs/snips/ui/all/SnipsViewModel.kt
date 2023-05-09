@@ -1,4 +1,4 @@
-package com.feylabs.snips.ui
+package com.feylabs.snips.ui.all
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,6 +21,8 @@ class SnipsViewModel @Inject constructor(private val snipUseCase: SnipsUseCase) 
         val isLoading: Boolean = false,
         val snipList: List<SnipsUIModel> = emptyList<SnipsUIModel>(),
         var error: String = "",
+        var isSuccess: Boolean = true,
+        var isEmpty: Boolean = false,
         var toBeCleared: Boolean = false,
     )
 
@@ -36,14 +38,17 @@ class SnipsViewModel @Inject constructor(private val snipUseCase: SnipsUseCase) 
                         }
                         is Success -> {
                             _snipListValue.value = SnipsListState(
-                                snipList = it.data ?: emptyList()
+                                snipList = it.data ?: emptyList(),
+                                isEmpty = it.data?.isEmpty() ?: true,
+                                isSuccess = true
                             )
                             _snipListValue.value.toBeCleared = it.toBeCleared
                         }
                         is Error -> {
                             _snipListValue.value = SnipsListState(
                                 isLoading = false,
-                                error = it.errorResponse?.errorMessage.toString()
+                                error = it.errorResponse?.errorMessage.toString(),
+                                isSuccess = false
                             )
                         }
                     }

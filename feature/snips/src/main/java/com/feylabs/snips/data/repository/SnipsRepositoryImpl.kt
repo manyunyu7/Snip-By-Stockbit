@@ -66,42 +66,41 @@ class SnipsRepositoryImpl @Inject constructor(
     override fun getSnipsCache(
         lastId: Int?, categoryId: Int?, limit: Int?
     ) = flow<ResponseState<List<SnipsUIModel>>> {
-        emit(ResponseState.Loading())
+        emit(ResponseState.Error(errorResponse = ErrorResponse("Entah")))
         val categoryString = getCategoryLabelFromNumber(categoryId)
         val dataUI = mutableListOf<SnipsUIModel>()
-
 //        if (getCachedSnips().isEmpty()) {
 //            getAllSnips(1, null, 9999)
 //        }
 
-        emit(ResponseState.Success(getCachedSnips(), toBeCleared = true))
-
-        if (categoryString == "all") {
-            dataUI.addAll(localDatabase.getAll()?.map {
-                it.toSnipsUIModel()
-            } ?: listOf())
-            emit(ResponseState.Success(dataUI))
-        } else {
-            if (lastId != null) {
-                dataUI.addAll(
-                    localDatabase.getPaginateCategory(
-                        lastValue = lastId, categoryLabel = categoryString
-                    )?.map {
-                        it.toSnipsUIModel()
-                    }?.toMutableList() ?: mutableListOf()
-                )
-                emit(ResponseState.Success(dataUI))
-            } else {
-                dataUI.addAll(
-                    localDatabase.getPaginateCategory(
-                        categoryLabel = categoryString
-                    )?.map {
-                        it.toSnipsUIModel()
-                    }?.toMutableList() ?: mutableListOf()
-                )
-                emit(ResponseState.Success(dataUI))
-            }
-        }
+//        emit(ResponseState.Success(getCachedSnips(), toBeCleared = true))
+//
+//        if (categoryString == "all") {
+//            dataUI.addAll(localDatabase.getAll()?.map {
+//                it.toSnipsUIModel()
+//            } ?: listOf())
+//            emit(ResponseState.Success(dataUI))
+//        } else {
+//            if (lastId != null) {
+//                dataUI.addAll(
+//                    localDatabase.getPaginateCategory(
+//                        lastValue = lastId, categoryLabel = categoryString
+//                    )?.map {
+//                        it.toSnipsUIModel()
+//                    }?.toMutableList() ?: mutableListOf()
+//                )
+//                emit(ResponseState.Success(dataUI))
+//            } else {
+//                dataUI.addAll(
+//                    localDatabase.getPaginateCategory(
+//                        categoryLabel = categoryString
+//                    )?.map {
+//                        it.toSnipsUIModel()
+//                    }?.toMutableList() ?: mutableListOf()
+//                )
+//                emit(ResponseState.Success(dataUI))
+//            }
+//        }
     }.flowOn(Dispatchers.IO)
 
     private fun getCategoryLabelFromNumber(categoryId: Int?): String {
