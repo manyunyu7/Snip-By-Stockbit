@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_lumina_home">
+    app:startDestination="@+id/navigation_snips_home">
 
 
     <fragment
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_snip_module_test"
-        android:name="com.feylabs.snips.ui.SnipModuleTestFragment"
+        android:name="com.feylabs.snips.ui.all.AllSnipFragment"
         android:label="Snips">
 
         <deepLink app:uri="@string/route_lumina_homes" />
@@ -35,6 +35,14 @@
         android:label="Snips Home">
 
         <deepLink app:uri="@string/route_lumina_homes" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_unboxing_module_test"
+        android:name="com.feylabs.unboxing.ui.all.UnboxingAllFragment"
+        android:label="Snips Home">
+
+        <deepLink app:uri="@string/route_snips_unboxing_test" />
     </fragment>
 
 

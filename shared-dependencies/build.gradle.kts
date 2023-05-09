@@ -74,6 +74,12 @@ dependencies {
     // OkHttp for handling HTTP requests and caching
     api("com.squareup.okhttp3:okhttp:4.9.2")
 
+    api("com.jakewharton.timber:timber:4.7.1")
+
+    // Interceptor
+    api("com.squareup.okhttp3:logging-interceptor:4.7.2")
+
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
 
     // Navigation

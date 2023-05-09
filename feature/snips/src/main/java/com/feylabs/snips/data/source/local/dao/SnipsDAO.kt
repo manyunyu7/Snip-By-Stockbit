@@ -6,6 +6,13 @@ import com.feylabs.snips.data.source.local.entity.SnipsEntity
 @Dao
 interface SnipsDAO {
 
+    @Query("SELECT * FROM snips_items WHERE id < :lastValue AND categoryLabel = :categoryLabel ORDER BY id desc LIMIT 10;")
+    fun getPaginateCategory(lastValue: Int, categoryLabel: String): List<SnipsEntity>?
+
+    @Query("SELECT * FROM snips_items WHERE categoryLabel = :categoryLabel ORDER BY id desc LIMIT 10;")
+    fun getPaginateCategory(categoryLabel: String): List<SnipsEntity>?
+
+
     @Query("SELECT * FROM snips_items ORDER BY id DESC")
     fun getAll(): List<SnipsEntity>?
 

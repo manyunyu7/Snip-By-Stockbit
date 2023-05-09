@@ -10,4 +10,10 @@ interface SnipsRepository {
         lastId: Int?,
         limit: Int?
     ): Flow<ResponseState<List<SnipsUIModel>>>
+
+    fun getSnipsCache(
+        lastId: Int?,
+        categoryId: Int?,
+        limit: Int?
+    ): Flow<ResponseState<List<SnipsUIModel>>>
 }

@@ -50,6 +50,9 @@ data class Image(
             url = this.url,
             category = this.category,
             model = this.model,
+            width = this.width,
+            height = this.height,
+            upscaled = this.isUpscaled ?: false
         )
     }
 
@@ -59,7 +62,10 @@ data class Image(
             prompt = this.prompt,
             url = this.url,
             category = this.category,
-            model = this.model
+            model = this.model,
+            height = this.height,
+            width = this.width,
+            upscaled = this.isUpscaled ?: false
         )
     }
 }

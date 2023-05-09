@@ -21,7 +21,7 @@ class LuminaHomeFragment : BaseFragment<FragmentLuminaHomeBinding>(
 
     val viewModel: LuminaViewModel by viewModels()
     override fun initData() {
-        viewModel.getImage(1000)
+        viewModel.getImage(100)
     }
 
     val luminaAdapter by lazy { LuminaListAdapter() }

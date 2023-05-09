@@ -12,7 +12,10 @@ data class LuminaItemEntity(
     val prompt: String,
     val category: String,
     val url: String,
-    val model: String
+    val width: Int,
+    val height: Int,
+    val model: String,
+    val upscaled: Boolean = false
 ) {
     fun toLuminaUIModel(): LuminaUIModel {
         return LuminaUIModel(
@@ -20,7 +23,10 @@ data class LuminaItemEntity(
             prompt = prompt,
             category = category,
             url = url,
-            model = this.model
+            model = this.model,
+            width = width,
+            height = height,
+            upscaled = upscaled
         )
     }
 }

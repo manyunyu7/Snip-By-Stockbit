@@ -6,4 +6,7 @@ data class LuminaUIModel(
     val category: String,
     val url: String,
     val model: String,
+    val width: Int,
+    val height: Int,
+    val upscaled: Boolean = false
 )
