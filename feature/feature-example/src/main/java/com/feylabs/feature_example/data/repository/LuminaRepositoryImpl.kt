@@ -2,6 +2,8 @@ package com.feylabs.feature_example.data.repository
 
 import android.net.ConnectivityManager
 import com.feylabs.core.helper.error.ErrorResponse
+import com.feylabs.core.helper.error.ResponseExceptionHandler
+import com.feylabs.core.helper.network.NetworkInfo.isOnline
 import com.feylabs.core.helper.wrapper.ResponseState
 import com.feylabs.feature_example.data.source.RemoteDataSource
 import com.feylabs.feature_example.data.source.local.dao.LuminaDAO
@@ -9,6 +11,7 @@ import com.feylabs.feature_example.di.LuminaModule.ConnectivityManagerLumina
 import com.feylabs.feature_example.domain.repository.LuminaRepository
 import com.feylabs.feature_example.domain.ui_model.LuminaUIModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -25,39 +28,35 @@ class LuminaRepositoryImpl @Inject constructor(
         page: Int
     ): Flow<ResponseState<List<LuminaUIModel>>> = flow<ResponseState<List<LuminaUIModel>>> {
         emit(ResponseState.Loading())
-//        delay(2000)
-        emit(ResponseState.Error(ErrorResponse("capek deh")))
-//        emit(ResponseState.Success(getCachedAllImage()))
-
-        //        if (isOnline(connectivityManager)) {
-//            try {
-//                for (i in 0 until 1) {
-//                    val response = remoteDataSource.getLuminaList(limit, page)
-//                    if (response.isSuccessful) {
-//                        val images = response.body()?.data?.images.orEmpty()
-//                        val entityModels = images.map { it.toLuminaItemEntity() }
-//                        localDatabase.apply {
-//                            insertAll(entityModels)
-//                            emit(ResponseState.Success(getCachedAllImage()))
-//                        }
-//                    } else {
-//                        emit(ResponseState.Error())
-//                    }
-//                    delay(2500) // add a delay of 500 milliseconds
-//                }
-//            } catch (e: Exception) {
-//                ResponseExceptionHandler.handleException(e, this)
-//            }
-//        } else {
-//            val errorMessage = "Tidak Ada Koneksi Internet"
-//            if (getCachedAllImage().isNotEmpty()) {
-//                emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
-//                delay(1000)
-//                emit(ResponseState.Success(getCachedAllImage()))
-//            } else {
-//                emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
-//            }
-//        }
+        if (isOnline(connectivityManager)) {
+            try {
+                for (i in 0 until 1) {
+                    val response = remoteDataSource.getLuminaList(limit, page)
+                    if (response.isSuccessful) {
+                        val images = response.body()?.data?.images.orEmpty()
+                        val entityModels = images.map { it.toLuminaItemEntity() }
+                        localDatabase.apply {
+                            insertAll(entityModels)
+                            emit(ResponseState.Success(getCachedAllImage()))
+                        }
+                    } else {
+                        emit(ResponseState.Error())
+                    }
+                    delay(2500) // add a delay of 500 milliseconds
+                }
+            } catch (e: Exception) {
+                ResponseExceptionHandler.handleException(e, this)
+            }
+        } else {
+            val errorMessage = "Tidak Ada Koneksi Internet"
+            if (getCachedAllImage().isNotEmpty()) {
+                emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
+                delay(1000)
+                emit(ResponseState.Success(getCachedAllImage()))
+            } else {
+                emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
+            }
+        }
     }.flowOn(Dispatchers.IO)
 
     private fun getCachedAllImage(): List<LuminaUIModel> {
