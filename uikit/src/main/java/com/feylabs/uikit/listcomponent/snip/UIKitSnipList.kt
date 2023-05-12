@@ -71,7 +71,7 @@ class UIKitSnipList : ConstraintLayout {
         when (uiStateFlow) {
             UIKitState.LOADING -> {
                 if (calledId.isEmpty().not()) {
-                    binding.progressBar.visible()
+                    //binding.progressBar.visible()
                 } else {
                     showSkeleton()
                 }
@@ -87,7 +87,7 @@ class UIKitSnipList : ConstraintLayout {
         }
 
         if (uiStateFlow != UIKitState.LOADING) {
-            binding.progressBar.gone()
+            //binding.progressBar.gone()
             hideSkeleton()
         }
     }
