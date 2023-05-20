@@ -32,13 +32,9 @@ class SnipsRepositoryImpl @Inject constructor(
                 try {
                     val response = remoteDataSource.getAllSnips(lastId, categoryId, limit)
                     if (response.isSuccessful) {
-                        val entityModels = response.body()?.data?.map { it.toSnipsEntity() }
-                        localDatabase.apply {
-                            entityModels?.apply {
-                                insertAll(entityModels)
-                            }
-                            emit(ResponseState.Success(getCachedSnips()))
-                        }
+                        val entityModels = response.body()?.data?.map { it.toSnipsEntity().toSnipsUIModel() }
+                        delay(1000)
+                        emit(ResponseState.Success(entityModels))
                     } else {
                         emit(
                             ResponseState.Error(
