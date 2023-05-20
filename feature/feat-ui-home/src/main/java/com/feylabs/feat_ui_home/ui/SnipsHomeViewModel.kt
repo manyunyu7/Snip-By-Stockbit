@@ -31,7 +31,7 @@ class SnipsHomeViewModel @Inject constructor(
     private var _snipListValue = MutableStateFlow(SnipsListState())
     val snipListValue: StateFlow<SnipsListState> = _snipListValue
 
-    init {
+    fun getData(){
         fetchUnboxingData("sectoral", _unboxingSectoralListValue)
         fetchUnboxingData("stock", _unboxingStockListValue)
     }
