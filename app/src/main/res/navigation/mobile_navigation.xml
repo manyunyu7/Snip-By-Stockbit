@@ -26,7 +26,7 @@
         android:name="com.feylabs.snips.ui.all.AllSnipFragment"
         android:label="Snips">
 
-        <deepLink app:uri="@string/route_lumina_homes" />
+        <deepLink app:uri="@string/route_snips_test" />
     </fragment>
 
     <fragment
@@ -44,6 +44,14 @@
 
         <deepLink app:uri="@string/route_snips_unboxing_test" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_content_viewer"
+        android:name="com.feylabs.content_viewer.ContentViewerFragment"
+        android:label="Snips Home">
+        <deepLink app:uri="@string/route_snips_content_viewer"/>
+    </fragment>
+
 
 
 </navigation>

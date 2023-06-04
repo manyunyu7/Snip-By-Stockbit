@@ -55,7 +55,7 @@ class UnboxingItemAdapter() :
 
                 with(binding) {
                     binding.tvTitle.text = data.title
-                    binding.tvContent.text = data.description
+                    binding.tvContent.text = data.volume.toString()+ data.description
                     binding.tvSecondary.text =
                         data.date.convertIsoDateStringToIndonesianDateString()
                     this.ivThumbnail.loadImageFromURL(context, data.image)

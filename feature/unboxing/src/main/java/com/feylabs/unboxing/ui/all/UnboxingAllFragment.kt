@@ -1,11 +1,16 @@
 package com.feylabs.unboxing.ui.all
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.toast.ToastHelper.showToast
+import com.feylabs.shared_dependencies.R
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
+import com.feylabs.uikit.listcomponent.unboxingstock.OnUnboxingStockListOnClickInterface
 import com.feylabs.unboxing.databinding.FragmentUnboxingHomeTestBinding
 import com.feylabs.unboxing.domain.uimodel.UnboxingListItemUIModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +37,6 @@ class UnboxingAllFragment : BaseFragment<FragmentUnboxingHomeTestBinding>(
                 stockValue to sectoralValue
             }.collect { (stockValue, sectoralValue) ->
                 val unboxingList = mutableListOf<UnboxingListItemUIModel>()
-
                 if (stockValue.isLoading || sectoralValue.isLoading) {
                     binding.pgLoading.visibility = View.VISIBLE
                 } else if (stockValue.error.isNotBlank() || sectoralValue.error.isNotBlank()) {
@@ -60,6 +64,23 @@ class UnboxingAllFragment : BaseFragment<FragmentUnboxingHomeTestBinding>(
     }
 
     override fun initAction() {
+        binding.snipList.setClickInterface(object: OnUnboxingStockListOnClickInterface {
+            override fun onClick(volume: String) {
+                val itemId = volume
+                val deeplink = NavDeepLinkRequest.Builder.fromUri(
+                    Uri.parse(
+                        getString(R.string.route_snips_content_viewer).replace(
+                            "{contentId}",
+                            itemId
+                        ).replace(
+                            "{contentType}",
+                            "unboxing-stock"
+                        )
+                    )
+                ).build()
+                findNavController().navigate(deeplink)
+            }
+        })
     }
 
     override fun initData() {
@@ -75,12 +96,14 @@ class UnboxingAllFragment : BaseFragment<FragmentUnboxingHomeTestBinding>(
 
     private fun UnboxingListItemUIModel.toUnboxingSectoralUIKitModel(): UnboxingSectoralUIKitModel {
         return UnboxingSectoralUIKitModel(
-            feyCover = this.feycover,
-            title = this.title,
-            image = this.imageUrl,
-            description = this.description,
             date = this.date,
-            id = this.id ?: -99
+            id = this.id ?: -99,
+            description = this.description,
+            image = this.imageUrl,
+            title = this.title,
+            feyCover = this.feycover,
+            volume = this.volume.toString(),
+            contentURL = this.url
         )
     }
 

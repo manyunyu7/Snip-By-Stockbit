@@ -32,7 +32,7 @@ class UIKitUnboxingStockList : ConstraintLayout {
             true
         )
 
-    private var onActionClick: (() -> Unit) = {}
+    lateinit var onClickInterface : OnUnboxingStockListOnClickInterface
 
 
     private val mAdapter by lazy { UnboxingItemAdapter() }
@@ -106,9 +106,7 @@ class UIKitUnboxingStockList : ConstraintLayout {
                 }
             }
         }
-
     }
-
 
     fun loadDummyData() {
         addDatas(GenerateDummyData.createData())
@@ -117,9 +115,15 @@ class UIKitUnboxingStockList : ConstraintLayout {
     private fun initAdapterClick() {
         mAdapter.setInterface(object : UnboxingItemAdapter.ItemInterface {
             override fun onClick(data: UnboxingSectoralUIKitModel) {
-                onActionClick.invoke()
+                if(::onClickInterface.isInitialized){
+                    onClickInterface.onClick(data.volume)
+                }
             }
         })
+    }
+
+    fun setClickInterface(mInterface : OnUnboxingStockListOnClickInterface){
+        this.onClickInterface = mInterface
     }
 
     private fun initRecyclerView() {
@@ -172,13 +176,6 @@ class UIKitUnboxingStockList : ConstraintLayout {
         } else {
             hideSkeleton()
         }
-
-    }
-
-    fun onUnboxingItemClick(action: (() -> Unit)? = null) {
-        if (action != null) {
-            onActionClick = action
-        }
     }
 
     private fun extractCustomAttributes(attrSet: AttributeSet?) {
@@ -205,5 +202,8 @@ class UIKitUnboxingStockList : ConstraintLayout {
         initAdapterClick()
         showSkeleton()
     }
+}
 
+interface OnUnboxingStockListOnClickInterface{
+    fun onClick(volume:String)
 }
