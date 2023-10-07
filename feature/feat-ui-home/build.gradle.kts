@@ -44,8 +44,6 @@ dependencies {
     api(project(":core"))
     api(project(":uikit"))
 
-    implementation(project(":feature:unboxing"))
-    implementation(project(":feature:snips"))
     implementation(project(":feature:movie-genre"))
     implementation(project(":feature:feat-ui-movie-by-genre"))
     implementation(project(":feature:feat-ui-movie-reviews"))
