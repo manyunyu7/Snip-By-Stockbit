@@ -14,7 +14,6 @@ import com.feylabs.uikit.R
 import com.feylabs.uikit.databinding.CustomUikitListSnipBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
-import com.feylabs.uikit.listcomponent.unboxingstock.OnUnboxingStockListOnClickInterface
 import com.feylabs.uikit.state.UIKitState
 import com.feylabs.uikit.util.RecyclerViewUtil.setVerticalLayoutManager
 

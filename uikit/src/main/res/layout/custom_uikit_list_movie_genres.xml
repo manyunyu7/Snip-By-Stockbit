@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/custom_uikit_info_show_case_card"></androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/custom_uikit_info_genre" />
 
     <HorizontalScrollView
         android:layout_width="0dp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/uikit_list_unboxing_sectoral_skeleton_container"
+            android:id="@+id/uikit_list_unboxing_movie_skeleton_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">

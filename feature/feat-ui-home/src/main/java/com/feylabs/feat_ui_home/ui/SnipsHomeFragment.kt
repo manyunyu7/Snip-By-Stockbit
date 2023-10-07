@@ -8,11 +8,11 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.feylabs.core.base.BaseFragment
-import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.shared_dependencies.R as sharedR
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
 import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
+import com.feylabs.uikit.listcomponent.uikitmodel.MovieGenreUIKitModel
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
 import com.feylabs.uikit.listcomponent.unboxingstock.OnUnboxingStockListOnClickInterface
 import com.feylabs.unboxing.domain.uimodel.UnboxingListItemUIModel
@@ -36,6 +36,33 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     }
 
     override fun initObserver() {
+
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.movieGenreListValue.collect { state ->
+                when {
+                    state.isLoading -> {
+                        // Show loading progress
+                    }
+
+                    state.error.isNotBlank() -> {
+                        // Show error message
+                    }
+
+                    state.movieList.isNotEmpty() -> {
+                        state.movieList.forEachIndexed { index, unboxingListItemUIModel ->
+                        }
+                        binding.movieGenre.addDatas(state.movieList.map {
+                            MovieGenreUIKitModel(
+                                title = it.title,
+                                id = it.id,
+                                image = ""
+                            )
+                        })
+                    }
+                }
+            }
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.unboxingStockListValue.collect { state ->
                 when {
@@ -185,6 +212,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
         viewModel.getUnboxingStock()
         viewModel.getUnboxingSectoral()
         viewModel.getSnip()
+        viewModel.getMovie()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

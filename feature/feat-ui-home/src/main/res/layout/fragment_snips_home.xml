@@ -45,6 +45,19 @@
                 android:layout_height="wrap_content" />
 
             <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
+                android:id="@+id/menu_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:sectionSeeAll="Lihat Semua"
+                app:sectionTitle="Genre Film" />
+
+            <com.feylabs.uikit.listcomponent.movie_genre.UIKitUnboxingMovieGenreList
+                android:id="@+id/movie_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
                 android:id="@+id/menu_snip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
