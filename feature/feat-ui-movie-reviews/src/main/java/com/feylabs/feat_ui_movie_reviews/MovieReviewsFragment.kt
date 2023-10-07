@@ -44,19 +44,16 @@ class MovieReviewsFragment : BaseFragment<FragmentMovieReviewsBinding>(
                     }
 
                     value.error.isNotBlank() -> {
-                        showToast("asik error")
                         binding.emptyState.gone()
                         binding.reviewList.setUiState(UIKitState.ERROR)
                     }
 
                     value.isEmpty -> {
-                        showToast("asik empty")
                         binding.emptyState.visible()
                         binding.reviewList.setUiState(UIKitState.EMPTY)
                     }
 
                     value.reviewList.isNotEmpty() -> {
-                        showToast("asik sukses")
                         binding.emptyState.gone()
                         if (value.toBeCleared) {
                             binding.reviewList.clear()
