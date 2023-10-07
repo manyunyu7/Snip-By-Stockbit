@@ -99,7 +99,7 @@ class MovieByGenreFragment : BaseFragment<FragmentMovieByGenreBinding>(
                 val movieDataEncoded = gson.toJson(data)
                 MyPreference(requireContext()).save(MovieDetailFragment.MOVIE_PASS,movieDataEncoded);
                 val deepLink = Uri.parse(
-                    getString(R.string.route_movies_reviews)
+                    getString(R.string.route_movies_detail)
                         .replace("{id}", link.id.toString())
                 )
                     .buildUpon()

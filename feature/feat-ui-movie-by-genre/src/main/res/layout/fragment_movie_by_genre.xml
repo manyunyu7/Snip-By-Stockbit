@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:showBackNavigation="true"
-        app:toolbarTitle="Snips"
+        app:toolbarTitle="Movies"
         app:toolbarTitleAlignment="left" />
 
     <com.feylabs.uikit.listcomponent.movie_list.UIKitMovieList

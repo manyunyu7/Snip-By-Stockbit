@@ -1,5 +1,6 @@
 package com.feylabs.feat_ui_movie_by_genre
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.MotionEvent
@@ -8,6 +9,8 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.toast.ToastHelper.showToast
@@ -15,6 +18,7 @@ import com.feylabs.core.helper.view.ViewUtils.gone
 import com.feylabs.core.helper.view.ViewUtils.visible
 import com.feylabs.feat_ui_movie_by_genre.databinding.FragmentMovieDetailBinding
 import com.feylabs.feat_ui_movie_by_genre.util.pref.MyPreference
+import com.feylabs.shared_dependencies.R
 import com.feylabs.uikit.listcomponent.movie_list.MovieUiKitModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,12 +57,6 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
         }
         return null;
     }
-
-    private fun getGenreId(): Int {
-        val genreId = arguments?.getString("genreId")?.toIntOrNull() ?: -99
-        return genreId;
-    }
-
     override fun initObserver() {
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.movieDetailValue.collect { value ->
@@ -93,7 +91,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
                                                 "var element = document.getElementById('title'); " +
                                                 "element.style.display='none'; " +
                                                 "})()")
-                                        emulateClick(view)
+                                        //emulateClick(view)
                                     }
                                 }
                                 view.settings.setAppCacheEnabled(true)
@@ -150,7 +148,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
 
                 binding.labelMovieLanguage.text = it.originalLanguage;
                 with(binding) {
-                    when (it.popularity) {
+                        when (it.voteAverage) {
                         in 0.0..2.0 -> {
                             labelMovieRate.text = "⭐"
                         }
@@ -186,6 +184,18 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
 
 
     override fun initAction() {
+        binding.labelSeeReview.setOnClickListener {
+            val deepLink = Uri.parse(
+                getString(R.string.route_movies_reviews)
+                    .replace("{id}", getMovieId().toString()))
+                .buildUpon()
+                .build()
+            val navOptions = NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .build()
+
+            findNavController().navigate(deepLink, navOptions)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
