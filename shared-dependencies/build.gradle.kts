@@ -86,4 +86,21 @@ dependencies {
     val navigation_version = "2.5.0"
     api("androidx.navigation:navigation-fragment-ktx:$navigation_version")
     api("androidx.navigation:navigation-ui-ktx:$navigation_version")
+
+    // CircleIndicator library for ViewPager indicators
+    implementation("me.relex:circleindicator:2.1.6")
+
+    // Lottie library for handling and rendering JSON-based animations
+    val lottieVersion = "3.6.1"
+    implementation("com.airbnb.android:lottie:$lottieVersion")
+
+    // CircleImageView library for circular images
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    // Glide library for efficient image loading and caching
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    // Blurry library for applying blur effects to views or bitmaps
+    implementation("jp.wasabeef:blurry:4.0.0")
+
 }
