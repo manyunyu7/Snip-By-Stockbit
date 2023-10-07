@@ -84,16 +84,16 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
                                 binding.trailerContainer.visible()
                                 val webView = binding.webView
 
-
-                                //WebView view = new WebView(getApplicationContext());
-
-                                //WebView view = new WebView(getApplicationContext());
                                 val view = binding.webView
-
                                 view.webViewClient = object : WebViewClient() {
                                     override fun onPageFinished(view: WebView, url: String) {
                                         super.onPageFinished(view, url)
-                                        emulateClick(view);
+                                        // Inject JavaScript to hide the element with ID "title"
+                                        view.loadUrl("javascript:(function() { " +
+                                                "var element = document.getElementById('title'); " +
+                                                "element.style.display='none'; " +
+                                                "})()")
+                                        emulateClick(view)
                                     }
                                 }
                                 view.settings.setAppCacheEnabled(true)
@@ -101,8 +101,6 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
                                 view.settings.setAppCachePath(requireContext().cacheDir.absolutePath)
                                 view.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
                                 view.settings.mediaPlaybackRequiresUserGesture = false
-                                //view.loadUrl("https://www.youtube.com/embed/bHQqvYy5KYo?autoplay=1");
-                                //view.loadUrl("https://www.youtube.com/embed/bHQqvYy5KYo?autoplay=1");
                                 view.loadUrl("${getFullPathVideoUrl()}")
 
                             }else{

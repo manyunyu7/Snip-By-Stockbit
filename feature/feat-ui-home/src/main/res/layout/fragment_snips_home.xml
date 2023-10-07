@@ -35,12 +35,14 @@
                 android:id="@+id/menu_unboxing_sector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 app:sectionSeeAll="Lihat Semua"
                 app:sectionTitle="Unboxing Sektor" />
 
             <com.feylabs.uikit.listcomponent.unboxingsectoral.UIKitUnboxingSectoralList
                 android:id="@+id/unboxing_sectoral"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
