@@ -48,14 +48,14 @@
     <fragment
         android:id="@+id/navigation_content_viewer"
         android:name="com.feylabs.content_viewer.ContentViewerFragment"
-        android:label="Snips Home">
+        >
         <deepLink app:uri="@string/route_snips_content_viewer"/>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_movie_by_genre"
         android:name="com.feylabs.feat_ui_movie_by_genre.MovieByGenreFragment"
-        android:label="Snips Home">
+        >
         <deepLink app:uri="@string/route_movie_by_genre"/>
     </fragment>
 
@@ -69,8 +69,15 @@
     <fragment
         android:id="@+id/navigation_movies_viewer"
         android:name="com.feylabs.movie_genre.ui.MovieGenreExampleFragment"
-        android:label="Snips Home">
+        >
         <deepLink app:uri="@string/route_movies_home"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_movies_review"
+        android:name="com.feylabs.feat_ui_movie_reviews.MovieReviewsFragment"
+        >
+        <deepLink app:uri="@string/route_movies_reviews"/>
     </fragment>
 
 

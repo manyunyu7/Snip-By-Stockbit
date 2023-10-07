@@ -63,7 +63,6 @@ class MovieByGenreFragment : BaseFragment<FragmentMovieByGenreBinding>(
                         if (value.toBeCleared) {
                             binding.snipList.clear()
                         }
-                        binding.snipList
                         binding.snipList.addDatas(value.coinList.map {
                             MovieUiKitModel(
                                 title = it.title,
@@ -100,7 +99,7 @@ class MovieByGenreFragment : BaseFragment<FragmentMovieByGenreBinding>(
                 val movieDataEncoded = gson.toJson(data)
                 MyPreference(requireContext()).save(MovieDetailFragment.MOVIE_PASS,movieDataEncoded);
                 val deepLink = Uri.parse(
-                    getString(R.string.route_movies_detail)
+                    getString(R.string.route_movies_reviews)
                         .replace("{id}", link.id.toString())
                 )
                     .buildUpon()

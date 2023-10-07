@@ -51,7 +51,7 @@ class UIKitMovieReviewItemAdapter() :
                     binding.tvDescription.visibility = View.VISIBLE
                     binding.tvDescription.text = data.content
                     binding.tvMain.text = data.author
-                    binding.tvSubtitle.text = data.createdAt?.convertIsoDateStringToIndonesianDateString()
+                    binding.tvSubtitle.text = data.createdAt
                     binding.ivMainxImage.loadImageFromURL(context, "https://secure.gravatar.com/avatar/"+data.authorAvatarPath)
                 }
             }

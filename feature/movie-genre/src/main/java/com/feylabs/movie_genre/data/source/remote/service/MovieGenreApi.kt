@@ -32,7 +32,8 @@ interface MovieGenreApi {
     @GET("movie/{id}/reviews")
     suspend fun getMovieReviews(
         @Path("id") movieId: Int,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("language") language: String= "en-US"
     ): Response<MovieReviewsResponseDto>
 
 }

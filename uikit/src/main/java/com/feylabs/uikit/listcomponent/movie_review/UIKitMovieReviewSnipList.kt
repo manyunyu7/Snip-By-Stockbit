@@ -77,8 +77,10 @@ class UIKitMovieReviewSnipList : ConstraintLayout {
                     showSkeleton()
                 }
             }
-            UIKitState.SUCCESS -> {}
-            UIKitState.ERROR -> {}
+            UIKitState.SUCCESS -> {
+            }
+            UIKitState.ERROR -> {
+            }
             UIKitState.EMPTY -> {
                 if (calledId.isEmpty()) {
                     hideSkeleton()
@@ -157,20 +159,6 @@ class UIKitMovieReviewSnipList : ConstraintLayout {
                 }
             }
         })
-
-
-//        binding.rvUikitListSnip.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-//                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-//                val totalItemCount = layoutManager.itemCount
-//
-//                if (lastVisibleItemPosition == totalItemCount - 1) {
-//                    loadMoreListener?.onLoadMore(mAdapter.getLastId())
-//                }
-//            }
-//        })
     }
 
     fun getItemCount() = mAdapter.itemCount

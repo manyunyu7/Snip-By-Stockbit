@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.feylabs.core.base.BaseFragment
+import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.core.helper.view.ViewUtils.gone
 import com.feylabs.core.helper.view.ViewUtils.visible
 import com.feylabs.feat_ui_movie_reviews.databinding.FragmentMovieReviewsBinding
@@ -22,13 +23,13 @@ class MovieReviewsFragment : BaseFragment<FragmentMovieReviewsBinding>(
     FragmentMovieReviewsBinding::inflate
 ) {
 
-    val viewModel: MovieByGenreViewModel by viewModels()
+    val viewModel: MoviewReviewsViewModel by viewModels()
     override fun initData() {
         viewModel.getMovieByGenre(1, getMovieId())
     }
 
     private fun getMovieId(): Int {
-        val genreId = arguments?.getString("movieId")?.toIntOrNull() ?: -99
+        val genreId = arguments?.getString("id")?.toIntOrNull() ?: -99
         return genreId;
     }
 
@@ -39,26 +40,29 @@ class MovieReviewsFragment : BaseFragment<FragmentMovieReviewsBinding>(
                 when {
                     value.isLoading -> {
                         binding.emptyState.gone()
-                        binding.snipList.setUiState(UIKitState.LOADING)
+                        binding.reviewList.setUiState(UIKitState.LOADING)
                     }
 
                     value.error.isNotBlank() -> {
+                        showToast("asik error")
                         binding.emptyState.gone()
-                        binding.snipList.setUiState(UIKitState.ERROR)
+                        binding.reviewList.setUiState(UIKitState.ERROR)
                     }
 
                     value.isEmpty -> {
+                        showToast("asik empty")
                         binding.emptyState.visible()
-                        binding.snipList.setUiState(UIKitState.EMPTY)
+                        binding.reviewList.setUiState(UIKitState.EMPTY)
                     }
 
-                    value.coinList.isNotEmpty() -> {
+                    value.reviewList.isNotEmpty() -> {
+                        showToast("asik sukses")
                         binding.emptyState.gone()
                         if (value.toBeCleared) {
-                            binding.snipList.clear()
+                            binding.reviewList.clear()
                         }
-                        binding.snipList.addDatas(
-                            value.coinList.map { 
+                        binding.reviewList.addDatas(
+                            value.reviewList.map {
                                 MovieReviewUiKitModel(
                                     author = it.author.orEmpty(),
                                     authorUsername = it.authorUsername?.orEmpty(),
@@ -71,7 +75,7 @@ class MovieReviewsFragment : BaseFragment<FragmentMovieReviewsBinding>(
                                 )
                             }
                         )
-                        binding.snipList.setUiState(UIKitState.SUCCESS)
+                        binding.reviewList.setUiState(UIKitState.SUCCESS)
                     }
                 }
             }
@@ -81,7 +85,7 @@ class MovieReviewsFragment : BaseFragment<FragmentMovieReviewsBinding>(
 
     override fun initUI() {
 
-        binding.snipList.setClickInterface(object :UIKitMovieReviewSnipList.OnSnipListClickInterface{
+        binding.reviewList.setClickInterface(object :UIKitMovieReviewSnipList.OnSnipListClickInterface{
             override fun onClick(link: String) {
 
             }
@@ -89,10 +93,10 @@ class MovieReviewsFragment : BaseFragment<FragmentMovieReviewsBinding>(
         })
 
 
-        binding.snipList.loadMoreListener = object :UIKitMovieReviewSnipList.LoadMoreListener{
+        binding.reviewList.loadMoreListener = object :UIKitMovieReviewSnipList.LoadMoreListener{
             override fun onLoadMore(lastId: Int, calledId: String, isCalled: Boolean) {
                 if (isCalled.not()) {
-                    viewModel.getMovieByGenre(lastId, getMovieId(), "")
+                    viewModel.getMovieByGenre(lastId, getMovieId())
                 } else {
                     Timber.d("1688_ $lastId calledId : ${calledId.toString()} + $isCalled")
                 }

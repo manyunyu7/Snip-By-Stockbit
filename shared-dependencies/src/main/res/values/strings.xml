@@ -6,6 +6,7 @@
 
     <string name="route_movies_home">android-app://movies/home</string>
     <string name="route_movies_detail">android-app://movies/{id}/detail</string>
+    <string name="route_movies_reviews">android-app://movies/{id}/review</string>
     <string name="route_movie_by_genre" translatable="false">android-app://movie/genre/{genreId}</string>
 
     <string name="route_snips_home">android-app://snips/home</string>

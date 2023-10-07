@@ -10,7 +10,6 @@ class FeatureExampleMainActivity : BaseActivity<ActivityFeatureExampleMainBindin
         super.onCreate(savedInstanceState)
 
         binding.btnClickMe.setOnClickListener {
-            showSnackbar(binding.root,"Halo Gais")
         }
     }
 }

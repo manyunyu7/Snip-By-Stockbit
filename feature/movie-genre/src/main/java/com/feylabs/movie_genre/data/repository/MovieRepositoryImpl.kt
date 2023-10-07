@@ -190,21 +190,21 @@ class MovieRepositoryImpl @Inject constructor(
                     if (response.isSuccessful) {
                         val entityModels = response.body()?.results?.map { it.toMovieReviewUiModel() }
                         delay(1000)
-                        ResponseState.Success(entityModels)
+                        emit(ResponseState.Success(entityModels))
                     } else {
-                        emit(
-                            ResponseState.Error(
-                                errorResponse = ErrorResponse(
-                                    response.message().toString()
-                                )
-                            )
+                        val errorResponse = ErrorResponse(
+                            response.message().toString(),
                         )
+                        Timber.d("xyz error a gan: ${response.message()}, Code: ${response.code()}")
+                        emit(ResponseState.Error(errorResponse))
                     }
                 } catch (e: Exception) {
+                    Timber.d("xyz error b gan ")
                     ResponseExceptionHandler.handleException(e, this)
                 }
             } else {
                 val errorMessage = "Tidak Ada Koneksi Internet"
+                Timber.d("xyz error c gan ")
                 emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
             }
         }.flowOn(Dispatchers.IO)
