@@ -1,9 +1,9 @@
 package com.feylabs.movie_genre.data.source.remote.service
 
-import android.graphics.Movie
 import com.feylabs.movie_genre.data.source.remote.dto.movie_by_genre.MovieListByGenreResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_detail.MovieDetailResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_genre.MovieGenreResponseDto
+import com.feylabs.movie_genre.data.source.remote.dto.movie_reviews.MovieReviewsResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_video.MovieVideoResponseDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -28,5 +28,11 @@ interface MovieGenreApi {
 
     @GET("movie/{id}/videos")
     suspend fun getMovieVideos(@Path("id") movieId: Int): Response<MovieVideoResponseDto>
+
+    @GET("movie/{id}/reviews")
+    suspend fun getMovieReviews(
+        @Path("id") movieId: Int,
+        @Query("page") page: Int
+    ): Response<MovieReviewsResponseDto>
 
 }

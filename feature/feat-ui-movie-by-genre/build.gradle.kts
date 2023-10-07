@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":uikit"))
     implementation(project(":shared-dependencies"))
     implementation(project(":feature:movie-genre"))
+    implementation(project(":feature:feat-ui-movie-reviews"))
 
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

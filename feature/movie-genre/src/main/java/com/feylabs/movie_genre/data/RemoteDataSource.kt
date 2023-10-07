@@ -3,6 +3,7 @@ package com.feylabs.movie_genre.data
 import com.feylabs.movie_genre.data.source.remote.dto.movie_by_genre.MovieListByGenreResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_detail.MovieDetailResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_genre.MovieGenreResponseDto
+import com.feylabs.movie_genre.data.source.remote.dto.movie_reviews.MovieReviewsResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_video.MovieVideoResponseDto
 import com.feylabs.movie_genre.data.source.remote.service.MovieGenreApi
 import com.feylabs.snips.di.MovieModule
@@ -24,6 +25,16 @@ class RemoteDataSource @Inject constructor(
     ): Response<MovieListByGenreResponseDto> {
         return api.discoverMovies(
             genres = genreId,
+            page = page,
+        )
+    }
+
+    suspend fun getMovieReview(
+        movieId:Int,
+        page:Int,
+    ): Response<MovieReviewsResponseDto> {
+        return api.getMovieReviews(
+            movieId = movieId,
             page = page,
         )
     }

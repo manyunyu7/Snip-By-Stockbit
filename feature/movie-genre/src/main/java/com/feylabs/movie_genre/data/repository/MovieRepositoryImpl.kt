@@ -10,6 +10,7 @@ import com.feylabs.movie_genre.data.mapper.Mapper.toMovieGenreUIModel
 import com.feylabs.movie_genre.data.RemoteDataSource
 import com.feylabs.movie_genre.data.mapper.Mapper.toMovieDetailUiModel
 import com.feylabs.movie_genre.data.mapper.Mapper.toMovieEntity
+import com.feylabs.movie_genre.data.mapper.Mapper.toMovieReviewUiModel
 import com.feylabs.movie_genre.data.mapper.Mapper.toMovieUiModel
 import com.feylabs.movie_genre.data.source.local.dao.MoviesDAO
 import com.feylabs.movie_genre.data.source.remote.dto.movie_detail.MovieDetailResponseDto
@@ -17,6 +18,7 @@ import com.feylabs.snips.di.MovieModule.ConnectivityManagerSnips
 import com.feylabs.movie_genre.domain.repository.MovieRepository
 import com.feylabs.movie_genre.domain.uimodel.MovieDetailUiModel
 import com.feylabs.movie_genre.domain.uimodel.MovieGenreUIModel
+import com.feylabs.movie_genre.domain.uimodel.MovieReviewUiModel
 import com.feylabs.movie_genre.domain.uimodel.MovieUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -172,6 +174,41 @@ class MovieRepositoryImpl @Inject constructor(
                 }
             }
         }.flowOn(Dispatchers.IO)
+
+    override fun getMovieReviews(
+        page: Int,
+        movieId: Int
+    ): Flow<ResponseState<List<MovieReviewUiModel>>> =
+        flow<ResponseState<List<MovieReviewUiModel>>> {
+            emit(ResponseState.Loading())
+            if (NetworkInfo.isOnline(connectivityManager)) {
+                try {
+                    val response = remoteDataSource.getMovieReview(
+                        page = page,
+                        movieId = movieId
+                    )
+                    if (response.isSuccessful) {
+                        val entityModels = response.body()?.results?.map { it.toMovieReviewUiModel() }
+                        delay(1000)
+                        ResponseState.Success(entityModels)
+                    } else {
+                        emit(
+                            ResponseState.Error(
+                                errorResponse = ErrorResponse(
+                                    response.message().toString()
+                                )
+                            )
+                        )
+                    }
+                } catch (e: Exception) {
+                    ResponseExceptionHandler.handleException(e, this)
+                }
+            } else {
+                val errorMessage = "Tidak Ada Koneksi Internet"
+                emit(ResponseState.Error(ErrorResponse(errorMessage = errorMessage)))
+            }
+        }.flowOn(Dispatchers.IO)
+
 
 
     private fun getCachedMovieGenre(): List<MovieGenreUIModel> {

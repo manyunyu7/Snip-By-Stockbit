@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":feature:snips"))
     implementation(project(":feature:movie-genre"))
     implementation(project(":feature:feat-ui-movie-by-genre"))
+    implementation(project(":feature:feat-ui-movie-reviews"))
 
 
     implementation("androidx.core:core-ktx:1.7.0")

@@ -5,8 +5,10 @@ import com.feylabs.movie_genre.data.source.local.entity.MovieGenreEntity
 import com.feylabs.movie_genre.data.source.remote.dto.movie_by_genre.MovieListByGenreResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_detail.MovieDetailResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_genre.MovieGenreResponseDto
+import com.feylabs.movie_genre.data.source.remote.dto.movie_reviews.MovieReviewsResponseDto
 import com.feylabs.movie_genre.domain.uimodel.MovieDetailUiModel
 import com.feylabs.movie_genre.domain.uimodel.MovieGenreUIModel
+import com.feylabs.movie_genre.domain.uimodel.MovieReviewUiModel
 import com.feylabs.movie_genre.domain.uimodel.MovieUiModel
 
 object Mapper {
@@ -79,6 +81,19 @@ object Mapper {
             video = this.video ?: false,
             voteAverage = this.voteAverage ?: 0.0,
             voteCount = this.voteCount ?: 0
+        )
+    }
+
+    fun MovieReviewsResponseDto.MovieReviewsResponseItemDto.toMovieReviewUiModel(): MovieReviewUiModel {
+        return MovieReviewUiModel(
+            author = this.author.orEmpty(),
+            authorUsername = this.authorDetails?.username.orEmpty(),
+            authorAvatarPath = this.authorDetails?.avatarPath.orEmpty(),
+            content = this.content.orEmpty(),
+            createdAt = this.createdAt.orEmpty(),
+            id = this.id.orEmpty(),
+            updatedAt = this.updatedAt.orEmpty(),
+            url = this.url.orEmpty()
         )
     }
 

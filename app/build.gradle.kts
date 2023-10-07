@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":feature:movie-genre"))
     implementation(project(":feature:feat-ui-content-viewer"))
     implementation(project(":feature:feat-ui-home"))
+    implementation(project(":feature:feat-ui-movie-reviews"))
     implementation(project(":feature:unboxing"))
     implementation(project(":feature:feat-ui-movie-by-genre"))
 
