@@ -3,6 +3,7 @@ package com.feylabs.feat_ui_movie_by_genre
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.feylabs.core.base.BaseFragment
@@ -25,7 +26,8 @@ class MovieByGenreFragment : BaseFragment<FragmentMovieByGenreBinding>(
     }
 
     private fun getGenreId(): Int {
-        return 0;
+        val genreId = arguments?.getString("genreId")?.toIntOrNull()  ?: -99
+        return genreId;
     }
 
     val luminaAdapter by lazy { LuminaListAdapter() }
@@ -59,7 +61,7 @@ class MovieByGenreFragment : BaseFragment<FragmentMovieByGenreBinding>(
     private fun setupRecyclerView() {
         luminaAdapter.page = 1
         binding.rvLuminar.apply {
-            layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL)
             adapter = luminaAdapter
         }
     }

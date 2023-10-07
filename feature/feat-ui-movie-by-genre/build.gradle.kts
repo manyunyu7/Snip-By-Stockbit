@@ -8,10 +8,11 @@ plugins {
 
 android {
     namespace = "com.feylabs.feat_ui_movie_by_genre"
-    compileSdk = 33
+    compileSdk = 32
 
     defaultConfig {
-        minSdk = 32
+        minSdk = 25
+        targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

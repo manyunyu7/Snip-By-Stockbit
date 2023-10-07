@@ -51,7 +51,7 @@ class LuminaListAdapter : RecyclerView.Adapter<LuminaListAdapter.AdapterViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_lumina, parent, false)
+            .inflate(com.feylabs.uikit.R.layout.item_movie, parent, false)
         return AdapterViewHolder(view)
     }
 

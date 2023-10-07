@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":feature:feat-ui-content-viewer"))
     implementation(project(":feature:feat-ui-home"))
     implementation(project(":feature:unboxing"))
+    implementation(project(":feature:feat-ui-movie-by-genre"))
 
     // Navigation
     val navigation_version = "2.5.0"

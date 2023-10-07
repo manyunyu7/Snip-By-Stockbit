@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -83,6 +84,8 @@ class MovieRepositoryImpl @Inject constructor(
                         genreId = genreId
                     )
                     if (response.isSuccessful) {
+                        Timber.d("ngentot success")
+
                         val entityModels = response.body()?.results?.map { it.toMovieEntity() }
                         entityModels?.let {
                             movieDatabase.insertAllMovies(entityModels)

@@ -53,6 +53,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_movie_by_genre"
+        android:name="com.feylabs.feat_ui_movie_by_genre.MovieByGenreFragment"
+        android:label="Snips Home">
+        <deepLink app:uri="@string/route_movie_by_genre"/>
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_movies_viewer"
         android:name="com.feylabs.movie_genre.ui.LuminaHomeFragment"
         android:label="Snips Home">

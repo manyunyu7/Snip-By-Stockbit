@@ -9,10 +9,9 @@ import retrofit2.http.Query
 interface MovieGenreApi {
 
     @GET("discover/movie")
-    fun discoverMovies(
+    suspend fun discoverMovies(
         @Query("with_genres") genres: Int,
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int
     ): Response<MovieListByGenreResponseDto>
 
     @GET("genre/movie/list?language=en")

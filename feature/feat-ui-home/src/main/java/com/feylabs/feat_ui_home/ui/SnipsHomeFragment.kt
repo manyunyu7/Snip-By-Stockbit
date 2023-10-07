@@ -8,9 +8,12 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.feylabs.core.base.BaseFragment
+import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.shared_dependencies.R as sharedR
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
+import com.feylabs.uikit.listcomponent.movie_genre.MovieGenreItemAdapter
+import com.feylabs.uikit.listcomponent.movie_genre.UIKitUnboxingMovieGenreList
 import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
 import com.feylabs.uikit.listcomponent.uikitmodel.MovieGenreUIKitModel
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
@@ -151,6 +154,24 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
             findNavController().navigate(deepLink)
         }
 
+        binding.movieGenre.setClickInterface(object :MovieGenreItemAdapter.ItemInterface{
+            override fun onClick(string: String) {
+                showToast(string)
+                val deepLink = Uri.parse(
+                    getString(sharedR.string.route_movie_by_genre)
+                        .replace("{genreId}", string)
+                )
+                    .buildUpon()
+                    .build()
+
+                val navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build()
+
+                findNavController().navigate(deepLink, navOptions)
+            }
+
+        })
         binding.snipList.setClickInterface(object : UIKitSnipList.OnSnipListClickInterface {
             override fun onClick(link: String) {
                 val encodedUrl = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())

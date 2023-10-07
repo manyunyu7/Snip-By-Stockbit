@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":feature:unboxing"))
     implementation(project(":feature:snips"))
     implementation(project(":feature:movie-genre"))
+    implementation(project(":feature:feat-ui-movie-by-genre"))
 
 
     implementation("androidx.core:core-ktx:1.7.0")

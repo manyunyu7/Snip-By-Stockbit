@@ -70,7 +70,7 @@ class UIKitUnboxingMovieGenreList : ConstraintLayout {
 
             override fun onClick(string: String) {
                 if(::onClickInterface.isInitialized){
-                    onClickInterface.onClick("")
+                    onClickInterface.onClick(string)
                 }
             }
         })

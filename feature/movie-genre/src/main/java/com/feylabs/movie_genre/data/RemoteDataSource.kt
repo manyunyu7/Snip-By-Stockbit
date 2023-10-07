@@ -23,7 +23,6 @@ class RemoteDataSource @Inject constructor(
         return api.discoverMovies(
             genres = genreId,
             page = page,
-            perPage = 20
         )
     }
 
