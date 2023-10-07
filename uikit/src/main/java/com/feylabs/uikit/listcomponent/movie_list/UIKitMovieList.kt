@@ -99,7 +99,7 @@ class UIKitMovieList : ConstraintLayout {
         mAdapter.setInterface(object : UIKitMovieItemAdapter.ItemInterface {
             override fun onClick(data: MovieUiKitModel) {
                 if(::onClickInterface.isInitialized){
-                    onClickInterface.onClick(data.id.toString())
+                    onClickInterface.onClick(data)
                 }
             }
         })
@@ -229,7 +229,7 @@ class UIKitMovieList : ConstraintLayout {
     }
 
     interface OnSnipListClickInterface{
-        fun onClick(link:String)
+        fun onClick(link: MovieUiKitModel)
     }
 
 }

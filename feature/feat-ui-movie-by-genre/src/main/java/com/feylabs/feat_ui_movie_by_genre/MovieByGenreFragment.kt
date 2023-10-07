@@ -6,27 +6,21 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.feylabs.core.base.BaseFragment
-import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.core.helper.view.ViewUtils.gone
 import com.feylabs.core.helper.view.ViewUtils.visible
 import com.feylabs.feat_ui_movie_by_genre.databinding.FragmentMovieByGenreBinding
-import com.feylabs.movie_genre.domain.uimodel.MovieUiModel
+import com.feylabs.feat_ui_movie_by_genre.util.pref.MyPreference
 import com.feylabs.shared_dependencies.R
 import com.feylabs.uikit.listcomponent.movie_list.MovieUiKitModel
 import com.feylabs.uikit.listcomponent.movie_list.UIKitMovieList
-import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
-import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
 import com.feylabs.uikit.state.UIKitState
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 
 @AndroidEntryPoint
@@ -99,15 +93,18 @@ class MovieByGenreFragment : BaseFragment<FragmentMovieByGenreBinding>(
     override fun initUI() {
 
         binding.snipList.setClickInterface(object : UIKitMovieList.OnSnipListClickInterface {
-            override fun onClick(link: String) {
-                val encodedUrl = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())
+            override fun onClick(link: MovieUiKitModel) {
+
+                val data = link;
+                val gson = Gson()
+                val movieDataEncoded = gson.toJson(data)
+                MyPreference(requireContext()).save(MovieDetailFragment.MOVIE_PASS,movieDataEncoded);
                 val deepLink = Uri.parse(
                     getString(R.string.route_movies_detail)
-                        .replace("{id}", link)
+                        .replace("{id}", link.id.toString())
                 )
                     .buildUpon()
                     .build()
-
                 val navOptions = NavOptions.Builder()
                     .setLaunchSingleTop(true)
                     .build()
