@@ -1,4 +1,4 @@
-package com.feylabs.snipbystockbit
+package com.feylabs.mandirimoviehub
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -1,4 +1,4 @@
-package com.feylabs.snipbystockbit.route
+package com.feylabs.mandirimoviehub.route
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.feylabs.snipbystockbit.R
-import com.feylabs.snipbystockbit.databinding.ActivityMainRouterBinding
+import com.feylabs.mandirimoviehub.R
+import com.feylabs.mandirimoviehub.databinding.ActivityMainRouterBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.feylabs.snipbystockbit"
+    namespace = "com.feylabs.mandirimoviehub"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.feylabs.snipbystockbit"
+        applicationId = "com.feylabs.mandirimoviehub"
         versionCode = 1
         versionName = "1.0"
         minSdk = 25

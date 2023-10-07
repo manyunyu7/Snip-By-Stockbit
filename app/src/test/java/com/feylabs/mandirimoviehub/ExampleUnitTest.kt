@@ -1,4 +1,4 @@
-package com.feylabs.snipbystockbit
+package com.feylabs.mandirimoviehub
 
 import org.junit.Test
 

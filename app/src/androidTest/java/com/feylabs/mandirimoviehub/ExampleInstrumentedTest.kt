@@ -1,4 +1,4 @@
-package com.feylabs.snipbystockbit
+package com.feylabs.mandirimoviehub
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.feylabs.snipbystockbit", appContext.packageName)
+        assertEquals("com.feylabs.mandirimoviehub", appContext.packageName)
     }
 }
