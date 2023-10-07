@@ -13,10 +13,8 @@ import com.feylabs.shared_dependencies.R as sharedR
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
 import com.feylabs.uikit.listcomponent.movie_genre.MovieGenreItemAdapter
 import com.feylabs.uikit.listcomponent.movie_genre.UIKitUnboxingMovieGenreList
-import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
 import com.feylabs.uikit.listcomponent.uikitmodel.MovieGenreUIKitModel
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
-import com.feylabs.uikit.listcomponent.unboxingstock.OnUnboxingStockListOnClickInterface
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -102,60 +100,6 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                 findNavController().navigate(deepLink, navOptions)
             }
 
-        })
-        binding.snipList.setClickInterface(object : UIKitSnipList.OnSnipListClickInterface {
-            override fun onClick(link: String) {
-                val encodedUrl = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())
-                val deepLink = Uri.parse(
-                    getString(sharedR.string.route_snips_content_viewer)
-                        .replace("{contentId}", encodedUrl)
-                        .replace("{contentType}", "snip")
-                )
-                    .buildUpon()
-                    .build()
-
-                val navOptions = NavOptions.Builder()
-                    .setLaunchSingleTop(true)
-                    .build()
-
-                findNavController().navigate(deepLink, navOptions)
-            }
-        })
-
-        binding.unboxingStock.setClickInterface(object : OnUnboxingStockListOnClickInterface {
-            override fun onClick(volume: String) {
-                val itemId = volume
-                val deeplink = NavDeepLinkRequest.Builder.fromUri(
-                    Uri.parse(
-                        getString(sharedR.string.route_snips_content_viewer).replace(
-                            "{contentId}",
-                            itemId
-                        ).replace(
-                            "{contentType}",
-                            "unboxing-stock"
-                        )
-                    )
-                ).build()
-                findNavController().navigate(deeplink)
-            }
-        })
-
-        binding.unboxingSectoral.setClickInterface(object : OnUnboxingStockListOnClickInterface {
-            override fun onClick(volume: String) {
-                val itemId = volume
-                val deeplink = NavDeepLinkRequest.Builder.fromUri(
-                    Uri.parse(
-                        getString(sharedR.string.route_snips_content_viewer).replace(
-                            "{contentId}",
-                            itemId
-                        ).replace(
-                            "{contentType}",
-                            "unboxing-sectoral"
-                        )
-                    )
-                ).build()
-                findNavController().navigate(deeplink)
-            }
         })
 
     }
