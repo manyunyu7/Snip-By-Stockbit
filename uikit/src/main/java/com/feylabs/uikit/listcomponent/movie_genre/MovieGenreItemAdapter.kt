@@ -3,7 +3,7 @@ package com.feylabs.uikit.listcomponent.movie_genre
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.feylabs.core.helper.date.UtilDate.convertIsoDateStringToIndonesianDateString
+import com.bumptech.glide.Glide
 import com.feylabs.uikit.util.ImageViewUtil.loadImageFromURL
 import com.feylabs.uikit.databinding.CustomUikitInfoGenreBinding as AdapterBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.MovieGenreUIKitModel as AdapterModel

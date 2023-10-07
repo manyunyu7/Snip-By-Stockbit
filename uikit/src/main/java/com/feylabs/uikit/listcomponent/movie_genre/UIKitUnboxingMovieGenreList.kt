@@ -8,7 +8,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.feylabs.uikit.R
 import com.feylabs.uikit.databinding.CustomUikitListMovieGenresBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.MovieGenreUIKitModel
+import com.feylabs.uikit.util.RecyclerViewUtil.setGridLayoutManager
 import com.feylabs.uikit.util.RecyclerViewUtil.setHorizontalLayoutManager
+import com.feylabs.uikit.util.RecyclerViewUtil.setStaggeredGridLayoutManager
+
 class UIKitUnboxingMovieGenreList : ConstraintLayout {
 
     private val skeletonCounts: Int = 3
@@ -83,7 +86,7 @@ class UIKitUnboxingMovieGenreList : ConstraintLayout {
     private fun initRecyclerView() {
         binding.rvUikitListUnboxingSectoral.apply {
             this.adapter = mAdapter
-            setHorizontalLayoutManager(context)
+            setStaggeredGridLayoutManager(3,false)
         }
     }
 

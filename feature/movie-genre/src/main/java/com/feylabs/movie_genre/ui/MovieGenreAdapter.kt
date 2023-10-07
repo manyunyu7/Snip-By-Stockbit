@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.feylabs.movie_genre.R
 import com.feylabs.movie_genre.databinding.ItemLuminaBinding as Binding
 import com.feylabs.movie_genre.domain.uimodel.MovieGenreUIModel as AdapterModel
@@ -33,8 +34,15 @@ class MovieGenreAdapter : RecyclerView.Adapter<MovieGenreAdapter.AdapterViewHold
 
             binding.base.title=data.title
             binding.base.content="content"
-            binding.base.setImage("")
             binding.base.subtitle="subtitle"
+            Glide
+                .with(binding.base)
+                .load(data.getImageUrl())
+                .centerCrop()
+                .placeholder(com.feylabs.uikit.R.drawable.dark_placeholder)
+                .thumbnail(Glide.with(binding.base).load(com.feylabs.uikit.R.raw.loading))
+                .dontAnimate()
+                .into(binding.base.thumbnailImage)
         }
     }
 

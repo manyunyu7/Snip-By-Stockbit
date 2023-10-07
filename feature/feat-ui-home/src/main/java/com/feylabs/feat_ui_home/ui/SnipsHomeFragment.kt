@@ -58,7 +58,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                             MovieGenreUIKitModel(
                                 title = it.title,
                                 id = it.id,
-                                image = ""
+                                image = it.getImageUrl()
                             )
                         })
                     }
@@ -156,7 +156,6 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
 
         binding.movieGenre.setClickInterface(object :MovieGenreItemAdapter.ItemInterface{
             override fun onClick(string: String) {
-                showToast(string)
                 val deepLink = Uri.parse(
                     getString(sharedR.string.route_movie_by_genre)
                         .replace("{genreId}", string)

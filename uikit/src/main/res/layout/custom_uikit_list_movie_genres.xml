@@ -20,6 +20,13 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/custom_uikit_info_genre" />
 
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
     <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"

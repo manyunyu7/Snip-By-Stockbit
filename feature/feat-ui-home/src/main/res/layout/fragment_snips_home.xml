@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20dp"
-                app:sectionSeeAll="Lihat Semua"
+                app:sectionSeeAll=""
                 app:sectionTitle="Genre Film" />
 
             <com.feylabs.uikit.listcomponent.movie_genre.UIKitUnboxingMovieGenreList
@@ -64,11 +64,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20dp"
+                android:visibility="gone"
                 app:sectionSeeAll="Lihat Semua"
                 app:sectionTitle="Snip Terbaru" />
 
             <com.feylabs.uikit.listcomponent.snip.UIKitSnipList
                 android:id="@+id/snip_list"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -76,12 +78,14 @@
                 android:id="@+id/menu_unboxing_stock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 app:sectionSeeAll="Lihat Semua"
                 app:sectionTitle="Unboxing Saham" />
 
             <com.feylabs.uikit.listcomponent.unboxingstock.UIKitUnboxingStockList
                 android:id="@+id/unboxing_stock"
+                android:visibility="gone"
                 app:layoutStyle="linear_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
