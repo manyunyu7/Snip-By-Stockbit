@@ -9,7 +9,7 @@ import com.feylabs.movie_genre.databinding.ItemLuminaBinding as Binding
 import com.feylabs.movie_genre.domain.uimodel.MovieGenreUIModel as AdapterModel
 
 
-class LuminaListAdapter : RecyclerView.Adapter<LuminaListAdapter.AdapterViewHolder>() {
+class MovieGenreAdapter : RecyclerView.Adapter<MovieGenreAdapter.AdapterViewHolder>() {
 
     var page = 1
 

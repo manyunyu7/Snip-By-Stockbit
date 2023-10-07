@@ -46,5 +46,8 @@ class MovieByGenreViewModel @Inject constructor(private val movieUseCase: MovieU
 class LuminaListState(
     val isLoading: Boolean = false,
     val coinList: List<MovieUiModel> = emptyList<MovieUiModel>(),
-    var error: String = ""
+    var error: String = "",
+    var isSuccess: Boolean = true,
+    var isEmpty: Boolean = false,
+    var toBeCleared: Boolean = false,
 )

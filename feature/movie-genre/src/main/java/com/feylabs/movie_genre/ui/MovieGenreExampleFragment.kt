@@ -15,16 +15,16 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class LuminaHomeFragment : BaseFragment<FragmentLuminaHomeBinding>(
+class MovieGenreExampleFragment : BaseFragment<FragmentLuminaHomeBinding>(
     FragmentLuminaHomeBinding::inflate
 ) {
 
-    val viewModel: LuminaViewModel by viewModels()
+    val viewModel: MovieGenreViewModel by viewModels()
     override fun initData() {
         viewModel.getImage(50)
     }
 
-    val luminaAdapter by lazy { LuminaListAdapter() }
+    val luminaAdapter by lazy { MovieGenreAdapter() }
 
     override fun initObserver() {
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_lumina_home"
-        android:name="com.feylabs.movie_genre.ui.LuminaHomeFragment"
+        android:name="com.feylabs.movie_genre.ui.MovieGenreExampleFragment"
         android:label="Lumina">
 
         <deepLink app:uri="@string/route_lumina_home" />
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/navigation_lumina_s"
-        android:name="com.feylabs.movie_genre.ui.LuminaHomeFragment"
+        android:name="com.feylabs.movie_genre.ui.MovieGenreExampleFragment"
         android:label="Lumina">
 
         <deepLink app:uri="@string/route_lumina_homes" />
@@ -61,7 +61,7 @@
 
     <fragment
         android:id="@+id/navigation_movies_viewer"
-        android:name="com.feylabs.movie_genre.ui.LuminaHomeFragment"
+        android:name="com.feylabs.movie_genre.ui.MovieGenreExampleFragment"
         android:label="Snips Home">
         <deepLink app:uri="@string/route_movies_home"/>
     </fragment>

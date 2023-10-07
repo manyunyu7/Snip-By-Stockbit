@@ -4,4 +4,12 @@
     <string name="menu_snip_unboxing">Unboxing</string>
     <string name="menu_snip_academy">Academy</string>
     <string name="menu_snip_snips">Snips</string>
+
+    <string name="star1">⭐</string>
+    <string name="star2">⭐⭐</string>
+    <string name="start3">⭐⭐⭐</string>
+    <string name="star4">⭐⭐⭐⭐</string>
+    <string name="star5">⭐⭐⭐⭐⭐</string>
+
+
 </resources>

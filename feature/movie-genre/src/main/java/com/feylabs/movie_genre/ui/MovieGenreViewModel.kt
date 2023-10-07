@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LuminaViewModel @Inject constructor(private val luminaUseCase: MovieUseCase) : ViewModel() {
+class MovieGenreViewModel @Inject constructor(private val luminaUseCase: MovieUseCase) : ViewModel() {
     private val _movieGenreListValue = MutableStateFlow(MovieGenreListState())
     var movieGenreListValue: StateFlow<MovieGenreListState> = _movieGenreListValue
 

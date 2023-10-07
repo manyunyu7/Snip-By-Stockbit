@@ -8,11 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.toast.ToastHelper.showToast
+import com.feylabs.core.helper.view.ViewUtils.gone
+import com.feylabs.core.helper.view.ViewUtils.visible
 import com.feylabs.feat_ui_movie_by_genre.databinding.FragmentMovieByGenreBinding
+import com.feylabs.movie_genre.domain.uimodel.MovieUiModel
+import com.feylabs.uikit.listcomponent.movie_list.MovieUiKitModel
+import com.feylabs.uikit.listcomponent.movie_list.UIKitMovieList
+import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
+import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
+import com.feylabs.uikit.state.UIKitState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -30,41 +39,67 @@ class MovieByGenreFragment : BaseFragment<FragmentMovieByGenreBinding>(
         return genreId;
     }
 
-    val luminaAdapter by lazy { LuminaListAdapter() }
 
     override fun initObserver() {
-
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.luminaListValue.collect { value ->
                 when {
                     value.isLoading -> {
-                        binding.pgLoading.visibility = View.VISIBLE
+                        binding.emptyState.gone()
+                        binding.snipList.setUiState(UIKitState.LOADING)
                     }
                     value.error.isNotBlank() -> {
-                        showToast(value.error)
-                        binding.pgLoading.visibility = View.GONE
+                        binding.emptyState.gone()
+                        binding.snipList.setUiState(UIKitState.ERROR)
+                    }
+                    value.isEmpty -> {
+                        binding.emptyState.visible()
+                        binding.snipList.setUiState(UIKitState.EMPTY)
                     }
                     value.coinList.isNotEmpty() -> {
-                        luminaAdapter.addData(value.coinList.toMutableList())
-                        luminaAdapter.notifyDataSetChanged()
-                        binding.pgLoading.visibility = View.GONE
+                        binding.emptyState.gone()
+                        if (value.toBeCleared) {
+                            binding.snipList.clear()
+                        }
+                        binding.snipList
+                        binding.snipList.addDatas(value.coinList.map {
+                            MovieUiKitModel(
+                                title = it.title,
+                                originalLanguage = it.originalLanguage,
+                                id = it.id,
+                                genreIds = it.genreIds,
+                                adult = it.adult,
+                                voteAverage = it.voteAverage,
+                                popularity = it.popularity,
+                                posterPath = it.posterPath,
+                                backdropPath = it.backdropPath,
+                                originalTitle = it.originalTitle,
+                                overview = it.overview,
+                                video = it.video,
+                                voteCount = it.voteCount,
+                                releaseDate = it.releaseDate
+                            )
+                        })
+                        binding.snipList.setUiState(UIKitState.SUCCESS)
                     }
                 }
             }
         }
     }
 
-    override fun initUI() {
-        setupRecyclerView()
-    }
 
-    private fun setupRecyclerView() {
-        luminaAdapter.page = 1
-        binding.rvLuminar.apply {
-            layoutManager = StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL)
-            adapter = luminaAdapter
+    override fun initUI() {
+        binding.snipList.loadMoreListener = object : UIKitMovieList.LoadMoreListener {
+            override fun onLoadMore(lastId: Int, calledId: String, isCalled: Boolean) {
+                if (isCalled.not()) {
+                    viewModel.getMovieByGenre(lastId,getGenreId(),"")
+                } else {
+                    Timber.d("1688_ $lastId calledId : ${calledId.toString()} + $isCalled")
+                }
+            }
         }
     }
+
 
 
     override fun initAction() {
