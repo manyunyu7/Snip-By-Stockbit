@@ -50,11 +50,9 @@ class UIKitMovieItemAdapter() :
 
 
                 with(binding) {
-
                     labelMovieTitle.text = data.title
                     labelMovieDesc.text = data.overview
                     labelMovieDate.text = data.releaseDate
-
 
                     binding.labelMovieTitle.text = data.title
                     when (data.voteAverage) {
