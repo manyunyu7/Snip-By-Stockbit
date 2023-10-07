@@ -1,16 +1,10 @@
-package com.feylabs.movie_genre.data.source.local.entity
+package com.feylabs.movie_genre.domain.uimodel
 
-import androidx.annotation.Keep
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Keep
-@Entity(tableName = "movie_items")
-data class MovieEntity(
-    @PrimaryKey val id: Int,
+data class MovieUiModel(
     val adult: Boolean = false,
     val backdropPath: String = "",
-    val genreIds: Int = 0,
+    val genreIds: Int =0,
+    val id: Int = 0,
     val originalLanguage: String = "",
     val originalTitle: String = "",
     val overview: String = "",

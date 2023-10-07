@@ -10,7 +10,7 @@ data class MovieListByGenreResponseDto(
     val page: Int? = null,
     @SerializedName("results")
     @Expose
-    val results: List<Result?>? = null,
+    val results: List<MovieListByGenreResponseItemDto>,
     @SerializedName("total_pages")
     @Expose
     val totalPages: Int? = null,
@@ -18,7 +18,7 @@ data class MovieListByGenreResponseDto(
     @Expose
     val totalResults: Int? = null
 ) {
-    data class Result(
+    data class MovieListByGenreResponseItemDto(
         @SerializedName("adult")
         @Expose
         val adult: Boolean? = null,
