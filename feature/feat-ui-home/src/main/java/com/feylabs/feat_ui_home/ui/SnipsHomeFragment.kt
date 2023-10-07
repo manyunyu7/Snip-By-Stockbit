@@ -108,7 +108,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     override fun initAction() {
 
         binding.menuSnip.onClickListener {
-            val deepLink = Uri.parse(getString(sharedR.string.route_snips_test)).buildUpon().build()
+            val deepLink = Uri.parse(getString(sharedR.string.route_movies_home)).buildUpon().build()
             findNavController().navigate(deepLink)
         }
 

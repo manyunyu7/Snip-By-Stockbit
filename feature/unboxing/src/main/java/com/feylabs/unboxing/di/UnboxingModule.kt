@@ -30,7 +30,7 @@ object UnboxingModule {
     @UnboxingSnips
     fun provideAPI(): UnboxingAPI {
         return Retrofit.Builder()
-            .baseUrl("https://snips-api.feylabs.my.id/api/")
+            .baseUrl("https://168.feylabs.my.id/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(UnboxingAPI::class.java)
