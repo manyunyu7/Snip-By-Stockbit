@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.core.helper.wrapper.ResponseState.*
 import com.feylabs.movie_genre.domain.uimodel.MovieDetailUiModel
-import com.feylabs.movie_genre.domain.uimodel.MovieUiModel
 import com.feylabs.movie_genre.domain.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,25 +13,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieByGenreViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
-    private val _luminaListValue = MutableStateFlow(LuminaListState())
-    var luminaListValue: StateFlow<LuminaListState> = _luminaListValue
-    fun getMovieByGenre(page: Int=1, genreId:Int, query:String="") {
+class MovieDetailViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
+
+    private val _movieDetailValue = MutableStateFlow(MovieDetailState())
+    var movieDetailValue: StateFlow<MovieDetailState> = _movieDetailValue
+
+    fun getMovieDetail(movieId:Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            movieUseCase.getMovieByGenre(page = page, genreId = genreId, query =query ).collect {
+            movieUseCase.getMovieDetail(movieId).collect {
                 when (it) {
                     is Loading -> {
-                        _luminaListValue.value = LuminaListState(
+                        _movieDetailValue.value = MovieDetailState(
                             isLoading = true
                         )
                     }
                     is Success -> {
-                        _luminaListValue.value = LuminaListState(
-                            coinList = it.data ?: emptyList()
+                        _movieDetailValue.value = MovieDetailState(
+                            data = it.data
                         )
                     }
                     is Error -> {
-                        _luminaListValue.value = LuminaListState(
+                        _movieDetailValue.value = MovieDetailState(
                             isLoading = false,
                             error = it.errorResponse?.errorMessage.toString()
                         )
@@ -44,11 +45,9 @@ class MovieByGenreViewModel @Inject constructor(private val movieUseCase: MovieU
     }
 }
 
-class LuminaListState(
+class MovieDetailState(
     val isLoading: Boolean = false,
-    val coinList: List<MovieUiModel> = emptyList<MovieUiModel>(),
     var error: String = "",
-    var isSuccess: Boolean = true,
-    var isEmpty: Boolean = false,
-    var toBeCleared: Boolean = false,
+    var data : MovieDetailUiModel?=null
 )
+

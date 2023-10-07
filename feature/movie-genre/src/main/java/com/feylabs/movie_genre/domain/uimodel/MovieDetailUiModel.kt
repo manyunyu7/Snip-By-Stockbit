@@ -9,6 +9,7 @@ data class MovieDetailUiModel(
     val homepage: String,
     val id: Int,
     val imdbId: String,
+    val videoUrl :String,
     val originalLanguage: String,
     val originalTitle: String,
     val overview: String,
@@ -26,4 +27,9 @@ data class MovieDetailUiModel(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
-)
+){
+    fun getFullPathVideoUrl(): String {
+//        "https://www.youtube.com/embed/${matchResult.groupValues[1]}"
+        return "https://m.youtube.com/embed/watch?v="+videoUrl;
+    }
+}

@@ -86,8 +86,18 @@ class MovieRepositoryImpl @Inject constructor(
                         movieId = movieId
                     )
                     if (response.isSuccessful) {
+                        var videoUrl = ""
+                        val videos = remoteDataSource.getMovieVideos(movieId)
+
+                        if (videos.isSuccessful){
+                            videos.body()?.results?.take(1)?.forEachIndexed { index, movieVideoResponseItemDto ->
+                                videoUrl = movieVideoResponseItemDto.key.toString()
+                                return@forEachIndexed  // exit the loop after processing the first item
+                            }
+                        }
+
                         delay(1000)
-                        val data = response.body()?.toMovieDetailUiModel()
+                        val data = response.body()?.toMovieDetailUiModel(videoUrl)
                         ResponseState.Success( { data })
                             .let {
                                 emit((ResponseState.Success(data)))
@@ -102,7 +112,13 @@ class MovieRepositoryImpl @Inject constructor(
                         )
                     }
                 } catch (e: Exception) {
-                    ResponseExceptionHandler.handleException(e, this)
+                    emit(
+                        ResponseState.Error(
+                            errorResponse = ErrorResponse(
+                                "Terjadi Kesalahan"
+                            )
+                        )
+                    )
                 }
             } else {
                 val errorMessage = "Tidak Ada Koneksi Internet"

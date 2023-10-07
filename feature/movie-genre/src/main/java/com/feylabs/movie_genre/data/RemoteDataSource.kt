@@ -3,6 +3,7 @@ package com.feylabs.movie_genre.data
 import com.feylabs.movie_genre.data.source.remote.dto.movie_by_genre.MovieListByGenreResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_detail.MovieDetailResponseDto
 import com.feylabs.movie_genre.data.source.remote.dto.movie_genre.MovieGenreResponseDto
+import com.feylabs.movie_genre.data.source.remote.dto.movie_video.MovieVideoResponseDto
 import com.feylabs.movie_genre.data.source.remote.service.MovieGenreApi
 import com.feylabs.snips.di.MovieModule
 import retrofit2.Response
@@ -31,6 +32,14 @@ class RemoteDataSource @Inject constructor(
         movieId:Int,
     ): Response<MovieDetailResponseDto> {
         return api.getMovieDetails(
+            movieId = movieId
+        )
+    }
+
+    suspend fun getMovieVideos(
+        movieId:Int,
+    ): Response<MovieVideoResponseDto> {
+        return api.getMovieVideos(
             movieId = movieId
         )
     }

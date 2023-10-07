@@ -3,6 +3,7 @@ package com.feylabs.movie_genre.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.core.helper.wrapper.ResponseState.*
+import com.feylabs.movie_genre.domain.uimodel.MovieDetailUiModel
 import com.feylabs.movie_genre.domain.uimodel.MovieGenreUIModel
 import com.feylabs.movie_genre.domain.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

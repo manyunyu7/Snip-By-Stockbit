@@ -32,7 +32,7 @@ object Mapper {
         )
     }
 
-    fun MovieDetailResponseDto.toMovieDetailUiModel(): MovieDetailUiModel {
+    fun MovieDetailResponseDto.toMovieDetailUiModel(videoUrl:String): MovieDetailUiModel {
         return MovieDetailUiModel(
             adult = this.adult ?: false,
             backdropPath = this.backdropPath.orEmpty(),
@@ -58,7 +58,8 @@ object Mapper {
             title = this.title.orEmpty(),
             video = this.video ?: false,
             voteAverage = this.voteAverage ?: 0.0,
-            voteCount = this.voteCount ?: 0
+            voteCount = this.voteCount ?: 0,
+            videoUrl = videoUrl
         )
     }
 
