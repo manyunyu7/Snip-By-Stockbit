@@ -2,6 +2,7 @@ package com.feylabs.movie_genre.domain.interactor
 
 import com.feylabs.core.helper.wrapper.ResponseState
 import com.feylabs.movie_genre.domain.repository.MovieRepository
+import com.feylabs.movie_genre.domain.uimodel.MovieDetailUiModel
 import com.feylabs.movie_genre.domain.uimodel.MovieGenreUIModel
 import com.feylabs.movie_genre.domain.uimodel.MovieUiModel
 import com.feylabs.movie_genre.domain.usecase.MovieUseCase
@@ -26,6 +27,10 @@ class MovieInteractor @Inject constructor(
             genreId=genreId,
             query=query
         )
+    }
+
+    override fun getMovieDetail(movieId: Int): Flow<ResponseState<MovieDetailUiModel>> {
+        return movieRepository.getMovieDetail(movieId)
     }
 
 }
