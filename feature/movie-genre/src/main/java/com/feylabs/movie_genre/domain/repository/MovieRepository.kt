@@ -13,7 +13,8 @@ interface MovieRepository {
 
     fun getMovieOnGenre(
         page:Int,
-        genreId:Int
+        genreId:Int,
+        query:String
     ): Flow<ResponseState<List<MovieUiModel>>>
 
 }

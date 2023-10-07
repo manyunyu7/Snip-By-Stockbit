@@ -8,7 +8,7 @@ import com.feylabs.movie_genre.data.source.local.entity.MovieGenreEntity
 
 
 @Database(
-    entities = [MovieGenreEntity::class,MovieEntity::class], version = 168
+    entities = [MovieGenreEntity::class,MovieEntity::class], version = 169
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun movieGenreDao(): MoviesDAO

@@ -42,6 +42,10 @@ class MovieRepositoryImpl @Inject constructor(
                         delay(1000)
                         emit(ResponseState.Success(entityModels?.map { it.toMovieGenreUIModel() }))
                     } else {
+                        if (getCachedMovieGenre().isNotEmpty()) {
+                            delay(1000)
+                            emit(ResponseState.Success(getCachedMovieGenre()))
+                        }
                         emit(
                             ResponseState.Error(
                                 errorResponse = ErrorResponse(
@@ -51,6 +55,10 @@ class MovieRepositoryImpl @Inject constructor(
                         )
                     }
                 } catch (e: Exception) {
+                    if (getCachedMovieGenre().isNotEmpty()) {
+                        delay(1000)
+                        emit(ResponseState.Success(getCachedMovieGenre()))
+                    }
                     ResponseExceptionHandler.handleException(e, this)
                 }
             } else {
@@ -65,7 +73,7 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-    override fun getMovieOnGenre(page: Int, genreId: Int): Flow<ResponseState<List<MovieUiModel>>> =
+    override fun getMovieOnGenre(page: Int, genreId: Int,query:String): Flow<ResponseState<List<MovieUiModel>>> =
         flow<ResponseState<List<MovieUiModel>>> {
             emit(ResponseState.Loading())
             if (NetworkInfo.isOnline(connectivityManager)) {
