@@ -62,8 +62,10 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
 
     val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
     implementation(composeBom)
@@ -105,4 +107,10 @@ dependencies {
     implementation("androidx.room:room-runtime:2.4.2")
     implementation("androidx.room:room-ktx:2.4.2")
     kapt("androidx.room:room-compiler:2.4.2")
+    implementation("com.dynamsoft:dynamsoftcameraenhancer:2.3.11@aar")
+    implementation("com.dynamsoft:dynamsoftbarcodereader:9.6.20@aar")
+
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.zxing:core:3.4.1")
+
 }

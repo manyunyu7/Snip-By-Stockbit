@@ -13,6 +13,7 @@ import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.shared_dependencies.R as sharedR
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
 import com.feylabs.qris_bni.screen.history.HistoryScreen
+import com.feylabs.qris_bni.screen.scanner.QrScannerScreen
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
 import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
@@ -132,6 +133,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
         binding.menuHome.setOnClickListener {
             viewModel.fetchTransaction()
             showToast("Fetch Transaction")
+            startActivity(Intent(requireContext(), QrScannerScreen::class.java))
         }
         binding.header.setOnClickListener {
             startActivity(Intent(requireContext(), HistoryScreen::class.java))
