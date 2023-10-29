@@ -1,5 +1,6 @@
 package com.feylabs.feat_ui_home.ui
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.shared_dependencies.R as sharedR
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
+import com.feylabs.qris_bni.TransactionListScreen
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
 import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
@@ -132,6 +134,7 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
             showToast("Fetch Transaction")
         }
         binding.header.setOnClickListener {
+            startActivity(Intent(requireContext(),TransactionListScreen::class.java))
             viewModel.addTransaction("Yessy", transactionAmount = 20.0)
         }
 
