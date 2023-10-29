@@ -86,9 +86,9 @@ class HistoryScreen : ComponentActivity() {
             ) {
                 Text(text = "Merchant: ${transaction.merchantName}", color = Color.Black)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Amount: $${transaction.transactionAmount}", color = Color.Black)
+                Text(text = "Amount: ${transaction.getFormattedRupiahBalance()}", color = Color.Black)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Timestamp: ${transaction.timestamp}", color = Color.Black)
+                Text(text = "Timestamp: ${transaction.getFormattedTime()}", color = Color.Black)
             }
         }
     }
