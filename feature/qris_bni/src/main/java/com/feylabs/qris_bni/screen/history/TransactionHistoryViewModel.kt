@@ -69,8 +69,8 @@ class TransactionHistoryViewModel @Inject constructor(
     fun addTransaction(merchantName:String, transactionAmount:Double){
         viewModelScope.launch {
             transactionUseCase.addTransaction(
-                merchantName = "Yessy",
-                transactionAmount = 2.0,
+                merchantName = merchantName,
+                transactionAmount = transactionAmount,
                 transactionType = "QR",
                 timestamp = System.currentTimeMillis()
             ).collect {

@@ -1,25 +1,37 @@
 package com.feylabs.qris_bni.screen.scanner
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,11 +43,16 @@ import com.feylabs.core.helper.toast.ToastHelper
 import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.qris_bni.ui.theme.SnipByStockbitTheme
 import com.feylabs.qris_bni.R
+import com.feylabs.qris_bni.screen.history.HistoryScreen
+import com.feylabs.qris_bni.screen.history.TransactionHistoryViewModel
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class QrScannerScreen : ComponentActivity() {
 
+    private val viewModel: TransactionHistoryViewModel by viewModels()
 
     private var textResult = mutableStateOf("")
     private var barcodeLauncher = registerForActivityResult(ScanContract()) { result ->
@@ -76,7 +93,17 @@ class QrScannerScreen : ComponentActivity() {
                 Scaffold(
                     bottomBar = {
                         BottomAppBar(
-                            actions = {},
+                            actions = {
+                                // Add the button for showing history here
+                                IconButton(onClick = {
+                                    startActivity(Intent(this@QrScannerScreen,HistoryScreen::class.java))
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.History,
+                                        contentDescription = "Show History"
+                                    )
+                                }
+                            },
                             floatingActionButton = {
                                 FloatingActionButton(onClick = {
                                     checkCameraPermission(this@QrScannerScreen)
@@ -120,6 +147,7 @@ class QrScannerScreen : ComponentActivity() {
     @Composable
     fun DisplayQrInfo(qrString: String) {
         val qrInfo = parseQrString(qrString)
+        var isConfirmationDialogVisible by remember { mutableStateOf(false) }
 
         if (qrInfo.bankSumber.isNotEmpty()) {
             Column(
@@ -146,6 +174,34 @@ class QrScannerScreen : ComponentActivity() {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
+                Row(){
+                    Button(
+                        onClick = {
+                            isConfirmationDialogVisible = true
+                        },
+                        modifier = Modifier.padding(top = 16.dp)
+                    ) {
+                        Text(text = "Confirm Transaction")
+                    }
+                }
+
+                if (isConfirmationDialogVisible) {
+                    TransactionConfirmationDialog(
+                        onConfirm = {
+                            // Perform the transaction confirmation logic here
+                            showSuccessNotification(applicationContext)
+                            isConfirmationDialogVisible = false
+                            textResult.value = ""
+                            viewModel.addTransaction(
+                                merchantName = qrInfo.namaMerchant,
+                                transactionAmount = qrInfo.nominalTransaksi.toDoubleOrNull() ?: 0.0
+                            )
+                        },
+                        onDismiss = {
+                            isConfirmationDialogVisible = false
+                        }
+                    )
+                }
             }
         } else {
             Text(
@@ -155,6 +211,7 @@ class QrScannerScreen : ComponentActivity() {
             )
         }
     }
+
     data class QrInfo(
         val bankSumber: String,
         val idTransaksi: String,
@@ -184,6 +241,41 @@ class QrScannerScreen : ComponentActivity() {
         } else {
             requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
+    }
+
+    @Composable
+    fun TransactionConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+        var isConfirmed by remember { mutableStateOf(false) }
+
+        if (!isConfirmed) {
+            AlertDialog(
+                onDismissRequest = {
+                    onDismiss.invoke()
+                },
+                title = { Text("Transaction Confirmation") },
+                text = { Text("Do you want to confirm this transaction?") },
+                confirmButton = {
+                    Button(onClick = {
+                        isConfirmed = true
+                        onConfirm.invoke()
+                    }) {
+                        Text("Confirm")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = {
+                        onDismiss.invoke()
+                    }) {
+                        Text("Cancel")
+                    }
+                }
+            )
+        }
+    }
+
+    fun showSuccessNotification(context: Context) {
+        // Implement your logic to show a success notification here
+        ToastHelper.showToast(context, "Transaction successful!")
     }
 }
 
