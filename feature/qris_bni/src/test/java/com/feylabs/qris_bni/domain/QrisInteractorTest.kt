@@ -1,6 +1,7 @@
 package com.feylabs.qris_bni.domain
 
 import com.feylabs.core.helper.wrapper.ResponseState
+import com.feylabs.qris_bni.FakeTransactionData
 import com.feylabs.qris_bni.domain.interactor.QrisInteractor
 import com.feylabs.qris_bni.domain.repository.QrisRepository
 import com.feylabs.qris_bni.domain.uimodel.BalanceUiModel
@@ -22,23 +23,6 @@ class QrisInteractorTest {
 
     private lateinit var qrisInteractor: QrisInteractor
 
-    object FakeTransactionData {
-
-        fun generateFakeTransactionList(size: Int): List<TransactionUiModel> {
-            val fakeTransactionList = mutableListOf<TransactionUiModel>()
-
-            for (i in 1..size) {
-                val merchantName = "Merchant $i"
-                val transactionAmount = (i * 100).toDouble()  // Adjust as needed
-                val timestamp = System.currentTimeMillis() + i * 1000  // Adjust as needed
-
-                val fakeTransaction = TransactionUiModel(merchantName, transactionAmount, timestamp)
-                fakeTransactionList.add(fakeTransaction)
-            }
-
-            return fakeTransactionList
-        }
-    }
 
     @Before
     fun setUp() {
