@@ -19,7 +19,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideSnipsDatabase(@ApplicationContext context: Context): QrisDatabase {
-        return Room.databaseBuilder(context, QrisDatabase::class.java, "snips-db")
+        return Room.databaseBuilder(context, QrisDatabase::class.java, "bni_qris")
             .fallbackToDestructiveMigration()
             .build()
     }

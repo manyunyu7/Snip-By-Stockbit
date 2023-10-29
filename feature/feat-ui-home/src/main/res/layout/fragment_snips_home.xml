@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <com.feylabs.uikit.blockcomponent.UIKitSnipMenuHome
+                android:id="@+id/menu_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_30dp"

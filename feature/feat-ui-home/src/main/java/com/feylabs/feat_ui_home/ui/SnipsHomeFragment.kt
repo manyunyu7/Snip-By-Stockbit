@@ -57,6 +57,25 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                 }
             }
         }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.addTransactionValue.collect { state ->
+                when {
+                    state.isLoading -> {
+                        showToast("Loading")
+                        // Show loading progress
+                    }
+
+                    state.error.isNotEmpty() -> {
+                        showToast("Error")
+                    }
+
+                    state.success.isNotEmpty() -> {
+                        showToast("Success")
+                    }
+                }
+            }
+        }
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.snipListValue.collect { state ->
                 when {
@@ -106,6 +125,16 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     }
 
     override fun initAction() {
+
+
+        binding.menuHome.setOnClickListener {
+            viewModel.fetchTransaction()
+            showToast("Fetch Transaction")
+        }
+        binding.header.setOnClickListener {
+            viewModel.addTransaction("Yessy", transactionAmount = 20.0)
+        }
+
 
         binding.menuSnip.onClickListener {
             val deepLink = Uri.parse(getString(sharedR.string.route_snips_test)).buildUpon().build()

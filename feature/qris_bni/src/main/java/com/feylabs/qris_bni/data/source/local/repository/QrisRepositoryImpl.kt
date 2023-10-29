@@ -16,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 
@@ -31,6 +32,7 @@ class QrisRepositoryImpl @Inject constructor(
     ): Flow<ResponseState<String>> {
         return flow {
             try {
+                Timber.d("12: trying")
                 val transactionId = UUID.randomUUID()
                 val userId = 1 // Example user ID
 
@@ -49,6 +51,7 @@ class QrisRepositoryImpl @Inject constructor(
 
                 emit(ResponseState.Success("Transaction added successfully"))
             } catch (e: Exception) {
+                Timber.d("12: errror $e")
                 emit(ResponseState.Error(ErrorResponse(errorMessage = "Failed to add transaction: ${e.message}")))
             }
         }
@@ -58,7 +61,7 @@ class QrisRepositoryImpl @Inject constructor(
         flow {
             emit(ResponseState.Loading())
             try {
-                val data = transactionDao.getTransactionsByUserId(userId = 1).map {
+                val data = transactionDao.getTransactionsByUserId().map {
                     it.toTransactionUiModel()
                 }
                 emit(ResponseState.Success(data))

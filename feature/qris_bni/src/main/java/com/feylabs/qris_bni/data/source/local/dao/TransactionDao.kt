@@ -5,8 +5,8 @@ import com.feylabs.qris_bni.data.source.local.entity.TransactionEntity
 
 @Dao
 interface TransactionDao {
-    @Query("SELECT * FROM transactions WHERE userId = :userId ORDER BY timestamp DESC")
-    suspend fun getTransactionsByUserId(userId: Int): List<TransactionEntity>
+    @Query("SELECT * FROM transactions ORDER BY timestamp DESC")
+    suspend fun getTransactionsByUserId(): List<TransactionEntity>
 
     @Insert
     suspend fun insertTransaction(transaction: TransactionEntity)

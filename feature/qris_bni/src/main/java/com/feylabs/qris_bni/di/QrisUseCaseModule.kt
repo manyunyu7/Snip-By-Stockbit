@@ -11,5 +11,5 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 abstract class QrisUseCaseModule {
     @Binds
-    abstract fun useCaseProvider(useCase: QrisInteractor): QrUseCase
+    abstract fun qrisUseCaseProvider(useCase: QrisInteractor): QrUseCase
 }

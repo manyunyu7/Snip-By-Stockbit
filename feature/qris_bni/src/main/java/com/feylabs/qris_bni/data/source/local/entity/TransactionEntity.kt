@@ -8,7 +8,8 @@ import java.util.UUID
 @Keep
 @Entity(tableName = "transactions")
 data class TransactionEntity(
-    @PrimaryKey val transactionId: UUID,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val transactionId: UUID,
     val merchantName: String,
     val transactionAmount: Double,
     val transactionType: String,
