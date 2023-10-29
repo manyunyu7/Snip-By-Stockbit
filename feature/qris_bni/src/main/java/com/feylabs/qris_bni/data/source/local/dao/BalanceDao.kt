@@ -5,6 +5,20 @@ import com.feylabs.qris_bni.data.source.local.entity.BalanceEntity
 
 @Dao
 interface BalanceDao {
+
+    @Transaction
+    suspend fun setInitialBalance(userId: Int, initialBalance: Double) {
+        val existingBalance = getBalance(userId)
+        if (existingBalance.saldo < 10.0) {
+            // Only update the balance if it's null or 0
+            val newBalance = BalanceEntity(userId, initialBalance)
+            insertOrUpdateBalance(newBalance)
+        }
+    }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrUpdateBalance(balance: BalanceEntity)
+
     @Query("SELECT * FROM balances WHERE userId = :userId")
     suspend fun getBalance(userId: Int): BalanceEntity
 
