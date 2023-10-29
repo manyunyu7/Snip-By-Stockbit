@@ -1,18 +1,14 @@
 package com.feylabs.qris_bni.data.source.local.repository
 
-import android.net.ConnectivityManager
 import com.feylabs.core.helper.error.ErrorResponse
-import com.feylabs.core.helper.error.ResponseExceptionHandler
-import com.feylabs.core.helper.network.NetworkInfo
 import com.feylabs.core.helper.wrapper.ResponseState
 import com.feylabs.qris_bni.data.source.local.dao.BalanceDao
 import com.feylabs.qris_bni.data.source.local.dao.TransactionDao
 import com.feylabs.qris_bni.data.source.local.entity.TransactionEntity
 import com.feylabs.qris_bni.data.source.local.mapper.Mapper.toTransactionUiModel
 import com.feylabs.qris_bni.domain.repository.QrisRepository
-import com.feylabs.qris_bni.domain.uimodel.TransactionUiModel
+import com.feylabs.qris_bni.domain.uimodel.BalanceUiModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -32,6 +28,7 @@ class QrisRepositoryImpl @Inject constructor(
     ): Flow<ResponseState<String>> {
         return flow {
             try {
+                balanceDao.setInitialBalance(0,20000000.0)
                 Timber.d("12: trying")
                 val transactionId = UUID.randomUUID()
                 val userId = 1 // Example user ID
@@ -61,6 +58,7 @@ class QrisRepositoryImpl @Inject constructor(
         flow {
             emit(ResponseState.Loading())
             try {
+                balanceDao.setInitialBalance(0,20000000.0)
                 val data = transactionDao.getTransactionsByUserId().map {
                     it.toTransactionUiModel()
                 }
@@ -69,6 +67,23 @@ class QrisRepositoryImpl @Inject constructor(
                 emit(ResponseState.Error(errorResponse = ErrorResponse(errorMessage = "Failed to fetch transactions: ${e.message}")))
             }
         }.flowOn(Dispatchers.IO)
+
+    override suspend fun getBalance(): Flow<ResponseState<BalanceUiModel>> =
+        flow {
+            balanceDao.setInitialBalance(0,20000000.0)
+            emit(ResponseState.Loading())
+            try {
+                val balance = balanceDao.getBalance()
+                val balanceUiModel = BalanceUiModel(
+                    currentBalance = balance.saldo,
+                    timeStamp = System.currentTimeMillis()
+                )
+                emit(ResponseState.Success(balanceUiModel))
+            }catch (e:Exception){
+                emit(ResponseState.Error(errorResponse = ErrorResponse(errorMessage = "Failed to fetch transactions: ${e.message}")))
+            }
+        }.flowOn(Dispatchers.IO)
+
 
 
 }

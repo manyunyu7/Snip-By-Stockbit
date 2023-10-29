@@ -8,7 +8,7 @@ interface BalanceDao {
 
     @Transaction
     suspend fun setInitialBalance(userId: Int, initialBalance: Double) {
-        val existingBalance = getBalance(userId)
+        val existingBalance = getBalance()
         if (existingBalance.saldo < 10.0) {
             // Only update the balance if it's null or 0
             val newBalance = BalanceEntity(userId, initialBalance)
@@ -19,8 +19,8 @@ interface BalanceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdateBalance(balance: BalanceEntity)
 
-    @Query("SELECT * FROM balances WHERE userId = :userId")
-    suspend fun getBalance(userId: Int): BalanceEntity
+    @Query("SELECT * FROM balances")
+    suspend fun getBalance(): BalanceEntity
 
     @Insert
     suspend fun insertBalance(balance: BalanceEntity)

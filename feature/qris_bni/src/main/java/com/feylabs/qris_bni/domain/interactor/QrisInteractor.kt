@@ -2,6 +2,7 @@ package com.feylabs.qris_bni.domain.interactor
 
 import com.feylabs.core.helper.wrapper.ResponseState
 import com.feylabs.qris_bni.domain.repository.QrisRepository
+import com.feylabs.qris_bni.domain.uimodel.BalanceUiModel
 import com.feylabs.qris_bni.domain.uimodel.TransactionUiModel
 import com.feylabs.qris_bni.domain.usecase.QrUseCase
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +23,10 @@ class QrisInteractor @Inject constructor(
         timestamp: Long
     ): Flow<ResponseState<String>> {
         return qrRepository.addTransaction(merchantName, transactionAmount, transactionType, timestamp)
+    }
+
+    override suspend fun getBalance(): Flow<ResponseState<BalanceUiModel>> {
+        TODO("Not yet implemented")
     }
 
 }
