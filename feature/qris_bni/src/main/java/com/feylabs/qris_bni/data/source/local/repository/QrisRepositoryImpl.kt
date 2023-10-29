@@ -42,6 +42,7 @@ class QrisRepositoryImpl @Inject constructor(
                     timestamp = timestamp,
                     userId = userId
                 )
+                balanceDao.reduceBalance(transactionAmount)
 
                 // Insert the transaction into the database
                 transactionDao.insertTransaction(transaction)

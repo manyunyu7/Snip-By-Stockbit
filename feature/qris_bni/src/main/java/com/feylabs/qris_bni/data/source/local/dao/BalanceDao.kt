@@ -33,8 +33,8 @@ interface BalanceDao {
     @Update
     suspend fun updateBalance(balance: BalanceEntity)
 
-    @Query("UPDATE balances SET saldo = saldo - :amount WHERE userId = :userId")
-    suspend fun reduceBalance(userId: Int, amount: Double)
+    @Query("UPDATE balances SET saldo = saldo - :amount")
+    suspend fun reduceBalance(amount: Double)
 
     @Query("UPDATE balances SET saldo = saldo + :amount WHERE userId = :userId")
     suspend fun addBalance(userId: Int, amount: Double)
