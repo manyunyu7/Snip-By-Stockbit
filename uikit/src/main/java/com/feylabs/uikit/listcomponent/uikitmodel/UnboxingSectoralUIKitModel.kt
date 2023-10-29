@@ -6,7 +6,9 @@ data class UnboxingSectoralUIKitModel(
     val title: String,
     val description: String,
     val date: String,
-    val feyCover: String = ""
+    val feyCover: String = "",
+    val contentURL: String = "",
+    val volume: String = ""
 ) {
 
 }

@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    api(project(":shared-dependencies"))
+    implementation(project(":shared-dependencies"))
     api(project(":core"))
     api(project(":uikit"))
 

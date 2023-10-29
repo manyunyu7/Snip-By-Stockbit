@@ -14,6 +14,7 @@ import com.feylabs.uikit.R
 import com.feylabs.uikit.databinding.CustomUikitListSnipBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
+import com.feylabs.uikit.listcomponent.unboxingstock.OnUnboxingStockListOnClickInterface
 import com.feylabs.uikit.state.UIKitState
 import com.feylabs.uikit.util.RecyclerViewUtil.setVerticalLayoutManager
 
@@ -26,6 +27,7 @@ class UIKitSnipList : ConstraintLayout {
     var totalItemCount: Int = 0
     private var calledId = mutableListOf<Int>()
 
+    lateinit var onClickInterface : OnSnipListClickInterface
 
     private val binding: CustomUikitListSnipBinding =
         CustomUikitListSnipBinding.inflate(
@@ -99,9 +101,15 @@ class UIKitSnipList : ConstraintLayout {
     private fun initAdapterClick() {
         mAdapter.setInterface(object : UIKitSnipItemAdapter.ItemInterface {
             override fun onClick(data: UnboxingSectoralUIKitModel) {
-                onActionClick.invoke()
+                if(::onClickInterface.isInitialized){
+                    onClickInterface.onClick(data.contentURL)
+                }
             }
         })
+    }
+
+    fun setClickInterface(mInterface : OnSnipListClickInterface){
+        this.onClickInterface = mInterface
     }
 
     fun showSkeleton(count: Int = 3) {
@@ -247,6 +255,10 @@ class UIKitSnipList : ConstraintLayout {
 
     interface LoadMoreListener {
         fun onLoadMore(lastId: Int, calledId: String, isCalled: Boolean)
+    }
+
+    interface OnSnipListClickInterface{
+        fun onClick(link:String)
     }
 
 }

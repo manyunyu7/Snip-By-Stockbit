@@ -1,12 +1,16 @@
 package com.feylabs.snips.ui.all
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.view.ViewUtils.gone
 import com.feylabs.core.helper.view.ViewUtils.visible
+import com.feylabs.shared_dependencies.R
 import com.feylabs.snips.databinding.FragmentSnipModuleTestBinding
 import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
@@ -16,6 +20,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @AndroidEntryPoint
@@ -55,12 +61,14 @@ class AllSnipFragment : BaseFragment<FragmentSnipModuleTestBinding>(
                         }
                         binding.snipList.addDatas(value.snipList.map {
                             UnboxingSectoralUIKitModel(
-                                id = it.id ?: -99,
                                 date = it.created,
-                                description = "",
+                                id = it.id ?: -99,
+                                description = it.description,
                                 image = it.imageUrl,
                                 title = it.title,
-                                feyCover = it.feyCover.orEmpty()
+                                feyCover = it.feyCover.orEmpty(),
+                                volume = it.feyCover.toString(),
+                                contentURL = it.url
                             )
                         })
                         binding.snipList.setUiState(UIKitState.SUCCESS)
@@ -93,6 +101,24 @@ class AllSnipFragment : BaseFragment<FragmentSnipModuleTestBinding>(
         binding.toolbar.setOnClickListener {
             binding.snipList.clear()
         }
+
+        binding.snipList.setClickInterface(object : UIKitSnipList.OnSnipListClickInterface {
+            override fun onClick(link: String) {
+                val encodedUrl = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())
+                val deepLink = Uri.parse(getString(R.string.route_snips_content_viewer)
+                    .replace("{contentId}", encodedUrl)
+                    .replace("{contentType}", "snip"))
+                    .buildUpon()
+                    .build()
+
+                val navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build()
+
+                findNavController().navigate(deepLink, navOptions)
+            }
+        })
+
 
         binding.btnRefresh.setOnClickListener {
             initData()

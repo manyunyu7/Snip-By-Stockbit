@@ -6,4 +6,6 @@
 
     <string name="route_snips_home">android-app://snips/home</string>
     <string name="route_snips_unboxing_test">android-app://snips/unboxing</string>
+    <string name="route_snips_content_viewer" translatable="false">android-app://snips/content-viewer/{contentType}/{contentId}
+</string>
 </resources>

@@ -32,6 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
+                android:id="@+id/menu_unboxing_sector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content" />
 
             <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
+                android:id="@+id/menu_snip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -55,8 +57,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-
             <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
+                android:id="@+id/menu_unboxing_stock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20dp"

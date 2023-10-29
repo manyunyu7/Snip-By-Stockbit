@@ -30,7 +30,7 @@ object SnipsModule {
     @RetrofitSnips
     fun provideLuminaAPI(): SnipsAPI {
         return Retrofit.Builder()
-            .baseUrl("https://snips-api.feylabs.my.id/api/")
+            .baseUrl("https://168.feylabs.my.id/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(SnipsAPI::class.java)

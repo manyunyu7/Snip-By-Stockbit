@@ -1,26 +1,29 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("androidx.navigation.safeargs")
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
 }
 
+
 android {
-    namespace = "com.feylabs.snipbystockbit"
+    namespace = "com.feylabs.content_viewer"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.feylabs.snipbystockbit"
-        versionCode = 1
-        versionName = "1.0"
         minSdk = 25
-        targetSdk = 32
+        targetSdk = 33
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -29,6 +32,8 @@ android {
         }
     }
 
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -36,36 +41,32 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
+
+    implementation(project(":shared-dependencies"))
+    api(project(":core"))
+    api(project(":uikit"))
+
+    implementation(project(":feature:unboxing"))
+    implementation(project(":feature:snips"))
+
+
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    implementation(project(":core"))
-    implementation(project(":shared-dependencies"))
-    implementation(project(":feature:feature-example"))
-    implementation(project(":feature:snips"))
-    implementation(project(":feature:feat-ui-content-viewer"))
-    implementation(project(":feature:feat-ui-home"))
-    implementation(project(":feature:unboxing"))
-
-    // Navigation
-    val navigation_version = "2.5.0"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigation_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigation_version")
 
     // Dagger Hilt for dependency injection
     api("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
+    // Room Dependencies
+    implementation("androidx.room:room-runtime:2.4.2")
+    implementation("androidx.room:room-ktx:2.4.2")
+    kapt("androidx.room:room-compiler:2.4.2")
 }

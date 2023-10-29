@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    app:shimmer_auto_start="true"
+    app:shimmer_repeat_mode="restart">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="304dp"
+                    android:src="@drawable/placeholder_snip_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="17dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_marginEnd="110dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/tv_secondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="70dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="90dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="90dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="90dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/uikit_background_shimmer"
+                    app:layout_constraintBottom_toTopOf="@id/iv_thumbnail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</com.facebook.shimmer.ShimmerFrameLayout>

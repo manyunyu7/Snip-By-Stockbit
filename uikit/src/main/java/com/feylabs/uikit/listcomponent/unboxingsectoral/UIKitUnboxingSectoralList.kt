@@ -9,6 +9,7 @@ import com.feylabs.uikit.R
 import com.feylabs.uikit.databinding.CustomUikitListUnboxingSectoralBinding
 import com.feylabs.uikit.listcomponent.uikitmodel.GenerateDummyData
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
+import com.feylabs.uikit.listcomponent.unboxingstock.OnUnboxingStockListOnClickInterface
 import com.feylabs.uikit.util.RecyclerViewUtil.setHorizontalLayoutManager
 
 class UIKitUnboxingSectoralList : ConstraintLayout {
@@ -21,7 +22,7 @@ class UIKitUnboxingSectoralList : ConstraintLayout {
             true
         )
 
-    private var onActionClick: (() -> Unit) = {}
+    lateinit var onClickInterface : OnUnboxingStockListOnClickInterface
 
 
     private val mAdapter by lazy { UnboxingItemAdapter() }
@@ -71,9 +72,15 @@ class UIKitUnboxingSectoralList : ConstraintLayout {
     private fun initAdapterClick() {
         mAdapter.setInterface(object : UnboxingItemAdapter.ItemInterface {
             override fun onClick(data: UnboxingSectoralUIKitModel) {
-                onActionClick.invoke()
+                if(::onClickInterface.isInitialized){
+                    onClickInterface.onClick(data.volume)
+                }
             }
         })
+    }
+
+    fun setClickInterface(mInterface : OnUnboxingStockListOnClickInterface){
+        this.onClickInterface = mInterface
     }
 
     private fun initRecyclerView() {
@@ -123,8 +130,12 @@ class UIKitUnboxingSectoralList : ConstraintLayout {
 
     fun onUnboxingItemClick(action: (() -> Unit)? = null) {
         if (action != null) {
-            onActionClick = action
         }
+    }
+
+
+    interface OnUnboxingSectoralListOnClickInterface{
+        fun onClick(volume:String)
     }
 
 }

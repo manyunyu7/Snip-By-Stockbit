@@ -7,7 +7,7 @@ data class UnboxingListItemUIModel(
     val title: String = "",
     val description: String = "",
     val date: String = "",
-    val url: String = "",
+    val url: String = "jirrr",
     val feycover: String = "",
     val volume: Int? = 0,
     val status: String = "",

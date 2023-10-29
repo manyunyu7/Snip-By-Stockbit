@@ -1,17 +1,27 @@
 package com.feylabs.feat_ui_home.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.feylabs.core.base.BaseFragment
+import com.feylabs.core.helper.toast.ToastHelper.showToast
+import com.feylabs.shared_dependencies.R as sharedR
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
+import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
+import com.feylabs.uikit.listcomponent.unboxingstock.OnUnboxingStockListOnClickInterface
 import com.feylabs.unboxing.domain.uimodel.UnboxingListItemUIModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @AndroidEntryPoint
@@ -32,10 +42,14 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                     state.isLoading -> {
                         // Show loading progress
                     }
+
                     state.error.isNotBlank() -> {
                         // Show error message
                     }
+
                     state.unboxingList.isNotEmpty() -> {
+                        state.unboxingList.forEachIndexed { index, unboxingListItemUIModel ->
+                        }
                         binding.unboxingStock.addDatas(state.unboxingList.map {
                             it.toUnboxingSectoralUIKit()
                         })
@@ -49,9 +63,11 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                     state.isLoading -> {
                         // Show loading progress
                     }
+
                     state.error.isNotBlank() -> {
                         // Show error message
                     }
+
                     state.snipList.isNotEmpty() -> {
                         binding.snipList.addDatas(state.snipList.take(3).map {
                             it.toUnboxingSectoralUIKit()
@@ -68,11 +84,14 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                     state.isLoading -> {
                         // Show loading progress
                     }
+
                     state.error.isNotBlank() -> {
                         // Show error message
                     }
+
                     state.unboxingList.isNotEmpty() -> {
-                        val idsToFilter = listOf(34, 203, 4, 202, 199, 204) // IDs to filter by
+                        val idsToFilter =
+                            listOf(206, 205, 34, 203, 4, 202, 199, 204) // IDs to filter by
                         binding.unboxingSectoral.addDatas(state.unboxingList.map {
                             it.toUnboxingSectoralUIKit()
                         }.filter {
@@ -87,6 +106,79 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     }
 
     override fun initAction() {
+
+        binding.menuSnip.onClickListener {
+            val deepLink = Uri.parse(getString(sharedR.string.route_snips_test)).buildUpon().build()
+            findNavController().navigate(deepLink)
+        }
+
+        binding.menuUnboxingSector.onClickListener {
+            val deepLink =
+                Uri.parse(getString(sharedR.string.route_snips_unboxing_test)).buildUpon().build()
+            findNavController().navigate(deepLink)
+        }
+
+        binding.menuUnboxingStock.onClickListener {
+            val deepLink =
+                Uri.parse(getString(sharedR.string.route_snips_unboxing_test)).buildUpon().build()
+            findNavController().navigate(deepLink)
+        }
+
+        binding.snipList.setClickInterface(object : UIKitSnipList.OnSnipListClickInterface {
+            override fun onClick(link: String) {
+                val encodedUrl = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())
+                val deepLink = Uri.parse(
+                    getString(sharedR.string.route_snips_content_viewer)
+                        .replace("{contentId}", encodedUrl)
+                        .replace("{contentType}", "snip")
+                )
+                    .buildUpon()
+                    .build()
+
+                val navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build()
+
+                findNavController().navigate(deepLink, navOptions)
+            }
+        })
+
+        binding.unboxingStock.setClickInterface(object : OnUnboxingStockListOnClickInterface {
+            override fun onClick(volume: String) {
+                val itemId = volume
+                val deeplink = NavDeepLinkRequest.Builder.fromUri(
+                    Uri.parse(
+                        getString(sharedR.string.route_snips_content_viewer).replace(
+                            "{contentId}",
+                            itemId
+                        ).replace(
+                            "{contentType}",
+                            "unboxing-stock"
+                        )
+                    )
+                ).build()
+                findNavController().navigate(deeplink)
+            }
+        })
+
+        binding.unboxingSectoral.setClickInterface(object : OnUnboxingStockListOnClickInterface {
+            override fun onClick(volume: String) {
+                val itemId = volume
+                val deeplink = NavDeepLinkRequest.Builder.fromUri(
+                    Uri.parse(
+                        getString(sharedR.string.route_snips_content_viewer).replace(
+                            "{contentId}",
+                            itemId
+                        ).replace(
+                            "{contentType}",
+                            "unboxing-sectoral"
+                        )
+                    )
+                ).build()
+                findNavController().navigate(deeplink)
+            }
+        })
+
     }
 
     override fun initData() {
@@ -111,7 +203,9 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
             description = this.description,
             image = this.imageUrl,
             title = this.title,
-            feyCover = this.feycover
+            feyCover = this.feycover,
+            volume = this.volume.toString(),
+            contentURL = this.url
         )
 
 
@@ -122,7 +216,8 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
             description = "",
             image = this.imageUrl,
             title = this.title,
-            feyCover = this.imageUrl
+            feyCover = this.imageUrl,
+            contentURL = this.url
         )
 
 }
