@@ -1,17 +1,24 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
+    kotlin("kapt")
 }
 
 android {
     namespace = "com.feylabs.qris_bni"
-    compileSdk = 33
+    compileSdk = 32
 
     defaultConfig {
-        minSdk = 32
+        minSdk = 25
+        targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -34,11 +41,25 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    api(project(":shared-dependencies"))
+    api(project(":core"))
+    api(project(":uikit"))
+
+    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Dagger Hilt for dependency injection
+    api("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+    // Room Dependencies
+    implementation("androidx.room:room-runtime:2.4.2")
+    implementation("androidx.room:room-ktx:2.4.2")
+    kapt("androidx.room:room-compiler:2.4.2")
 }
