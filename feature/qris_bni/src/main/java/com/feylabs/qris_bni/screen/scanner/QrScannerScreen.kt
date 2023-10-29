@@ -55,6 +55,7 @@ class QrScannerScreen : ComponentActivity() {
     private val viewModel: TransactionHistoryViewModel by viewModels()
 
     private var textResult = mutableStateOf("")
+    private var balance = mutableStateOf("")
     private var barcodeLauncher = registerForActivityResult(ScanContract()) { result ->
         if (result.contents == null) {
             showToast("Cancelled")
@@ -129,6 +130,7 @@ class QrScannerScreen : ComponentActivity() {
                             modifier = Modifier.size(100.dp),
                             contentDescription = "QR"
                         )
+                        BalanceScreen(balanceViewModel = viewModel)
                         Text(
                             text = textResult.value,
                             fontSize = 12.sp,
@@ -275,6 +277,7 @@ class QrScannerScreen : ComponentActivity() {
 
     fun showSuccessNotification(context: Context) {
         // Implement your logic to show a success notification here
+        viewModel.fetchBalance()
         ToastHelper.showToast(context, "Transaction successful!")
     }
 }

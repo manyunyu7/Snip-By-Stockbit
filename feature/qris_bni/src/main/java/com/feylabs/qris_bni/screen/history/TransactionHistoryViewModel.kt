@@ -6,13 +6,10 @@ import com.feylabs.core.helper.wrapper.ResponseState
 import com.feylabs.qris_bni.domain.uimodel.TransactionUiModel
 import com.feylabs.qris_bni.domain.usecase.QrUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 
 @HiltViewModel
@@ -23,6 +20,7 @@ class TransactionHistoryViewModel @Inject constructor(
 
     init {
         fetchTransaction()
+        fetchBalance()
     }
 
     private var _transactionListValue = MutableStateFlow(TransactionListState())
@@ -31,6 +29,12 @@ class TransactionHistoryViewModel @Inject constructor(
     private var _addTransactionValue = MutableStateFlow(AddTransactionState())
     val addTransactionValue: StateFlow<AddTransactionState> = _addTransactionValue
 
+    private var _balance = MutableStateFlow(BalanceState(amount = ""))
+    val balance: StateFlow<BalanceState> = _balance
+
+    class BalanceState(
+        var amount: String = "",
+    )
 
     class AddTransactionState(
         val isLoading: Boolean = false,
@@ -43,6 +47,21 @@ class TransactionHistoryViewModel @Inject constructor(
         var error: String = ""
     )
 
+
+    fun fetchBalance(){
+        viewModelScope.launch {
+            transactionUseCase.getBalance(
+            ).collect {
+                when (it) {
+                    is ResponseState.Loading -> _balance.value = BalanceState(amount ="")
+                    is ResponseState.Success -> _balance.value = BalanceState(amount =it.data?.getFormattedRupiahBalance().orEmpty())
+                    is ResponseState.Error ->{
+                        _balance.value = BalanceState(amount ="")
+                    }
+                }
+            }
+        }
+    }
 
     fun fetchTransaction() {
         viewModelScope.launch {

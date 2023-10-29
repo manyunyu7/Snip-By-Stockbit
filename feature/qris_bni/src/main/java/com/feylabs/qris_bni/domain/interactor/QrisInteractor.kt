@@ -26,7 +26,7 @@ class QrisInteractor @Inject constructor(
     }
 
     override suspend fun getBalance(): Flow<ResponseState<BalanceUiModel>> {
-        TODO("Not yet implemented")
+        return qrRepository.getBalance()
     }
 
 }

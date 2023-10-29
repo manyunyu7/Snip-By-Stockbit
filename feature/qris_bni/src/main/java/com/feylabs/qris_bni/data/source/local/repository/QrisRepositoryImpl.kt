@@ -75,7 +75,7 @@ class QrisRepositoryImpl @Inject constructor(
             try {
                 val balance = balanceDao.getBalance()
                 val balanceUiModel = BalanceUiModel(
-                    currentBalance = balance.saldo,
+                    currentBalance = balance?.saldo?:0.0,
                     timeStamp = System.currentTimeMillis()
                 )
                 emit(ResponseState.Success(balanceUiModel))
