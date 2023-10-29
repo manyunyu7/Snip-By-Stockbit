@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.feylabs.snipbystockbit"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.feylabs.snipbystockbit"

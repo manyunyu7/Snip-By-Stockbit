@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.feylabs.qris_bni"
-    compileSdk = 32
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 25
@@ -19,6 +19,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
 
     buildTypes {
@@ -45,7 +50,29 @@ dependencies {
     api(project(":core"))
     api(project(":uikit"))
 
-    implementation("androidx.core:core-ktx:1.7.0")
+    val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    val compose_version = "1.0.0-beta07"
+    implementation("androidx.compose.runtime:runtime:$compose_version")
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    // Material Design 3
+    implementation("androidx.compose.material3:material3")
+
+    // Android Studio Preview support
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // custom design system based on Foundation)
+    implementation("androidx.compose.material:material-icons-core")
+    // Optional - Add full set of material icons
+    implementation("androidx.compose.material:material-icons-extended")
+    // Optional - Add window size utils
+    implementation("androidx.compose.material3:material3-window-size-class")
+
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
