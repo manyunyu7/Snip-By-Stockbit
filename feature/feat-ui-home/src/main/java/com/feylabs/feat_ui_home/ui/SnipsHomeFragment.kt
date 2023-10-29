@@ -129,6 +129,9 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
 
     override fun initAction() {
 
+        binding.menuQris.setOnClickListener {
+            startActivity(Intent(requireContext(), QrScannerScreen::class.java))
+        }
 
         binding.menuHome.setOnClickListener {
             viewModel.fetchTransaction()
