@@ -3,6 +3,8 @@ package com.feylabs.feat_ui_home.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.core.helper.wrapper.ResponseState
+import com.feylabs.qris_bni.domain.uimodel.TransactionUiModel
+import com.feylabs.qris_bni.domain.usecase.QrUseCase
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
 import com.feylabs.snips.domain.usecase.SnipsUseCase
 import com.feylabs.unboxing.domain.uimodel.UnboxingListItemUIModel
@@ -11,14 +13,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 
 @HiltViewModel
 class SnipsHomeViewModel @Inject constructor(
     private val unboxingUseCase: UnboxingUseCase,
-    private val snipUseCase: SnipsUseCase
+    private val snipUseCase: SnipsUseCase,
+    private val transactionUseCase: QrUseCase
 ) :
     ViewModel() {
 
@@ -31,11 +36,16 @@ class SnipsHomeViewModel @Inject constructor(
     private var _snipListValue = MutableStateFlow(SnipsListState())
     val snipListValue: StateFlow<SnipsListState> = _snipListValue
 
+    private var _transactionListValue = MutableStateFlow(TransactionListState())
+    val transactionListValue: StateFlow<TransactionListState> = _transactionListValue
+
+    private var _addTransactionValue = MutableStateFlow(AddTransactionState())
+    val addTransactionValue: StateFlow<AddTransactionState> = _addTransactionValue
+
     fun getData(){
         fetchUnboxingData("sectoral", _unboxingSectoralListValue)
         fetchUnboxingData("stock", _unboxingStockListValue)
     }
-
 
     data class UnboxingState(
         val isLoading: Boolean = false,
@@ -43,11 +53,48 @@ class SnipsHomeViewModel @Inject constructor(
         val error: String = ""
     )
 
+    class AddTransactionState(
+        val isLoading: Boolean = false,
+        var error: String = "",
+        var success: String = ""
+    )
+    class TransactionListState(
+        val isLoading: Boolean = false,
+        val transactionList: List<TransactionUiModel> = emptyList<TransactionUiModel>(),
+        var error: String = ""
+    )
+
     class SnipsListState(
         val isLoading: Boolean = false,
         val snipList: List<SnipsUIModel> = emptyList<SnipsUIModel>(),
         var error: String = ""
     )
+
+
+    fun fetchTransaction() {
+        viewModelScope.launch {
+            transactionUseCase.getAllTransaction()
+        }
+    }
+
+    fun addTransaction(merchantName:String, transactionAmount:Double){
+        viewModelScope.launch {
+            transactionUseCase.addTransaction(
+                merchantName = "Yessy",
+                transactionAmount = 2.0,
+                transactionType = "QR",
+                timestamp = System.currentTimeMillis()
+            ).collect {
+                when (it) {
+                    is ResponseState.Loading -> _addTransactionValue.value = AddTransactionState(isLoading = true)
+                    is ResponseState.Success -> _addTransactionValue.value = AddTransactionState(success = "y", isLoading = false)
+                    is ResponseState.Error ->{
+                        _addTransactionValue.value = AddTransactionState(error = "x", isLoading = false)
+                    }
+                }
+            }
+        }
+    }
 
     fun getUnboxingStock() {
         fetchUnboxingData("stock", _unboxingStockListValue)

@@ -1,5 +1,6 @@
 package com.feylabs.feat_ui_home.ui
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,8 @@ import com.feylabs.core.base.BaseFragment
 import com.feylabs.core.helper.toast.ToastHelper.showToast
 import com.feylabs.shared_dependencies.R as sharedR
 import com.feylabs.feat_ui_home.databinding.FragmentSnipsHomeBinding
+import com.feylabs.qris_bni.screen.history.HistoryScreen
+import com.feylabs.qris_bni.screen.scanner.QrScannerScreen
 import com.feylabs.snips.domain.uimodel.SnipsUIModel
 import com.feylabs.uikit.listcomponent.snip.UIKitSnipList
 import com.feylabs.uikit.listcomponent.uikitmodel.UnboxingSectoralUIKitModel
@@ -53,6 +56,25 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
                         binding.unboxingStock.addDatas(state.unboxingList.map {
                             it.toUnboxingSectoralUIKit()
                         })
+                    }
+                }
+            }
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.addTransactionValue.collect { state ->
+                when {
+                    state.isLoading -> {
+                        showToast("Loading")
+                        // Show loading progress
+                    }
+
+                    state.error.isNotEmpty() -> {
+                        showToast("Error")
+                    }
+
+                    state.success.isNotEmpty() -> {
+                        showToast("Success")
                     }
                 }
             }
@@ -106,6 +128,21 @@ class SnipsHomeFragment : BaseFragment<FragmentSnipsHomeBinding>(
     }
 
     override fun initAction() {
+
+        binding.menuQris.setOnClickListener {
+            startActivity(Intent(requireContext(), QrScannerScreen::class.java))
+        }
+
+        binding.menuHome.setOnClickListener {
+            viewModel.fetchTransaction()
+            showToast("Fetch Transaction")
+            startActivity(Intent(requireContext(), QrScannerScreen::class.java))
+        }
+        binding.header.setOnClickListener {
+            startActivity(Intent(requireContext(), HistoryScreen::class.java))
+            viewModel.addTransaction("Yessy", transactionAmount = 20.0)
+        }
+
 
         binding.menuSnip.onClickListener {
             val deepLink = Uri.parse(getString(sharedR.string.route_snips_test)).buildUpon().build()

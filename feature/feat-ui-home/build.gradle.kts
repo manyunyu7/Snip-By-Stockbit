@@ -46,6 +46,7 @@ dependencies {
 
     implementation(project(":feature:unboxing"))
     implementation(project(":feature:snips"))
+    implementation(project(":feature:qris_bni"))
 
 
     implementation("androidx.core:core-ktx:1.7.0")

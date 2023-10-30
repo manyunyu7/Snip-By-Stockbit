@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <meta-data
+        android:name="com.google.mlkit.vision.DEPENDENCIES"
+        android:value="barcode"/>
+    <application>
+        <activity
+            android:name=".screen.scanner.QrScannerScreen"
+            android:exported="false"
+            android:label="@string/title_activity_qr_scanner_screen"
+            android:theme="@style/Theme.SnipByStockbit" />
+        <activity
+            android:name=".screen.history.HistoryScreen"
+            android:exported="false"
+            android:label="@string/title_activity_transaction_list_screen"
+            android:theme="@style/Theme.SnipByStockbit" />
+        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="android:screenOrientation"
+            ></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="title_activity_transaction_list_screen">TransactionListScreen</string>
+    <string name="title_activity_qr_scanner_screen">QrScannerScreen</string>
+</resources>
