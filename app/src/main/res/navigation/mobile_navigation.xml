@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_snips_home">
+
+
+    <fragment
+        android:id="@+id/navigation_lumina_home"
+        android:name="com.feylabs.feature_example.ui.LuminaHomeFragment"
+        android:label="Lumina">
+
+        <deepLink app:uri="@string/route_lumina_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_lumina_s"
+        android:name="com.feylabs.feature_example.ui.LuminaHomeFragment"
+        android:label="Lumina">
+
+        <deepLink app:uri="@string/route_lumina_homes" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_snip_module_test"
+        android:name="com.feylabs.snips.ui.all.AllSnipFragment"
+        android:label="Snips">
+
+        <deepLink app:uri="@string/route_snips_test" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_snips_home"
+        android:name="com.feylabs.feat_ui_home.ui.SnipsHomeFragment"
+        android:label="Snips Home">
+
+        <deepLink app:uri="@string/route_lumina_homes" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_unboxing_module_test"
+        android:name="com.feylabs.unboxing.ui.all.UnboxingAllFragment"
+        android:label="Snips Home">
+
+        <deepLink app:uri="@string/route_snips_unboxing_test" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_content_viewer"
+        android:name="com.feylabs.content_viewer.ContentViewerFragment"
+        android:label="Snips Home">
+        <deepLink app:uri="@string/route_snips_content_viewer"/>
+    </fragment>
+
+
+
+</navigation>

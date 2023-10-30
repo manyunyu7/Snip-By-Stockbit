@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="UIKitLargeInfoCard">
+        <attr name="cardTitle" format="string"/>
+        <attr name="cardBody" format="string" />
+        <attr name="cardSubtitle" format="string" />
+        <attr name="cardImage" format="string" />
+        <attr name="cardTitleFont" format="string" />
+        <attr name="cardBodyFont" format="string" />
+        <attr name="cardSubtitleFont" format="string" />
+        <attr name="cardTitleTextColor" format="color" />
+        <attr name="cardBodyTextColor" format="color" />
+        <attr name="cardSubtitleTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="UIKitSectionMenu">
+        <attr name="sectionTitle" format="string" />
+        <attr name="sectionSeeAll" format="string" />
+        <attr name="sectionTitleFont" format="string" />
+        <attr name="sectionSeeAllFont" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="UIKitHeaderCommon">
+        <attr name="toolbarTitle" format="string" />
+        <attr name="toolbarTitleFontSize" format="string" />
+        <attr name="showBackNavigation" format="boolean" />
+
+        <attr name="toolbarTitleAlignment" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="UIKitUnboxingStockList">
+        <attr name="layoutStyle" format="enum">
+            <enum name="grid_2" value="0" />
+            <enum name="linear_vertical" value="1" />
+            <enum name="linear_horizontal" value="2" />
+        </attr>
+    </declare-styleable>
+
+
+</resources>

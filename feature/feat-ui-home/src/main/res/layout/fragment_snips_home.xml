@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.feylabs.uikit.common.UIKitHeaderHome
+        android:id="@+id/header"
+        android:background="@color/white"
+        android:elevation="@dimen/dimen_5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/menu_qris"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                app:cardCornerRadius="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/dimen_20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/qris_banner"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.feylabs.uikit.blockcomponent.UIKitSnipMenuHome
+                android:id="@+id/menu_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/dimen_30dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
+                android:id="@+id/menu_unboxing_sector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:sectionSeeAll="Lihat Semua"
+                android:visibility="gone"
+                app:sectionTitle="Unboxing Sektor" />
+
+            <com.feylabs.uikit.listcomponent.unboxingsectoral.UIKitUnboxingSectoralList
+                android:id="@+id/unboxing_sectoral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
+                android:id="@+id/menu_snip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:sectionSeeAll="Lihat Semua"
+                app:sectionTitle="Snip Terbaru" />
+
+            <com.feylabs.uikit.listcomponent.snip.UIKitSnipList
+                android:id="@+id/snip_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.uikit.blockcomponent.UIKitSectionMenu
+                android:id="@+id/menu_unboxing_stock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:sectionSeeAll="Lihat Semua"
+                app:sectionTitle="Unboxing Saham" />
+
+            <com.feylabs.uikit.listcomponent.unboxingstock.UIKitUnboxingStockList
+                android:id="@+id/unboxing_stock"
+                app:layoutStyle="linear_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

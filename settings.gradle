@@ -1,0 +1,28 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://download2.dynamsoft.com/maven/aar")
+        }
+    }
+}
+rootProject.name = "Snip by Stockbit"
+include ':app'
+include ':core'
+include ':uikit'
+include ':feature:feature-example'
+include ':shared-dependencies'
+include ':feature:snips'
+include ':feature:feat-ui-home'
+include ':feature:unboxing'
+include ':feature:feat-ui-content-viewer'
+include ':feature:qris_bni'
