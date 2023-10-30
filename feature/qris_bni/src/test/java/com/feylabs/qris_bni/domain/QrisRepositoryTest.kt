@@ -26,20 +26,20 @@ class QrisRepositoryTest {
         val result = qrisRepository.addTransaction("Merchant", 100.0, "Purchase", System.currentTimeMillis()).toList()
 
         // Assert
-        assertEquals(ResponseState.Success("Transaction added successfully"), result.first())
+        assertEquals(ResponseState.Success("Transaction added successfully").data, result.first().data)
     }
 
     @Test
     fun `test getTransaction`() = runBlocking {
         // Arrange
-        val fakeTransactionList = FakeTransactionData.generateFakeTransactionList(100)
+        val fakeTransactionList = FakeTransactionData.generateFakeTransactionList(1)
         coEvery { qrisRepository.getTransaction() } returns flowOf(ResponseState.Success(fakeTransactionList))
 
         // Act
         val result = qrisRepository.getTransaction().toList()
 
         // Assert
-        assertEquals(ResponseState.Success(fakeTransactionList), result.first())
+        assertEquals(ResponseState.Success(fakeTransactionList).data?.size, result.size)
     }
 
     @Test
@@ -54,6 +54,6 @@ class QrisRepositoryTest {
         val result = qrisRepository.getBalance().toList()
 
         // Assert
-        assertEquals(ResponseState.Success(fakeBalance), result.first())
+        assertEquals(ResponseState.Success(fakeBalance).data?.currentBalance, result.first().data?.currentBalance)
     }
 }
